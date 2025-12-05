@@ -5,13 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatCurrency } from "@/lib/formater";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { addProduct } from "../../_actions/products";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 
 export function ProductForm() {
   const [priceInCents, setPriceInCents] = useState<number>();
-  const [error, formAction] = useFormState(addProduct, {});
+  const [error, formAction] = useActionState(addProduct, {});
   return (
     <form action={formAction} className="space-y-8">
       <div className="space-y-2">
@@ -23,7 +23,7 @@ export function ProductForm() {
         <Label htmlFor="name">Price In Cents</Label>
         <Input
           type="number"
-          id="priceInCents "
+          id="priceInCents"
           name="priceInCents"
           required
           value={priceInCents}

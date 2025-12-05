@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 import fs from "fs/promises";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const fileSchema = z.instanceof(File, { message: "Required" });
 const imageSchema = fileSchema.refine(
@@ -20,21 +20,20 @@ const addSchema = z.object({
 
 function formatErrors(issues: z.core.$ZodIssue[]) {
   const errors: Record<string, string> = {};
-  
+
   for (const issue of issues) {
     const path = String(issue.path[0]);
     if (path && !errors[path]) {
       errors[path] = issue.message;
     }
   }
-  
+
   return errors;
 }
 
 export async function addProduct(prevState: unknown, formData: FormData) {
   const result = addSchema.safeParse(Object.fromEntries(formData.entries()));
   if (!result.success) {
-
     return formatErrors(result.error.issues);
   }
 
@@ -63,4 +62,20 @@ export async function addProduct(prevState: unknown, formData: FormData) {
   });
 
   redirect("/admin/products");
+}
+
+export async function toggleProductAvailability(
+  id: string,
+  isAvailableForPurchase: boolean
+) {
+  await prisma.product.update({
+    where: { id },
+    data: { isAvailableForPurchase },
+  });
+}
+
+export async function deleteProduct(id: string) {
+  const product = await prisma.product.delete({ where: { id } });
+  
+  if(product === null) return notFound()
 }
