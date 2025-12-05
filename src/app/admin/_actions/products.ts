@@ -18,20 +18,24 @@ const addSchema = z.object({
   image: imageSchema.refine((file) => file.size > 0, "Required"),
 });
 
-type ActionState = {
-  errors?: ReturnType<typeof z.treeifyError>;
-  success?: boolean;
-};
+function formatErrors(issues: z.core.$ZodIssue[]) {
+  const errors: Record<string, string> = {};
+  
+  for (const issue of issues) {
+    const path = String(issue.path[0]);
+    if (path && !errors[path]) {
+      errors[path] = issue.message;
+    }
+  }
+  
+  return errors;
+}
 
-export async function addProduct(prevState: ActionState | null, formData: FormData): Promise<ActionState> {
+export async function addProduct(prevState: unknown, formData: FormData) {
   const result = addSchema.safeParse(Object.fromEntries(formData.entries()));
   if (!result.success) {
-    const treeErrors = z.treeifyError(result.error);
-    
-    return {
-      success: false,
-      errors: treeErrors
-    };
+
+    return formatErrors(result.error.issues);
   }
 
   const data = result.data;
@@ -49,6 +53,7 @@ export async function addProduct(prevState: ActionState | null, formData: FormDa
 
   await prisma.product.create({
     data: {
+      isAvailableForPurchase: false,
       name: data.name,
       description: data.description,
       priceInCents: data.priceInCents,
