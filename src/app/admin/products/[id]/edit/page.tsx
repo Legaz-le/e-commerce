@@ -3,10 +3,11 @@ import { ProductForm } from "../../_components/ProductForm";
 import prisma from "@/lib/prisma";
 
 export default async function EditProductPage({
-  params: { id },
+  params
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const product = await prisma.product.findUnique({ where: { id } });
   return (
     <>

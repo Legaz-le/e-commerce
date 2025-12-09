@@ -12,9 +12,7 @@ import { Product } from "../../../../../generated/prisma/client";
 import Image from "next/image";
 
 export function ProductForm({ product }: { product?: Product | null }) {
-  const [priceInCents, setPriceInCents] = useState<number | undefined>(
-    product?.priceInCents
-  );
+  const [priceInCents, setPriceInCents] = useState<number>(0);
   const [error, formAction] = useActionState(
     product == null ? addProduct : updateProduct.bind(null, product.id),
     {}
@@ -39,8 +37,7 @@ export function ProductForm({ product }: { product?: Product | null }) {
           id="priceInCents"
           name="priceInCents"
           required
-          value={priceInCents}
-          onChange={(e) => setPriceInCents(Number(e.target.value) || undefined)}
+          onChange={(e) => setPriceInCents(Number(e.target.value))}
         />
         <div className="text-muted-foreground">
           {formatCurrency((priceInCents || 0) / 100)}
@@ -75,8 +72,8 @@ export function ProductForm({ product }: { product?: Product | null }) {
         {product != null && (
           <Image
             src={product.imagePath}
-            height="400"
-            width="400"
+            height={400}
+            width={400}
             alt="Product Image"
           />
         )}

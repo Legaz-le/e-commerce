@@ -94,8 +94,8 @@ export async function updateProduct(
 
   let imagePath = product.imagePath;
   if (data.image != null && data.image.size > 0) {
-    await fs.unlink(`public${product.filePath}`);
-     imagePath = `public${crypto.randomUUID()}- ${data.image.name}`;
+    await fs.unlink(`public${product.imagePath}`);
+     imagePath = `/public${crypto.randomUUID()}- ${data.image.name}`;
     await fs.writeFile(
       `public${imagePath}`,
       Buffer.from(await data.image.arrayBuffer())
@@ -129,8 +129,8 @@ export async function toggleProductAvailability(
 export async function deleteProduct(id: string) {
   const product = await prisma.product.delete({ where: { id } });
 
-  if (product === null) return notFound();
+  if (product == null) return notFound();
 
   await fs.unlink(product.filePath);
-  await fs.unlink(`public${product.filePath}`);
+  await fs.unlink(`public${product.imagePath}`);
 }

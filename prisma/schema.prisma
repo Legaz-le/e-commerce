@@ -24,7 +24,7 @@ model Product {
   createdAt DateTime              @default(now())
   updateAt DateTime               @updatedAt
   orders Order[]
-  downloadVerification  DownloadVerification[]
+  downloadVerifications  DownloadVerification[]
 }
 
 model User {
