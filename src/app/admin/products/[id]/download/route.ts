@@ -5,8 +5,9 @@ import fs from "fs/promises";
 
 export async function GET(
   req: NextRequest,
-  { params: { id } }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const product = await prisma.product.findUnique({
     where: { id },
     select: { filePath: true, name: true },
@@ -17,10 +18,12 @@ export async function GET(
   const file = await fs.readFile(product.filePath);
   const extension = product.filePath.split(".").pop();
 
+  console.log(product);
+
   return new NextResponse(file, {
     headers: {
       "Content-Disposition": `attachment; filename="${product.name}.${extension}"`,
-      "Content-length": size.toString(),
+      "Content-Length": size.toString(),
     },
   });
 }
