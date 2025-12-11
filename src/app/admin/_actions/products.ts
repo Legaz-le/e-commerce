@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { z } from "zod";
 import fs from "fs/promises";
 import { notFound, redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 const fileSchema = z.instanceof(File, { message: "Required" });
 const imageSchema = fileSchema.refine(
@@ -61,6 +62,8 @@ export async function addProduct(prevState: unknown, formData: FormData) {
     },
   });
 
+  revalidatePath("/");
+  revalidatePath("/products");
   redirect("/admin/products");
 }
 
@@ -95,7 +98,7 @@ export async function updateProduct(
   let imagePath = product.imagePath;
   if (data.image != null && data.image.size > 0) {
     await fs.unlink(`public${product.imagePath}`);
-     imagePath = `/public${crypto.randomUUID()}- ${data.image.name}`;
+    imagePath = `/public${crypto.randomUUID()}- ${data.image.name}`;
     await fs.writeFile(
       `public${imagePath}`,
       Buffer.from(await data.image.arrayBuffer())
@@ -112,7 +115,8 @@ export async function updateProduct(
       imagePath,
     },
   });
-
+  revalidatePath("/");
+  revalidatePath("/products");
   redirect("/admin/products");
 }
 
@@ -124,6 +128,9 @@ export async function toggleProductAvailability(
     where: { id },
     data: { isAvailableForPurchase },
   });
+
+  revalidatePath("/");
+  revalidatePath("/products");
 }
 
 export async function deleteProduct(id: string) {
@@ -133,4 +140,7 @@ export async function deleteProduct(id: string) {
 
   await fs.unlink(product.filePath);
   await fs.unlink(`public${product.imagePath}`);
+
+  revalidatePath("/");
+  revalidatePath("/products");
 }
