@@ -11,10 +11,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 export default async function SuccessPage({
   searchParams,
 }: {
-  searchParams: { payment_intent: string };
+  searchParams: Promise<{ payment_intent: string }>;
 }) {
+  const { payment_intent } = await searchParams;
   const paymentIntent = await stripe.paymentIntents.retrieve(
-    searchParams.payment_intent
+    payment_intent
   );
 
   if (paymentIntent.metadata.productId == null) return notFound();
