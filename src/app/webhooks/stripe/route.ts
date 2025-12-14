@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       from: `Support <onboarding@resend.dev>`,
       to: email,
       subject: "Order Confirmation",
-      react: await render(EmailTemplate({ firstName: "User" })),
+      html: await render(EmailTemplate({ firstName: "User" })),
     });
   }
 
