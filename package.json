@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "email": "cp .env ./node_modules/react-email && email dev --dir src/app/email --port 3001"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.0.1",
@@ -32,6 +33,7 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@react-email/preview-server": "^5.0.7",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.25",
     "@types/pg": "^8.15.6",
