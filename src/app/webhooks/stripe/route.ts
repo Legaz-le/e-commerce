@@ -3,17 +3,26 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
 import { EmailTemplate } from "../_components/EmailSender";
+import { render } from '@react-email/render';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export async function POST(req: NextRequest) {
-  const event = stripe.webhooks.constructEvent(
-    await req.text(),
-    req.headers.get("stripe-signature") as string,
+  const body = await req.text(); 
+  const signature = req.headers.get("stripe-signature");
+
+   if (!signature) {
+      return new NextResponse("No signature", { status: 400 });
+    }
+
+  const event = await stripe.webhooks.constructEvent(
+    body,
+    signature,
     process.env.STRIPE_WEBHOOK_SECRET as string
   );
+
 
   if (event.type === "charge.succeeded") {
     const charge = event.data.object;
@@ -49,13 +58,13 @@ export async function POST(req: NextRequest) {
       },
     });
 
-
     await resend.emails.send({
-        from: `Support <${process.env.SENDER_EMAIL}>`,
-        to: email,
-        subject: "Order Confirmation",
-        react: EmailTemplate({ firstName: "User" }),
-    })
+      from: `Support <onboarding@resend.dev>`,
+      to: email,
+      subject: "Order Confirmation",
+      react: await render(EmailTemplate({ firstName: "User" })),
+    });
   }
-  return new NextResponse()
+
+  return new NextResponse();
 }
