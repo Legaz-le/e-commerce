@@ -12,7 +12,7 @@ export async function GET(
     where: { id },
     select: { filePath: true, name: true },
   });
-  if (product == null) return notFound;
+  if (product == null) return notFound();
 
   const { size } = await fs.stat(product.filePath);
   const file = await fs.readFile(product.filePath);
