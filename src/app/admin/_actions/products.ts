@@ -41,13 +41,13 @@ export async function addProduct(prevState: unknown, formData: FormData) {
   const data = result.data;
 
   await fs.mkdir("products", { recursive: true });
-  const filePath = `products/${crypto.randomUUID()}- ${data.file.name}`;
+  const filePath = `products/${crypto.randomUUID()}-${data.file.name}`;
   await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()));
 
   await fs.mkdir("public/products", { recursive: true });
-  const imagePath = `/public/${crypto.randomUUID()}- ${data.image.name}`;
+  const imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`;
   await fs.writeFile(
-    `public/${imagePath}`,
+    `public${imagePath}`,
     Buffer.from(await data.image.arrayBuffer())
   );
 
@@ -87,18 +87,18 @@ export async function updateProduct(
 
   if (product == null) return notFound();
 
-  let filePath = product.filePath;
 
+  let filePath = product.filePath;
   if (data.file != null && data.file.size > 0) {
     await fs.unlink(product.filePath);
-    filePath = `products/${crypto.randomUUID()}- ${data.file.name}`;
+    filePath = `products/${crypto.randomUUID()}-${data.file.name}`;
     await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()));
   }
 
   let imagePath = product.imagePath;
   if (data.image != null && data.image.size > 0) {
     await fs.unlink(`public${product.imagePath}`);
-    imagePath = `/public${crypto.randomUUID()}- ${data.image.name}`;
+    imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`;
     await fs.writeFile(
       `public${imagePath}`,
       Buffer.from(await data.image.arrayBuffer())
