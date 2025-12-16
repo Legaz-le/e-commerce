@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
 
 export async function GET(
   req: NextRequest,
@@ -18,15 +17,24 @@ export async function GET(
       new URL("/products/download/expired", req.url)
     );
   }
+  const { product } = data;
 
-  const { size } = await fs.stat(data.product.filePath);
-  const file = await fs.readFile(data.product.filePath);
+  const response = await fetch(product.filePath);
+
+   if (!response.ok) {
+    return new NextResponse("File not found", { status: 404 });
+  }
+
+  const blob = await response.blob();
+  const buffer = Buffer.from(await blob.arrayBuffer());
+
   const extension = data.product.filePath.split(".").pop();
 
-  return new NextResponse(file, {
+  return new NextResponse(buffer, {
     headers: {
       "Content-Disposition": `attachment; filename="${data.product.name}.${extension}"`,
-      "Content-Length": size.toString(),
+      "Content-Type": blob.type,
+      "Content-Length": blob.size.toString(),
     },
   });
 }

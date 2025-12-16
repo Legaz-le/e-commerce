@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
 
 export async function GET(
   req: NextRequest,
@@ -14,16 +13,22 @@ export async function GET(
   });
   if (product == null) return notFound();
 
-  const { size } = await fs.stat(product.filePath);
-  const file = await fs.readFile(product.filePath);
-  const extension = product.filePath.split(".").pop();
+  const response = await fetch(product.filePath);
 
-  console.log(product);
+   if (!response.ok) {
+    return new NextResponse("File not found", { status: 404 });
+  }
 
-  return new NextResponse(file, {
-    headers: {
+  const blob = await response.blob();
+  const buffer = Buffer.from(await blob.arrayBuffer());
+  
+  const extension = product.filePath.split('.').pop()?.split('?')[0] || 'file';
+
+  return new NextResponse(buffer, {
+   headers: {
       "Content-Disposition": `attachment; filename="${product.name}.${extension}"`,
-      "Content-Length": size.toString(),
+      "Content-Type": blob.type,
+      "Content-Length": blob.size.toString(),
     },
   });
 }
