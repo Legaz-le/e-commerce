@@ -1,34 +1,30 @@
-import { NextRequest, NextResponse } from "next/server";
-import { isValidPassword } from "./lib/isValidPassword";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-export async function proxy(req: NextRequest) {
-  if ((await isAuthenticated(req)) === false) {
-    return new NextResponse("Unauthorized", {
-      status: 401,
-      headers: { "WWW-Authenticate": "Basic" },
-    });
+// Define which routes require authentication
+const isProtectedRoute = createRouteMatcher([
+  '/admin(.*)',
+]);
+
+export default clerkMiddleware(async (auth, req) => {
+  // Protect admin routes
+  if (isProtectedRoute(req)) {
+    const { userId } = await auth();
+    
+    if (!userId) {
+      // Redirect to sign-in page
+      const signInUrl = new URL('/sign-in', req.url);
+      signInUrl.searchParams.set('redirect_url', req.url);
+      return NextResponse.redirect(signInUrl);
+    }
   }
-}
-
-async function isAuthenticated(req: NextRequest) {
-  const authHeader =
-    req.headers.get("authorization") || req.headers.get("Authorization");
-
-  if (authHeader == null) return false;
-
-  const [username, password] = Buffer.from(authHeader.split(" ")[1], "base64")
-    .toString()
-    .split(":");
-
-  return (
-    username === process.env.ADMIN_USERNAME &&
-    (await isValidPassword(
-      password,
-      process.env.HASHED_ADMIN_PASSWORD as string
-    ))
-  );
-}
+});
 
 export const config = {
-  matcher: "/admin/:path*",
+  matcher: [
+    // Skip Next.js internals and all static files
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
 };

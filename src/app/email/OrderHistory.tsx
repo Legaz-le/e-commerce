@@ -39,18 +39,6 @@ OrderHistoryEmail.PreviewProps = {
           "/products/a74da488-ec95-4189-be4d-20d28dc97eb7- c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.avif",
       },
     },
-    {
-      id: crypto.randomUUID(),
-      createdAt: new Date(),
-      pricePaidInCents: 20000,
-      downloadVerificationId: crypto.randomUUID(),
-      product: {
-        name: "Product name 2",
-        description: "Some description ss",
-        imagePath:
-          "/products/a74da488-ec95-4189-be4d-20d28dc97eb7- c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.avif",
-      },
-    },
   ],
 } satisfies OrderHistoryEmailProps;
 
