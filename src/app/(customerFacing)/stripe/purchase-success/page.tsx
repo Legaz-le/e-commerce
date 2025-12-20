@@ -6,13 +6,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export default async function SuccessPage({
   searchParams,
 }: {
   searchParams: Promise<{ payment_intent: string }>;
 }) {
+  
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+  
   const { payment_intent } = await searchParams;
   const paymentIntent = await stripe.paymentIntents.retrieve(payment_intent);
 

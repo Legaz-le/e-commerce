@@ -5,11 +5,13 @@ import { Resend } from "resend";
 import { render } from "@react-email/render";
 import PurchaseReceiptEmail from "@/app/email/PurchaseReceipt";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
-
-const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export async function POST(req: NextRequest) {
+  
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+  
+  const resend = new Resend(process.env.RESEND_API_KEY as string);
+  
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
 
