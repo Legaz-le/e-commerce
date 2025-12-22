@@ -7,6 +7,8 @@ import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard";
 import { Suspense } from "react";
 import { cache } from "@/lib/cache";
 
+export const revalidate = 3600;
+
 const getMostPopularProducts = cache(() => {
   return prisma.product.findMany({
     where: { isAvailableForPurchase: true },
