@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard";
 import { Suspense } from "react";
 import { cache } from "@/lib/cache";
+import { Hero } from "@/app/(customerFacing)/_components/Hero";
 
 export const revalidate = 3600;
 
@@ -32,7 +33,6 @@ export default function HomePage() {
         title="Most Popular"
         productsFetcher={getMostPopularProducts}
       />
-      <ProductGridSection title="Newest" productsFetcher={getNewestProducts} />
     </main>
   );
 }
@@ -47,7 +47,9 @@ function ProductGridSection({
   title,
 }: ProductGridSectionProps) {
   return (
+    <>
     <div className="space-y-4">
+       <Hero />
       <div className="flex gap-4">
         <h2 className="text-3xl font-bold">{title}</h2>
         <Button variant="outline" asChild>
@@ -71,6 +73,7 @@ function ProductGridSection({
         </Suspense>
       </div>
     </div>
+    </>
   );
 }
 
