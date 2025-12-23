@@ -7,8 +7,8 @@ import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard";
 import { Suspense } from "react";
 import { cache } from "@/lib/cache";
 import { Hero } from "@/app/(customerFacing)/_components/Hero";
-import { data } from "../info-data/Image-text";
-import { Content } from "./_components/Content";
+import { data, Images } from "../info-data/Image-text";
+import { Content, ContentImages } from "./_components/Content";
 
 export const revalidate = 3600;
 
@@ -68,6 +68,15 @@ function ProductGridSection({
               />
             ))}
           </div>
+        </div>
+        <div className="flex justify-between w-full">
+          {Images.map((item,index) => (
+            <ContentImages 
+            key={index}
+            image={item.image}
+            title={item.title}
+            price={item.price}
+          />))}
         </div>
         <div className="flex gap-4">
           <h2 className="text-3xl font-bold">{title}</h2>
