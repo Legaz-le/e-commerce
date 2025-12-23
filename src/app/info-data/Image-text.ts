@@ -5,6 +5,8 @@ export type allType = {
   title: string
   description: string
   price: string
+  width?: number
+  height?: number
 }
 
 export type dataType = Pick<allType, "image" | "title" | "description">
@@ -55,4 +57,30 @@ export const Images:imageType[] = [
     title: "The Lucy Lamp",
     price: "$399",
   }
+]
+
+export type PopularProductsType = Pick<allType, 'image' | 'title' | 'price' | 'width' | 'height'>
+
+export const PopularProducts:PopularProductsType[] = [
+  {
+    image: "/images/Large.jpg",
+    title: "The Popular suede sofa",
+    price: "$980",
+    width: 740,
+    height: 375,
+  },
+  {
+    image: "/images/Photo.jpg",
+    title: "The Dandy chair",
+    price: "$250",
+    width: 355,
+    height: 0,
+  },
+  {
+    image: "/images/Photo_2.2.jpg",
+    title: "The Dandy chair",
+    price: "$250",
+    width: 355,
+    height: 0,
+  },
 ]

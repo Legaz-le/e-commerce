@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { dataType, imageType } from "../../info-data/Image-text";
+import { dataType, imageType, PopularProductsType } from "../../info-data/Image-text";
 export function Content({ image, title, description }: dataType) {
   return (
     <div className="flex flex-col w-[355px] space-y-2">
@@ -10,7 +10,7 @@ export function Content({ image, title, description }: dataType) {
   );
 }
 
-export function ContentImages({image,title,price}:imageType) {
+export function ContentImages({ image, title, price }: imageType) {
   return (
     <div className="space-y-5">
       <Image src={image} alt={image} width={355} height={462} loading="lazy" />
@@ -19,5 +19,23 @@ export function ContentImages({image,title,price}:imageType) {
         <span className="text-lg font-semibold">{price}</span>
       </div>
     </div>
-  )
+  );
+}
+
+export function ContentPopular({
+  image,
+  title,
+  price,
+  width,
+  height,
+}: PopularProductsType) {
+  return (
+    <div className="space-y-5">
+      <Image src={image} alt={image} width={width} height={height} loading="lazy" />
+      <div className="space-y-3">
+        <h3 className="text-xl font-mono">{title}</h3>
+        <span className="text-lg font-semibold">{price}</span>
+      </div>
+    </div>
+  );
 }
