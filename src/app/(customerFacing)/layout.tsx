@@ -1,7 +1,6 @@
 import { Nav, NavLink } from "./_components/Navbar";
 import { TopNavbar } from "./_components/TopNavbar";
 
-
 export const dynamic = "force-dynamic";
 
 export default function Layout({
@@ -12,19 +11,22 @@ export default function Layout({
   return (
     <>
       <div className="space-y-5">
-      <TopNavbar />
-        <div className=" flex border-b border-solid" />
-        <Nav>
-          <NavLink href="/">Plant pots</NavLink>
-          <NavLink href="/">Ceramics</NavLink>
-          <NavLink href="/">Tables</NavLink>
-          <NavLink href="/">Chairs</NavLink>
-          <NavLink href="/">Crockery</NavLink>
-          <NavLink href="/">Tableware</NavLink>
-          <NavLink href="/">Cutlery</NavLink>
-        </Nav>
+        <TopNavbar />
+        <div className="flex border-b border-solid" />
+        <div className="container mx-auto">
+          <Nav>
+            <NavLink href="/">Plant pots</NavLink>
+            <NavLink href="/">Ceramics</NavLink>
+            <NavLink href="/">Tables</NavLink>
+            <NavLink href="/">Chairs</NavLink>
+            <NavLink href="/">Crockery</NavLink>
+            <NavLink href="/">Tableware</NavLink>
+            <NavLink href="/">Cutlery</NavLink>
+          </Nav>
+        </div>
       </div>
-        <div className="container mx-auto my-6">{children}</div>
+
+      <main className="my-6">{children}</main>
     </>
   );
 }

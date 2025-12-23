@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function Hero() {
   return (
-    <div className="bg-[#2A254B] flex">
+    <section className="bg-[#2A254B] flex">
       <div className="flex-1 mt-15 relative">
         <div className="px-15 flex flex-col">
           <div className="space-y-3 w-[513px]">
@@ -22,6 +22,6 @@ export function Hero() {
         width={500}
         height={500}
       />
-    </div>
+    </section>
   );
 }

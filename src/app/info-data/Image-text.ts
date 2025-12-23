@@ -73,14 +73,14 @@ export const PopularProducts:PopularProductsType[] = [
     image: "/images/Photo.jpg",
     title: "The Dandy chair",
     price: "$250",
-    width: 355,
-    height: 0,
+    width: 358,
+    height: 375,
   },
   {
     image: "/images/Photo_2.2.jpg",
     title: "The Dandy chair",
     price: "$250",
-    width: 355,
-    height: 0,
+    width: 358,
+    height: 375,
   },
 ]
