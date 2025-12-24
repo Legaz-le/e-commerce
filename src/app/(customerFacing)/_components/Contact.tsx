@@ -8,7 +8,7 @@ export function Contact() {
           sales, pop up stores and more
         </p>
       </div>
-      <div className="">
+      <div>
         <input type="email" placeholder="you@gmail.com" className="p-4 bg-[#F9F9F9] w-1/4" />
         <button className="py-4 px-8 bg-[#2A254B] text-white">Sign up</button>
       </div>

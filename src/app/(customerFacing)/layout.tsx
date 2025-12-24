@@ -12,7 +12,7 @@ export default function Layout({
     <>
       <div className="space-y-5">
         <TopNavbar />
-        <div className="flex border-b border-solid" />
+        <div className="flex border-b border-solid"/>
         <div className="container mx-auto">
           <Nav>
             <NavLink href="/">Plant pots</NavLink>
@@ -25,7 +25,6 @@ export default function Layout({
           </Nav>
         </div>
       </div>
-
       <main className="my-6">{children}</main>
     </>
   );

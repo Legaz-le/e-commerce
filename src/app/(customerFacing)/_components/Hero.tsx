@@ -5,7 +5,7 @@ export function Hero() {
     <section className="bg-[#2A254B] flex">
       <div className="flex-1 mt-15 relative">
         <div className="px-15 flex flex-col">
-          <div className="space-y-3 w-[513px]">
+          <div className="space-y-10 w-[513px] ">
           <h1 className="text-white text-3xl font-mono">
             The furniture brand for the future, with  timeless design
           </h1>

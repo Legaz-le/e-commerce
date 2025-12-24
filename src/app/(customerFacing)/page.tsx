@@ -8,7 +8,12 @@ import { Suspense } from "react";
 import { cache } from "@/lib/cache";
 import { Hero } from "@/app/(customerFacing)/_components/Hero";
 import { data, Images, PopularProducts } from "../info-data/Image-text";
-import { Content, ContentImages, ContentPopular } from "./_components/Content";
+import {
+  Content,
+  ContentImages,
+  ContentPopular,
+  LastContent,
+} from "./_components/Content";
 import { Contact } from "./_components/Contact";
 
 export const revalidate = 3600;
@@ -49,7 +54,10 @@ type ProductGridSectionProps = {
   productsFetcher: () => Promise<Product[]>;
 };
 
-function ProductGridSection({ productsFetcher, title }: ProductGridSectionProps) {
+function ProductGridSection({
+  productsFetcher,
+  title,
+}: ProductGridSectionProps) {
   return (
     <>
       <div className="bg-white">
@@ -61,7 +69,9 @@ function ProductGridSection({ productsFetcher, title }: ProductGridSectionProps)
       <div className="bg-white py-16">
         <div className="container mx-auto">
           <div className="flex flex-col items-center space-y-10 w-full">
-            <h1 className="text-2xl font-mono">What makes our brand different</h1>
+            <h1 className="text-2xl font-mono">
+              What makes our brand different
+            </h1>
             <div className="flex justify-between w-full">
               {data.map((item, index) => (
                 <Content
@@ -81,7 +91,7 @@ function ProductGridSection({ productsFetcher, title }: ProductGridSectionProps)
           <div className="flex flex-col justify-between space-y-10">
             <div className="flex justify-between">
               {Images.map((item, index) => (
-                <ContentImages 
+                <ContentImages
                   key={index}
                   image={item.image}
                   title={item.title}
@@ -89,7 +99,11 @@ function ProductGridSection({ productsFetcher, title }: ProductGridSectionProps)
                 />
               ))}
             </div>
-            <Button variant="outline" asChild className="bg-black text-white self-center w-[200px] py-5">
+            <Button
+              variant="outline"
+              asChild
+              className="bg-black text-white self-center w-[200px] py-5"
+            >
               <Link href="/products" className="space-x-2">
                 <span>View All</span>
                 <ArrowRight className="size-4" />
@@ -102,10 +116,12 @@ function ProductGridSection({ productsFetcher, title }: ProductGridSectionProps)
       <div className="bg-white py-16">
         <div className="container mx-auto">
           <div className="flex flex-col space-y-8">
-            <h1 className="self-start text-2xl font-mono">Our popular products</h1>
+            <h1 className="self-start text-2xl font-mono">
+              Our popular products
+            </h1>
             <div className="flex justify-between">
               {PopularProducts.map((item, index) => (
-                <ContentPopular 
+                <ContentPopular
                   key={index}
                   image={item.image}
                   title={item.title}
@@ -115,7 +131,11 @@ function ProductGridSection({ productsFetcher, title }: ProductGridSectionProps)
                 />
               ))}
             </div>
-            <Button variant="outline" asChild className="bg-black text-white self-center w-[200px] py-5">
+            <Button
+              variant="outline"
+              asChild
+              className="bg-black text-white self-center w-[200px] py-5"
+            >
               <Link href="/products" className="space-x-2">
                 <span>View All</span>
                 <ArrowRight className="size-4" />
@@ -125,13 +145,14 @@ function ProductGridSection({ productsFetcher, title }: ProductGridSectionProps)
         </div>
       </div>
 
-      {/* Contact section */}
       <div className="bg-[#F9F9F9] py-16">
         <div className="container mx-auto">
           <Contact />
         </div>
       </div>
-
+      <div className="">
+        <LastContent />
+      </div>
       <div className="bg-white py-16">
         <div className="container mx-auto">
           <div className="flex gap-4 mb-8">

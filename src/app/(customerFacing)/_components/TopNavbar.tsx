@@ -3,7 +3,7 @@ import { NavLink } from "./Navbar";
 
 export function TopNavbar() {
   return (
-    <div className="w-screen px-15">
+    <div className=" px-15">
       <div className="flex items-center justify-between mt-5">
         <Image
           src="/images/Search.png"
