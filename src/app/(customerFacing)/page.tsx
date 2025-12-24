@@ -15,6 +15,7 @@ import {
   LastContent,
 } from "./_components/Content";
 import { Contact } from "./_components/Contact";
+import { Footer } from "./_components/Footer";
 
 export const revalidate = 3600;
 
@@ -150,8 +151,11 @@ function ProductGridSection({
           <Contact />
         </div>
       </div>
-      <div className="">
-        <LastContent />
+      <LastContent />
+      <div className="bg-[#2A254B] pt-16">
+        <div className="container mx-auto">
+          <Footer />
+        </div>
       </div>
       <div className="bg-white py-16">
         <div className="container mx-auto">
