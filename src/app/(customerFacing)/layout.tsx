@@ -25,7 +25,7 @@ export default function Layout({
           </Nav>
         </div>
       </div>
-      <main className="my-6">{children}</main>
+      <main>{children}</main>
     </>
   );
 }

@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export function Footer() {
   return (
     <footer className="bg-[#2A254B] text-white flex flex-col space-y-10">

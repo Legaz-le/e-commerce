@@ -41,7 +41,7 @@ const getMostPopularProducts = cache(
 
 export default function HomePage() {
   return (
-    <main className="space-y-12">
+    <main>
       <ProductGridSection
         title="Most Popular"
         productsFetcher={getMostPopularProducts}
@@ -152,12 +152,12 @@ function ProductGridSection({
         </div>
       </div>
       <LastContent />
-      <div className="bg-[#2A254B] pt-16">
+      <div className="bg-[#2A254B] pt-16 ">
         <div className="container mx-auto">
           <Footer />
         </div>
       </div>
-      <div className="bg-white py-16">
+      {/*<div className="bg-white py-16">
         <div className="container mx-auto">
           <div className="flex gap-4 mb-8">
             <h2 className="text-3xl font-bold">{title}</h2>
@@ -182,7 +182,7 @@ function ProductGridSection({
             </Suspense>
           </div>
         </div>
-      </div>
+      </div>*/}
     </>
   );
 }
