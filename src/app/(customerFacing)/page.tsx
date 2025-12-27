@@ -120,7 +120,7 @@ function ProductGridSection({
             <h1 className="self-start text-2xl font-mono">
               Our popular products
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:flex gap-4">
               {PopularProducts.map((item, index) => (
                 <ContentPopular
                   key={index}

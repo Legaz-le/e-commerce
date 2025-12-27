@@ -54,7 +54,7 @@ export function LastContent() {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 ">
      
-      <div className="py-16 md:pl-[max(2rem,calc((82vw-1280px)/2+2rem))] md:pr-45 flex flex-col justify-center space-y-10 px-8 md:px-0">
+      <div className="py-16 md:pl-[max(2rem,calc((82vw-1280px)/2+2rem))] pr-0 md:pr-10 xl:pr-45 flex flex-col justify-center space-y-10 px-8 md:px-0">
         <h2 className="text-3xl font-bold">
           From a studio in London to a global brand with over 400 outlets
         </h2>
