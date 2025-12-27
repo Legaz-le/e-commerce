@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section className="bg-[#2A254B] flex flex-col md:flex-row ">
       <div className=" mt-15 w-full">
-        <div className="px-8 lg:px-15 flex flex-col" >
+        <div className="px-8 lg:px-15 flex flex-col">
           <div className="space-y-10 lg:w-[513px]">
             <h1 className="text-white text-3xl font-mono">
               The furniture brand for the future, with timeless design
