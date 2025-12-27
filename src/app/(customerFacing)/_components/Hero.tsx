@@ -25,13 +25,15 @@ export function Hero() {
           </Button>
         </div>
       </div>
+      <div className="w-full justify-items-end">
       <Image
         src="/images/Right-Image.jpg"
         alt="Right Image"
         width={500}
         height={500}
-        className="hidden sm:block"
+        className="hidden sm:block h-full"
       />
+    </div>
     </section>
   );
 }
