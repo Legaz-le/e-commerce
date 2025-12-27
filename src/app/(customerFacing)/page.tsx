@@ -67,13 +67,13 @@ function ProductGridSection({
         </div>
       </div>
 
-      <div className="bg-white py-16">
+      <div className="bg-white py-16 px-8 sm:px-0">
         <div className="container mx-auto">
           <div className="flex flex-col items-center space-y-10 w-full">
             <h1 className="text-2xl font-mono">
               What makes our brand different
             </h1>
-            <div className="flex justify-between w-full">
+            <div className="flex justify-between w-full flex-col space-y-10 md:flex-row ">
               {data.map((item, index) => (
                 <Content
                   key={index}
@@ -89,8 +89,8 @@ function ProductGridSection({
 
       <div className="bg-white py-16">
         <div className="container mx-auto">
-          <div className="flex flex-col justify-between space-y-10">
-            <div className="flex justify-between">
+          <div className="flex flex-col space-y-10 px-8 sm:px-0">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ">
               {Images.map((item, index) => (
                 <ContentImages
                   key={index}
@@ -103,7 +103,7 @@ function ProductGridSection({
             <Button
               variant="outline"
               asChild
-              className="bg-black text-white self-center w-[200px] py-5"
+              className="bg-black text-white md:self-center md:w-[200px] py-5"
             >
               <Link href="/products" className="space-x-2">
                 <span>View All</span>
@@ -116,11 +116,11 @@ function ProductGridSection({
 
       <div className="bg-white py-16">
         <div className="container mx-auto">
-          <div className="flex flex-col space-y-8">
+          <div className="flex flex-col space-y-8 px-8 sm:px-0">
             <h1 className="self-start text-2xl font-mono">
               Our popular products
             </h1>
-            <div className="flex justify-between">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {PopularProducts.map((item, index) => (
                 <ContentPopular
                   key={index}
@@ -135,7 +135,7 @@ function ProductGridSection({
             <Button
               variant="outline"
               asChild
-              className="bg-black text-white self-center w-[200px] py-5"
+              className="bg-black text-white md:self-center md:w-[200px] py-5"
             >
               <Link href="/products" className="space-x-2">
                 <span>View All</span>

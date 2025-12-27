@@ -15,7 +15,7 @@ export function TopNavbar() {
         <NavLink href="/">
           <h1 className="text-2xl font-medium">Avion</h1>
         </NavLink>
-        <div className="flex space-x-5">
+        <div className="sm:flex space-x-5 hidden ">
           <Image
             src="/images/Shopping--cart.png"
             alt="Shopping Cart"

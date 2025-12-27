@@ -1,8 +1,8 @@
 export function Footer() {
   return (
-    <footer className="bg-[#2A254B] text-white flex flex-col space-y-10">
-      <div className="flex w-full ">
-        <div className="flex-1 flex justify-between pr-20">
+    <footer className="bg-[#2A254B] text-white flex flex-col space-y-10 px-8 md:px-0">
+      <div className="flex w-full flex-col md:flex-row">
+        <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-10 md:pr-20">
           <div className="flex flex-col space-y-3">
             <a>Menu</a>
             <a>New arrivals</a>
@@ -19,7 +19,7 @@ export function Footer() {
             <a>Plant pots</a>
             <a>Chairs</a>
           </div>
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-3 mb-10 md:mb-0">
             <a>Our company</a>
             <a>About us</a>
             <a>Vacancies</a>
@@ -40,7 +40,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <div className="py-5 space-y-5">
+      <div className="py-5 space-y-5 hidden md:block">
         <div className="flex border-b border-solid" />
         <div className="flex justify-between">
           <h1>Copyright 2026 Avion LTD</h1>
