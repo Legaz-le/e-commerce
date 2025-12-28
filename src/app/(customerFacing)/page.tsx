@@ -90,7 +90,7 @@ function ProductGridSection({
       <div className="bg-white py-16">
         <div className="container mx-auto">
           <div className="flex flex-col space-y-10 px-8 sm:px-0">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ">
+            <div className="grid grid-cols-2 md:flex md:justify-between gap-5 ">
               {Images.map((item, index) => (
                 <ContentImages
                   key={index}
