@@ -84,3 +84,50 @@ export const PopularProducts:PopularProductsType[] = [
     height: 375,
   },
 ]
+
+export type SidebarType = Pick<allType, 'title'>
+
+export const TextsType:SidebarType[] = [
+  {
+    title: "Furniture"
+  },
+  {
+    title: "Homeware"
+  },
+  {
+    title: "Sofas"
+  },
+  {
+    title: "Light fittings"
+  },
+  {
+    title: "Accessories"
+  }
+]
+
+export const Prices:SidebarType[] = [
+  {
+    title: "0 - 100"
+  },
+  {
+    title: "101 - 250"
+  },
+  {
+    title: "250 +"
+  },
+]
+
+export const Designer:SidebarType[] = [
+  {
+    title: "Robert Smith"
+  },
+  {
+    title: "Liam Gallagher"
+  },
+  {
+    title: "Biggie Smalls"
+  },
+  {
+    title: "Thom Yorke"
+  },
+]
