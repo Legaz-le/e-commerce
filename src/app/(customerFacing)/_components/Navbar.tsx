@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export function Nav({ children }: { children: ReactNode }) {
   return (
     <nav className="bg-white flex justify-center  px-4 md:mb-10">
-      <div className="space-x-18 hidden md:block">{children}</div>
+      <div className="space-x-10 hidden md:block">{children}</div>
     </nav>
   );
 }
