@@ -10,12 +10,12 @@ import { formatNumber, formatCurrency } from "@/lib/formater";
 
 async function getSalesData() {
   const data = await prisma.order.aggregate({
-    _sum: { pricePaidInCents: true },
+    _sum: { totalPaidInCents: true },
     _count: true,
   });
 
   return {
-    amount: data._sum.pricePaidInCents || 0 / 100,
+    amount: data._sum.totalPaidInCents || 0 / 100,
     numberOfSales: data._count,
   };
 }
@@ -24,7 +24,7 @@ async function getUserData() {
   const [userCount, orderData] = await Promise.all([
     prisma.user.count(),
     prisma.order.aggregate({
-      _sum: { pricePaidInCents: true },
+      _sum: { totalPaidInCents: true },
     }),
   ]);
   return {
@@ -32,7 +32,7 @@ async function getUserData() {
     averageValuePerUser:
       userCount === 0
         ? 0
-        : (orderData._sum.pricePaidInCents || 0) / userCount / 100,
+        : (orderData._sum.totalPaidInCents || 0) / userCount / 100,
   };
 }
 

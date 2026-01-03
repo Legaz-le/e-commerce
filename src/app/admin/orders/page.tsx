@@ -5,29 +5,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { formatCurrency } from "@/lib/formater"
-import { PageHeader } from "../_components/PageHeader"
+} from "@/components/ui/table";
+import { formatCurrency } from "@/lib/formater";
+import { PageHeader } from "../_components/PageHeader";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { MoreVertical } from "lucide-react"
-import { DeleteDropDownItem } from "./_components/OrderActions"
-import prisma from "@/lib/prisma"
-
+} from "@/components/ui/dropdown-menu";
+import { MoreVertical } from "lucide-react";
+import { DeleteDropDownItem } from "./_components/OrderActions";
+import prisma from "@/lib/prisma";
 
 function getOrders() {
   return prisma.order.findMany({
     select: {
       id: true,
-      pricePaidInCents: true,
-      product: { select: { name: true } },
+      totalPaidInCents: true,
       user: { select: { email: true } },
+      items: {
+        select: {
+          quantity: true,
+          product: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
     orderBy: { createdAt: "desc" },
-  })
+  });
 }
 
 export default function OrdersPage() {
@@ -36,19 +44,19 @@ export default function OrdersPage() {
       <PageHeader>Sales</PageHeader>
       <OrdersTable />
     </>
-  )
+  );
 }
 
 async function OrdersTable() {
-  const orders = await getOrders()
+  const orders = await getOrders();
 
-  if (orders.length === 0) return <p>No sales found</p>
+  if (orders.length === 0) return <p>No sales found</p>;
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Product</TableHead>
+          <TableHead>Order ID</TableHead>
           <TableHead>Customer</TableHead>
           <TableHead>Price Paid</TableHead>
           <TableHead className="w-0">
@@ -57,12 +65,12 @@ async function OrdersTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {orders.map(order => (
+        {orders.map((order) => (
           <TableRow key={order.id}>
-            <TableCell>{order.product.name}</TableCell>
+            <TableCell>{order.items.map(item => item.product.name).join(', ')}</TableCell>
             <TableCell>{order.user.email}</TableCell>
             <TableCell>
-              {formatCurrency(order.pricePaidInCents / 100)}
+              {formatCurrency(order.totalPaidInCents / 100)}
             </TableCell>
             <TableCell className="text-center">
               <DropdownMenu>
@@ -79,5 +87,5 @@ async function OrdersTable() {
         ))}
       </TableBody>
     </Table>
-  )
+  );
 }
