@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { NavLink } from "./Navbar";
+import Link from "next/link";
 
 export function TopNavbar() {
   return (
@@ -16,13 +17,15 @@ export function TopNavbar() {
           <h1 className="text-2xl font-medium">Avion</h1>
         </NavLink>
         <div className="sm:flex space-x-5 hidden ">
-          <Image
-            src="/images/Shopping--cart.png"
-            alt="Shopping Cart"
-            width={20}
-            height={20}
-            className="cursor-pointer"
-          />
+          <Link href="/basket">
+            <Image
+              src="/images/Shopping--cart.png"
+              alt="Shopping Cart"
+              width={20}
+              height={20}
+              className="cursor-pointer"
+            />
+          </Link>
           <Image
             src="/images/User--avatar.png"
             alt="User"

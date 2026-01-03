@@ -15,7 +15,6 @@ import {
   LastContent,
 } from "./_components/Content";
 import { Contact } from "./_components/Contact";
-import { Footer } from "./_components/Footer";
 
 export const revalidate = 3600;
 
@@ -77,9 +76,7 @@ function ProductGridSection({
               {data.map((item, index) => (
                 <Content
                   key={index}
-                  image={item.image}
-                  title={item.title}
-                  description={item.description}
+                  {...item}
                 />
               ))}
             </div>
@@ -94,9 +91,7 @@ function ProductGridSection({
               {Images.map((item, index) => (
                 <ContentImages
                   key={index}
-                  image={item.image}
-                  title={item.title}
-                  price={item.price}
+                  {...item}
                 />
               ))}
             </div>
@@ -124,11 +119,7 @@ function ProductGridSection({
               {PopularProducts.map((item, index) => (
                 <ContentPopular
                   key={index}
-                  image={item.image}
-                  title={item.title}
-                  price={item.price}
-                  width={item.width}
-                  height={item.height}
+                  {...item}
                 />
               ))}
             </div>
@@ -152,11 +143,6 @@ function ProductGridSection({
         </div>
       </div>
       <LastContent />
-      <div className="bg-[#2A254B] pt-16 ">
-        <div className="container mx-auto">
-          <Footer />
-        </div>
-      </div>
       {/*<div className="bg-white py-16">
         <div className="container mx-auto">
           <div className="flex gap-4 mb-8">

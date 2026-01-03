@@ -1,3 +1,4 @@
+import { Footer } from "./_components/Footer";
 import { Nav, NavLink } from "./_components/Navbar";
 import { TopNavbar } from "./_components/TopNavbar";
 
@@ -26,6 +27,11 @@ export default function Layout({
         </div>
       </div>
       <main>{children}</main>
+      <div className="bg-[#2A254B] pt-16 ">
+        <div className="container mx-auto">
+          <Footer />
+        </div>
+      </div>
     </>
   );
 }

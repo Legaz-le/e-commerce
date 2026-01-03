@@ -1,17 +1,9 @@
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard";
-import { cache } from "@/lib/cache";
+import { getProducts } from "@/lib/cache";
 import Image from "next/image";
-import prisma from "@/lib/prisma";
 import { Suspense } from "react";
 import { Sidebar } from "./_components/Sidebar";
-import { Footer } from "../_components/Footer";
 
-const getProducts = cache(() => {
-  return prisma.product.findMany({
-    where: { isAvailableForPurchase: true },
-    orderBy: { name: "asc" },
-  });
-}, ["/products", "getProducts"]);
 
 export default function ProductsPage() {
   return (
@@ -25,7 +17,7 @@ export default function ProductsPage() {
           className="w-full object-contain"
         />
       </div>
-      <div className="container mx-auto mt-10 flex w-full px-8 xl:px-0">
+      <div className="container mx-auto my-10 flex w-full px-8 xl:px-0">
         <div className=" md:w-[385px]">
           <Sidebar />
         </div>
@@ -41,11 +33,6 @@ export default function ProductsPage() {
           >
             <ProductsSuspense />
           </Suspense>
-        </div>
-      </div>
-      <div className="bg-[#2A254B] pt-16 sm:px-8 xl:px-0">
-        <div className="container mx-auto">
-          <Footer />
         </div>
       </div>
     </>

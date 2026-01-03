@@ -14,43 +14,91 @@ datasource db {
 }
 
 model Product {
-  id    String     @id @default(uuid())
-  name String
-  priceInCents Int
-  filePath String
-  imagePath String
+  id          String   @id @default(uuid())
+  name        String
   description String
-  isAvailableForPurchase Boolean  @default(true)
-  createdAt DateTime              @default(now())
-  updateAt DateTime               @updatedAt
-  orders Order[]
-  downloadVerifications  DownloadVerification[]
+  priceInCents Int
+  imagePath   String
+  filePath    String
+  isAvailableForPurchase Boolean @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+  downloadVerifications DownloadVerification[]
 }
 
 model User {
-  id    String       @id @default(uuid())
+  id        String   @id @default(uuid())
   email     String   @unique
+
   createdAt DateTime @default(now())
-  updateAt DateTime  @updatedAt
-  orders Order[]
+  updatedAt DateTime @updatedAt
+
+  cart      Cart?
+  orders    Order[]
+}
+
+model Cart {
+  id        String   @id @default(uuid())
+
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items     CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+
+  cartId    String
+  productId String
+
+  quantity  Int      @default(1)
+
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@unique([cartId, productId])
 }
 
 model Order {
-  id    String       @id @default(uuid())
-  pricePaidInCents Int
-  createdAt DateTime              @default(now())
-  updateAt DateTime               @updatedAt
+  id        String   @id @default(uuid())
 
-  userId String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  totalPaidInCents Int
+
+  items     OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+
+  orderId   String
   productId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  quantity  Int
+  priceInCents Int   // snapshot at checkout time
+
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
 }
 
 model DownloadVerification {
-  id    String       @id @default(uuid())
+  id        String   @id @default(uuid())
   expiresAt DateTime
-  createdAt DateTime              @default(now())
+  createdAt DateTime @default(now())
+
   productId String
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
