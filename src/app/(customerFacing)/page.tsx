@@ -22,7 +22,7 @@ const getMostPopularProducts = cache(
   () => {
     return prisma.product.findMany({
       where: { isAvailableForPurchase: true },
-      orderBy: { orders: { _count: "desc" } },
+      orderBy: { orderItems: { _count: "desc" } },
       take: 6,
     });
   },
