@@ -14,14 +14,16 @@ import React from "react";
 type OrderHistoryEmailProps = {
   orders: {
     id: string;
-    pricePaidInCents: number;
+    totalPaidInCents: number;
     createdAt: Date;
-    downloadVerificationId: string;
-    product: {
-      name: string;
-      imagePath: string;
-      description: string;
-    };
+    items: {
+      product: {
+        name: string;
+        imagePath: string;
+        description: string;
+      };
+      downloadVerificationId: string;
+    }[];
   }[];
 };
 
@@ -30,14 +32,18 @@ OrderHistoryEmail.PreviewProps = {
     {
       id: crypto.randomUUID(),
       createdAt: new Date(),
-      pricePaidInCents: 10000,
-      downloadVerificationId: crypto.randomUUID(),
-      product: {
-        name: "Product name",
-        description: "Some description",
-        imagePath:
-          "/products/a74da488-ec95-4189-be4d-20d28dc97eb7- c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.avif",
-      },
+      totalPaidInCents: 10000,
+      items: [
+        {
+          product: {
+            name: "Product name",
+            description: "Some description",
+            imagePath:
+              "/products/a74da488-ec95-4189-be4d-20d28dc97eb7- c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.avif",
+          },
+          downloadVerificationId: crypto.randomUUID(),
+        },
+      ],
     },
   ],
 } satisfies OrderHistoryEmailProps;
@@ -53,11 +59,14 @@ export default function OrderHistoryEmail({ orders }: OrderHistoryEmailProps) {
             <Heading>Order History</Heading>
             {orders.map((order, index) => (
               <React.Fragment key={order.id}>
-                <OrderInformation
-                  order={order}
-                  product={order.product}
-                  downloadVerificationId={order.downloadVerificationId}
-                />
+                {order.items.map((item) => (
+                  <OrderInformation
+                    key={item.downloadVerificationId}
+                    order={order}
+                    product={item.product}
+                    downloadVerificationId={item.downloadVerificationId}
+                  />
+                ))}
                 {index < orders.length - 1 && <Hr />}
               </React.Fragment>
             ))}

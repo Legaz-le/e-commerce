@@ -11,7 +11,7 @@ const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export async function emailOrderHistory(
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ): Promise<{ message?: string; error?: string }> {
   const result = emailSchema.safeParse(formData.get("email"));
   if (result.success === false) {
@@ -24,15 +24,20 @@ export async function emailOrderHistory(
       email: true,
       orders: {
         select: {
-          pricePaidInCents: true,
+          totalPaidInCents: true,
           id: true,
           createdAt: true,
-          product: {
+          items: {
             select: {
               id: true,
-              name: true,
-              imagePath: true,
-              description: true,
+              product: {
+                select: {
+                  id: true,
+                  name: true,
+                  imagePath: true,
+                  description: true,
+                },
+              },
             },
           },
         },
@@ -49,30 +54,39 @@ export async function emailOrderHistory(
 
   const orders = await Promise.all(
     user.orders.map(async (order) => {
-      const downloadVerification = await prisma.downloadVerification.create({
-        data: {
-          expiresAt: new Date(Date.now() + 24 * 1000 * 60 * 60),
-          productId: order.product.id,
-        },
-      });
-
-      const fullImageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000"}${order.product.imagePath}`;
-      const downloadUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000"}/products/download/${downloadVerification.id}`;
-
+      const items = await Promise.all(
+        order.items.map(async (item) => {
+          const downloadVerification =
+            await prisma.downloadVerification.create({
+              data: {
+                expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+                productId: item.product.id,
+              },
+            });
+  
+          const baseUrl =
+            process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+  
+          return {
+            product: {
+              name: item.product.name,
+              imagePath: `${baseUrl}${item.product.imagePath}`,
+              description: item.product.description,
+            },
+            downloadVerificationId: `${baseUrl}/products/download/${downloadVerification.id}`,
+          };
+        })
+      );
+  
       return {
         id: order.id,
-        pricePaidInCents: order.pricePaidInCents,
+        totalPaidInCents: order.totalPaidInCents,
         createdAt: order.createdAt,
-        downloadVerificationId: downloadVerification.id,
-        product: {
-          name: order.product.name,
-          imagePath: fullImageUrl,
-          description: order.product.description,
-        },
-        downloadUrl: downloadUrl,
+        items,
       };
     })
   );
+
 
   const data = await resend.emails.send({
     from: `Support <onboarding@resend.dev>`,
