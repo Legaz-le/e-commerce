@@ -5,13 +5,11 @@ import { Resend } from "resend";
 import { render } from "@react-email/render";
 import PurchaseReceiptEmail from "@/app/email/PurchaseReceipt";
 
-
 export async function POST(req: NextRequest) {
-  
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
-  
+
   const resend = new Resend(process.env.RESEND_API_KEY as string);
-  
+
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
 
@@ -22,7 +20,7 @@ export async function POST(req: NextRequest) {
   const event = await stripe.webhooks.constructEvent(
     body,
     signature,
-    process.env.STRIPE_WEBHOOK_SECRET as string
+    process.env.STRIPE_WEBHOOK_SECRET as string,
   );
 
   if (event.type === "charge.succeeded") {
@@ -38,18 +36,45 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Bad Request", { status: 400 });
     }
 
-    const userField = {
-      email,
-      orders: { create: { productId, pricePaidInCents } },
-    };
-
     const {
       orders: [order],
     } = await prisma.user.upsert({
       where: { email },
-      create: userField,
-      update: userField,
-      select: { orders: { orderBy: { createdAt: "desc" }, take: 1 } },
+      create: {
+        email,
+        orders: {
+          create: {
+            totalPaidInCents: pricePaidInCents,
+            items: {
+              create: {
+                productId,
+                quantity: 1,
+                priceInCents: pricePaidInCents,
+              },
+            },
+          },
+        },
+      },
+      update: {
+        orders: {
+          create: {
+            totalPaidInCents: pricePaidInCents,
+            items: {
+              create: {
+                productId,
+                quantity: 1,
+                priceInCents: pricePaidInCents,
+              },
+            },
+          },
+        },
+      },
+      select: {
+        orders: {
+          orderBy: { createdAt: "desc" },
+          take: 1,
+        },
+      },
     });
 
     const downloadVerification = await prisma.downloadVerification.create({
@@ -60,7 +85,7 @@ export async function POST(req: NextRequest) {
     });
 
     const fullImageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000"}${product.imagePath}`;
-    
+
     console.log("Full Image URL:", fullImageUrl);
 
     await resend.emails.send({
@@ -77,10 +102,10 @@ export async function POST(req: NextRequest) {
           order: {
             id: order.id,
             createdAt: order.createdAt,
-            pricePaidInCents: order.pricePaidInCents,
+            totalPaidInCents: order.totalPaidInCents,
           },
           downloadVerificationId: downloadVerification.id,
-        })
+        }),
       ),
     });
   }
