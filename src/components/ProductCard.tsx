@@ -10,6 +10,7 @@ import {
 import { Button } from "./ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { AddToCartButton } from "./AddToCartButton";
 
 type ProductCardProps = {
   id: string;
@@ -39,9 +40,7 @@ export function ProductCard({
         <p>{description}</p>
       </CardContent>
       <CardFooter>
-        <Button asChild size="lg" className="w-full">
-          <Link href={`/products/${id}/purchase`}>Add Cart</Link>
-        </Button>
+        <AddToCartButton productId={id} />
       </CardFooter>
     </Card>
   );
