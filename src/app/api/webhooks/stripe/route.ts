@@ -36,46 +36,32 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Bad Request", { status: 400 });
     }
 
-    const {
-      orders: [order],
-    } = await prisma.user.upsert({
+    let user = await prisma.user.findUnique({
       where: { email },
-      create: {
-        email,
-        orders: {
-          create: {
-            totalPaidInCents: pricePaidInCents,
-            items: {
-              create: {
-                productId,
-                quantity: 1,
-                priceInCents: pricePaidInCents,
-              },
-            },
-          },
-        },
-      },
-      update: {
-        orders: {
-          create: {
-            totalPaidInCents: pricePaidInCents,
-            items: {
-              create: {
-                productId,
-                quantity: 1,
-                priceInCents: pricePaidInCents,
-              },
-            },
-          },
-        },
-      },
-      select: {
-        orders: {
-          orderBy: { createdAt: "desc" },
-          take: 1,
-        },
-      },
     });
+    
+    if(!user) {
+      user = await prisma.user.create({
+        data: {
+          email,
+          clerkId: null,
+        }
+      })
+    }
+    
+    const order = await prisma.order.create({
+      data: {
+        userId: user.id,
+        totalPaidInCents: pricePaidInCents,
+        items: {
+          create: {
+            productId,
+            quantity: 1,
+            priceInCents: pricePaidInCents,
+          },
+        },
+      }
+    })
 
     const downloadVerification = await prisma.downloadVerification.create({
       data: {
