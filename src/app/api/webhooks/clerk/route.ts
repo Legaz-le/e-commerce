@@ -20,8 +20,7 @@ export async function POST(req: Request) {
     throw new Error("Headers are missing");
   }
 
-  const response = await req.json();
-  const body = JSON.stringify(response);
+  const body = await req.text();
 
   const wh = new Webhook(WEBHOOK_SECRET);
   let evt: WebhookEvent;
@@ -38,15 +37,28 @@ export async function POST(req: Request) {
   const eventType = evt.type;
   if (eventType === "user.created") {
     const { email_addresses, id } = evt.data;
+    const email = email_addresses[0]?.email_address || "";
     try {
-      await prisma.user.create({
-        data: {
-          clerkId: id,
-          email: email_addresses[0]?.email_address || "",
-        },
-      });
+      const existingUser = await prisma.user.findUnique({ where: { email } });
+
+      if (existingUser) {
+        // User exists (probably from guest checkout)
+        if (!existingUser.clerkId) {
+          // Link the guest user to Clerk
+          await prisma.user.update({
+            where: { email },
+            data: { clerkId: id },
+          });
+        }
+        // If clerkId already exists, do nothing (already linked)
+      } else {
+        // Create new user
+        await prisma.user.create({
+          data: { clerkId: id, email },
+        });
+      }
     } catch (err) {
-      console.log("Error verifying webhook", err);
+      console.log("Error creating user:", err);
       return new NextResponse("Error creating user", { status: 500 });
     }
   }
