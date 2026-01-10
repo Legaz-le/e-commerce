@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import Link from "next/link";
 import Image from "next/image";
 import { AddToCartButton } from "./AddToCartButton";
 

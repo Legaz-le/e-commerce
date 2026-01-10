@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 type CartItem = {
   productId: string;
@@ -10,6 +10,10 @@ export function useGuestCart() {
     const savedCart = localStorage.getItem("guestCart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
+  
+  useEffect(() => {
+    localStorage.setItem("guestCart", JSON.stringify(cartItems));
+  },[cartItems])
 
   const addItem = (item: string) => {
     setCartItems((prevItem) => {
@@ -26,9 +30,9 @@ export function useGuestCart() {
           quantity: newCart[existingItem].quantity + 1,
         };
       } else {
-        setCartItems([...prevItem, { productId: item, quantity: 1 }]);
+        newCart.push({ productId: item, quantity: 1 });
       }
-      localStorage.setItem("guestCart", JSON.stringify(prevItem));
+      localStorage.setItem("guestCart", JSON.stringify(newCart));
       return newCart;
     });
   };

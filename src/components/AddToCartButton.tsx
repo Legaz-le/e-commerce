@@ -1,15 +1,26 @@
-"use client"; 
+"use client";
 
 import { useState, useTransition } from "react";
+import { useGuestCart } from "@/hooks/useGuestCart";
+import { useAuth } from "@clerk/nextjs";
 import { addToCart } from "@/components/AddToCart";
 import { Button } from "./ui/button";
 
 export function AddToCartButton({ productId }: { productId: string }) {
-  const [message, setMessage] = useState<string | null>(null); 
-  const [isPending, startTransition] = useTransition(); 
+  const [message, setMessage] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const { isSignedIn } = useAuth();
+  const { addItem } = useGuestCart();
 
   const handleAddToCart = async () => {
     setMessage(null);
+
+    if (!isSignedIn) {
+      addItem(productId)
+      setMessage("Added to cart!");
+      setTimeout(() => setMessage(null), 2000)
+      return;
+    }
 
     startTransition(async () => {
       try {
@@ -17,12 +28,12 @@ export function AddToCartButton({ productId }: { productId: string }) {
 
         if (result.success) {
           setMessage("Added to cart!");
-          
+
           setTimeout(() => setMessage(null), 2000);
         }
       } catch (error) {
         if (error instanceof Error) {
-          setMessage(error.message); 
+          setMessage(error.message);
         } else {
           setMessage("Failed to add to cart");
         }
@@ -33,15 +44,17 @@ export function AddToCartButton({ productId }: { productId: string }) {
   return (
     <div className="w-full">
       <Button
-        onClick={handleAddToCart} 
-        disabled={isPending} 
+        onClick={handleAddToCart}
+        disabled={isPending}
         size="lg"
         className="w-full"
       >
         {isPending ? "Adding..." : "Add to Cart"}
       </Button>
       {message && (
-        <p className={`text-sm mt-2 ${message.includes("sign in") ? "text-red-500" : "text-green-500"}`}>
+        <p
+          className={`text-sm mt-2 ${message.includes("sign in") ? "text-red-500" : "text-green-500"}`}
+        >
           {message}
         </p>
       )}
