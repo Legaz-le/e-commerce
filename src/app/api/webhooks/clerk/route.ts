@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     throw new Error("Headers are missing");
   }
 
-  const response = req.json();
+  const response = await req.json();
   const body = JSON.stringify(response);
 
   const wh = new Webhook(WEBHOOK_SECRET);
@@ -32,6 +32,7 @@ export async function POST(req: Request) {
       "svix-signature": svix_signature,
     }) as WebhookEvent;
   } catch (err) {
+    console.log("Error verifying webhook", err)
     return new NextResponse("Error verifying webhook", { status: 400 });
   }
   const eventType = evt.type;
@@ -44,7 +45,8 @@ export async function POST(req: Request) {
           email: email_addresses[0]?.email_address || "",
         },
       });
-    } catch {
+    } catch(err) {
+      console.log("Error verifying webhook", err)
       return new NextResponse("Error creating user", { status: 500 });
     }
   }
