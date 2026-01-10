@@ -65,13 +65,19 @@ export async function POST(req: Request) {
   if (eventType === "user.deleted") {
     const { id } = evt.data;
     try {
-      await prisma.user.delete({
-        where: {
-          clerkId: id,
-        },
+      const existingUser = await prisma.user.findUnique({
+        where: { clerkId: id },
       });
-    } catch {
-      return new NextResponse("Error at deleting user", { status: 500 });
+
+      if (existingUser) {
+        await prisma.user.delete({
+          where: { clerkId: id },
+        });
+      }
+      // If user doesn't exist, do nothing
+    } catch (err) {
+      console.log("Error deleting user:", err);
+      return new NextResponse("Error deleting user", { status: 500 });
     }
   }
   return new NextResponse("Webhook processed successfully", { status: 200 });
