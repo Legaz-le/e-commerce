@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 
 type CartItem = {
   productId: string;
@@ -7,13 +7,10 @@ type CartItem = {
 
 export function useGuestCart() {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window === "undefined") return [];  // Server: return empty
     const savedCart = localStorage.getItem("guestCart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
-  
-  useEffect(() => {
-    localStorage.setItem("guestCart", JSON.stringify(cartItems));
-  },[cartItems])
 
   const addItem = (item: string) => {
     setCartItems((prevItem) => {
@@ -44,15 +41,14 @@ export function useGuestCart() {
     localStorage.removeItem("guestCart");
     setCartItems([]);
   };
-  
+
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  
+
   return {
     guestCart: cartItems,
     addItem,
     getGuestCart,
     clearCart,
     cartCount,
-  }
-
+  };
 }
