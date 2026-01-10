@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       "svix-signature": svix_signature,
     }) as WebhookEvent;
   } catch (err) {
-    console.log("Error verifying webhook", err)
+    console.log("Error verifying webhook", err);
     return new NextResponse("Error verifying webhook", { status: 400 });
   }
   const eventType = evt.type;
@@ -45,8 +45,8 @@ export async function POST(req: Request) {
           email: email_addresses[0]?.email_address || "",
         },
       });
-    } catch(err) {
-      console.log("Error verifying webhook", err)
+    } catch (err) {
+      console.log("Error verifying webhook", err);
       return new NextResponse("Error creating user", { status: 500 });
     }
   }
@@ -62,5 +62,5 @@ export async function POST(req: Request) {
       return new NextResponse("Error at deleting user", { status: 500 });
     }
   }
-  return new NextResponse('Webhook processed successfully', {status: 200})
+  return new NextResponse("Webhook processed successfully", { status: 200 });
 }
