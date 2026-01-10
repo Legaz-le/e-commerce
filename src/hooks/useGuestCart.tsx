@@ -7,7 +7,7 @@ type CartItem = {
 
 export function useGuestCart() {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    if (typeof window === "undefined") return [];  // Server: return empty
+    if (typeof window === "undefined") return [];
     const savedCart = localStorage.getItem("guestCart");
     return savedCart ? JSON.parse(savedCart) : [];
   });

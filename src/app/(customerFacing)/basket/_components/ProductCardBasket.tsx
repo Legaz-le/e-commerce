@@ -15,7 +15,7 @@ export function ProductCardBasket({
   priceInCents,
   description,
   imagePath,
-  quantity = 1,
+  quantity,
 }: ProductCardBasketProps) {
   return (
     <div className="grid grid-cols-[2fr_1fr_1fr] gap-4 items-center w-full">

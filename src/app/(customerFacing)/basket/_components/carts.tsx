@@ -37,7 +37,7 @@ export function Cart() {
       </div>
       <div className="hidden md:flex border-b border-solid" />
       <div className="space-y-4">
-        {/*<ProductsSuspense />*/}
+        <ProductsSuspense />
       </div>
       <div className="hidden md:flex border-b border-solid" />
       <div className="self-end text-end space-y-3 mt-4">
@@ -57,9 +57,9 @@ export function Cart() {
 }
 
 
-// async function ProductsSuspense() {
-//   const cartItem = await getCart();
-//   return cartItem.map((carItem) => (
-//     <ProductCardBasket key={carItem.id} {...carItem} />
-//   ));
-// }
+async function ProductsSuspense() {
+  const cartItem = await getCart();
+  return cartItem.map((carItem) => (
+    <ProductCardBasket key={carItem.id} {...carItem} />
+  ));
+}
