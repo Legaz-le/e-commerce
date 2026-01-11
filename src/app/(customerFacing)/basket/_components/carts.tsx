@@ -4,6 +4,7 @@ import { GuestCart } from "./GuestCart";
 import { ProductCardBasket } from "./ProductCardBasket";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
+import { CheckoutButton } from "./CheckoutButton";
 
 async function getCart(userId: string) {
   const cartItems = await prisma.cartItem.findMany({
@@ -75,9 +76,7 @@ export async function Cart() {
         <p className="text-sm text-gray-600">
           Taxes and shipping are calculated at checkout
         </p>
-        <Button asChild size="lg" className="">
-          <Link href="/">Go to checkout</Link>
-        </Button>
+        <CheckoutButton />
       </div>
     </div>
   );
