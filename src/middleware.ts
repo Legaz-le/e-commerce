@@ -9,13 +9,19 @@ const isProtectedRoute = createRouteMatcher([
 export default clerkMiddleware(async (auth, req) => {
   // Protect admin routes
   if (isProtectedRoute(req)) {
-    const { userId } = await auth();
+    const { userId, sessionClaims } = await auth();
     
     if (!userId) {
       // Redirect to sign-in page
       const signInUrl = new URL('/sign-in', req.url);
       signInUrl.searchParams.set('redirect_url', req.url);
       return NextResponse.redirect(signInUrl);
+    }
+    const role = (sessionClaims?.metadata as { role?: string })?.role;
+    
+    if (role !== "admin") {
+      const homeUrl = new URL("/", req.url);
+      return NextResponse.redirect(homeUrl)
     }
   }
 });
