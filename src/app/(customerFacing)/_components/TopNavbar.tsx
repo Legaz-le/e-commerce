@@ -26,13 +26,15 @@ export function TopNavbar() {
               className="cursor-pointer"
             />
           </Link>
-          <Image
-            src="/images/User--avatar.png"
-            alt="User"
-            width={20}
-            height={20}
-            className="cursor-pointer"
-          />
+          <Link href="/sign-in">
+            <Image
+              src="/images/User--avatar.png"
+              alt="User"
+              width={20}
+              height={20}
+              className="cursor-pointer"
+            />
+          </Link>
         </div>
       </div>
     </div>
