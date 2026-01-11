@@ -6,18 +6,19 @@ import { useRouter } from "next/navigation";
 
 export function CheckoutButton() {
   const { isSignedIn } = useAuth();
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const handleClick = () => {
     if (isSignedIn) {
-      router.push("/checkout")
+      router.push("/checkout");
     } else {
-      router.push("/sign-in?redirect_url=/basket")
+      router.push("/sign-in?redirect_url=/basket");
     }
-  }
-  
+  };
+
   return (
     <Button size="lg" onClick={handleClick}>
-    Go to checkout
-  </Button>)
+      Go to checkout
+    </Button>
+  );
 }
