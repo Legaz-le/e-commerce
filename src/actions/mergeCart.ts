@@ -40,7 +40,7 @@ export async function mergeGuestCart(guestcartItems: guestCartItemsProps[]) {
     if (existingItem) {
       await prisma.cartItem.update({
         where: { id: existingItem.id },
-        data: { quantity: existingItem.quantity },
+        data: { quantity: existingItem.quantity + item.quantity },
       });
     } else {
       await prisma.cartItem.create({

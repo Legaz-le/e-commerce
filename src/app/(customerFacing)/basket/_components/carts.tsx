@@ -5,6 +5,7 @@ import { ProductCardBasket } from "./ProductCardBasket";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { CheckoutButton } from "./CheckoutButton";
+import { formatCurrency } from "@/lib/formater";
 
 async function getCart(userId: string) {
   const cartItems = await prisma.cartItem.findMany({
@@ -71,7 +72,7 @@ export async function Cart() {
       <div className="self-end text-end space-y-3 mt-4">
         <div className="flex justify-end space-x-3">
           <span className="text-lg">Subtotal</span>
-          <span className="text-lg font-semibold">{subtotal}</span>
+          <span className="text-lg font-semibold">{formatCurrency(subtotal / 100)}</span>
         </div>
         <p className="text-sm text-gray-600">
           Taxes and shipping are calculated at checkout

@@ -4,6 +4,7 @@ import { useGuestCart } from "@/hooks/useGuestCart";
 import { getProductsById } from "@/actions/getProductsByIds";
 import { ProductCardBasket } from "./ProductCardBasket";
 import { formatCurrency } from "@/lib/formater";
+import { CheckoutButton } from "./CheckoutButton";
 
 type Product = {
   id: string;
@@ -61,9 +62,9 @@ export function GuestCart() {
                   />
                 );
               })}
-              <div>
-                Subtotal: {formatCurrency(subtotal / 100)}
-              </div>
+              <div>Subtotal: {formatCurrency(subtotal / 100)}</div>
+
+              <CheckoutButton />
             </>
           )}
         </div>
