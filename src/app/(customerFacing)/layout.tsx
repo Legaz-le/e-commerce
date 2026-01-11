@@ -10,7 +10,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <div className="space-y-5">
         <TopNavbar />
         <div className="hidden md:flex border-b border-solid" />
@@ -26,12 +26,12 @@ export default function Layout({
           </Nav>
         </div>
       </div>
-      <main>{children}</main>
+      <main className="flex-1">{children}</main>
       <div className="bg-[#2A254B] pt-16 ">
         <div className="container mx-auto">
           <Footer />
         </div>
       </div>
-    </>
+    </div>
   );
 }
