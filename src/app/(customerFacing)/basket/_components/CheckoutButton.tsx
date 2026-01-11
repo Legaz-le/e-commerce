@@ -17,7 +17,7 @@ export function CheckoutButton() {
   };
 
   return (
-    <Button size="lg" onClick={handleClick}>
+    <Button size="lg" className="cursor-pointer" onClick={handleClick}>
       Go to checkout
     </Button>
   );

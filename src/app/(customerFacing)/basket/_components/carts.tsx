@@ -1,8 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { auth } from "@clerk/nextjs/server";
 import { GuestCart } from "./GuestCart";
 import { ProductCardBasket } from "./ProductCardBasket";
-import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { CheckoutButton } from "./CheckoutButton";
 import { formatCurrency } from "@/lib/formater";

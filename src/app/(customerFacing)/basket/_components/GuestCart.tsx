@@ -62,9 +62,10 @@ export function GuestCart() {
                   />
                 );
               })}
-              <div>Subtotal: {formatCurrency(subtotal / 100)}</div>
-
-              <CheckoutButton />
+              <div className="text-right space-y-5">
+                <div>Subtotal: {formatCurrency(subtotal / 100)}</div>
+                <CheckoutButton />
+              </div>
             </>
           )}
         </div>
