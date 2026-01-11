@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { auth } from "@clerk/nextjs/server";
+import { GuestCart } from "./GuestCart";
 import { ProductCardBasket } from "./ProductCardBasket";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
-
 
 async function getCart(userId: string) {
   const cartItems = await prisma.cartItem.findMany({
@@ -11,7 +12,7 @@ async function getCart(userId: string) {
         userId: userId,
       },
       product: {
-        isAvailableForPurchase: true, 
+        isAvailableForPurchase: true,
       },
     },
     include: {
@@ -27,7 +28,27 @@ async function getCart(userId: string) {
   return cartItems;
 }
 
-export function Cart() {
+export async function Cart() {
+  const { userId: clerkId } = await auth();
+
+  if (!clerkId) {
+    return <GuestCart />;
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { clerkId },
+  });
+
+  if (!user) {
+    return <GuestCart />;
+  }
+
+  const cartItems = await getCart(user.id);
+
+  const subtotal = cartItems.reduce((sum, item) => {
+    return sum + item.product.priceInCents * item.quantity;
+  }, 0);
+
   return (
     <div className="flex flex-col w-full space-y-5">
       <div className="grid grid-cols-[2fr_1fr_1fr] gap-4 w-full font-semibold">
@@ -37,13 +58,19 @@ export function Cart() {
       </div>
       <div className="hidden md:flex border-b border-solid" />
       <div className="space-y-4">
-        <ProductsSuspense />
+        {cartItems.map((item) => (
+          <ProductCardBasket
+            key={item.id}
+            {...item.product}
+            quantity={item.quantity}
+          />
+        ))}
       </div>
       <div className="hidden md:flex border-b border-solid" />
       <div className="self-end text-end space-y-3 mt-4">
         <div className="flex justify-end space-x-3">
           <span className="text-lg">Subtotal</span>
-          <span className="text-lg font-semibold">$XXX.XX</span>
+          <span className="text-lg font-semibold">{subtotal}</span>
         </div>
         <p className="text-sm text-gray-600">
           Taxes and shipping are calculated at checkout
@@ -56,10 +83,9 @@ export function Cart() {
   );
 }
 
-
-async function ProductsSuspense() {
-  const cartItem = await getCart();
-  return cartItem.map((carItem) => (
-    <ProductCardBasket key={carItem.id} {...carItem} />
-  ));
-}
+// async function ProductsSuspense() {
+//   const cartItem = await getCart();
+//   return cartItem.map((carItem) => (
+//     <ProductCardBasket key={carItem.id} {...carItem} />
+//   ));
+// }
