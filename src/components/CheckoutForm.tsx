@@ -1,6 +1,5 @@
 "use client";
 
-import { userOrderExist } from "@/app/actions/userOrderExist";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,7 +21,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 
-type CheckoutFormProps = {
+type CartItem = {
+  id: string;
+  quantity: number;
   product: {
     id: string;
     imagePath: string;
@@ -30,49 +31,70 @@ type CheckoutFormProps = {
     priceInCents: number;
     description: string;
   };
+};
+
+type CheckoutFormProps = {
+  cartItems: CartItem[];
+  totalInCents: number;
   clientSecret: string;
 };
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string
+  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string,
 );
 
-export function CheckoutForm({ product, clientSecret }: CheckoutFormProps) {
+export function CheckoutForm({
+  cartItems,
+  totalInCents,
+  clientSecret,
+}: CheckoutFormProps) {
   return (
     <div className="max-w-5xl w-full mx-auto space-y-8">
-      <div className="flex gap-4 items-center">
-        <div className="aspect-video shrink-0 w-1/3 relative">
-          <Image
-            src={product.imagePath}
-            fill
-            alt={product.name}
-            className="object-cover"
-          />
-        </div>
-        <div>
-          <div className="text-lg">
-            {formatCurrency(product.priceInCents / 100)}
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Order Summary</h2>
+        {cartItems.map((item) => (
+          <div key={item.id} className="flex gap-4 items-center">
+            <div className="aspect-video shrink-0 w-24 relative">
+              <Image
+                src={item.product.imagePath}
+                fill
+                alt={item.product.name}
+                className="object-cover rounded"
+              />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-medium">{item.product.name}</h3>
+              <p className="text-sm text-muted-foreground">
+                Qty: {item.quantity}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="font-medium">
+                {formatCurrency(
+                  (item.product.priceInCents * item.quantity) / 100,
+                )}
+              </p>
+              {item.quantity > 1 && (
+                <p className="text-sm text-muted-foreground">
+                  {formatCurrency(item.product.priceInCents / 100)} each
+                </p>
+              )}
+            </div>
           </div>
-          <h1 className="text-2xl font-bold">{product.name}</h1>
-          <div className="line-clamp-3 text-muted-foreground">
-            {product.description}
-          </div>
+        ))}
+        <div className="border-t pt-4 flex justify-between font-semibold text-lg">
+          <span>Total</span>
+          <span>{formatCurrency(totalInCents / 100)}</span>
         </div>
       </div>
       <Elements options={{ clientSecret }} stripe={stripePromise}>
-        <Form priceInCents={product.priceInCents} productId={product.id} />
+        <Form totalInCents={totalInCents} />
       </Elements>
     </div>
   );
 }
 
-function Form({
-  priceInCents,
-  productId,
-}: {
-  priceInCents: number;
-  productId: string;
-}) {
+function Form({ totalInCents }: { totalInCents: number }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -85,16 +107,6 @@ function Form({
     if (stripe == null || elements == null || email == null) return;
 
     setIsLoading(true);
-
-    const orderExits = await userOrderExist(email, productId);
-
-    if (orderExits) {
-      setErrorMessage(
-        "You have already purchased this product. Try downloading it from the My Orders page"
-      );
-      setIsLoading(false);
-      return;
-    }
 
     stripe
       .confirmPayment({
@@ -117,7 +129,7 @@ function Form({
     <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>Checkout</CardTitle>
+          <CardTitle>Payment Details</CardTitle>
           {errorMessage && (
             <CardDescription className="text-destructive">
               {errorMessage}
@@ -140,7 +152,7 @@ function Form({
           >
             {isLoading
               ? "Purchasing..."
-              : `Purchase - ${formatCurrency(priceInCents / 100)}`}
+              : `Pay - ${formatCurrency(totalInCents / 100)}`}
           </Button>
         </CardFooter>
       </Card>

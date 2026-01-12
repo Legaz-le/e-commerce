@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
-import { CheckoutForm } from "./_components/CheckoutForm";
+import { CheckoutForm } from "../../../../../components/CheckoutForm";
 
 export default async function PurchasePage({
   params,
