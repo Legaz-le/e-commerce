@@ -66,8 +66,9 @@ export default function OrderHistoryEmail({ orders }: OrderHistoryEmailProps) {
                 {order.items.map((item) => (
                   <OrderInformation
                     key={item.downloadVerificationId}
-                    order={order}
                     product={item.product}
+                    quantity={item.quantity}
+                    priceInCents={item.priceInCents}
                     downloadVerificationId={item.downloadVerificationId}
                   />
                 ))}
