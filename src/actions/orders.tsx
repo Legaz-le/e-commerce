@@ -29,6 +29,8 @@ export async function emailOrderHistory(
           createdAt: true,
           items: {
             select: {
+              quantity: true,
+              priceInCents: true,
               id: true,
               product: {
                 select: {
@@ -73,6 +75,8 @@ export async function emailOrderHistory(
               imagePath: `${baseUrl}${item.product.imagePath}`,
               description: item.product.description,
             },
+            quantity: item.quantity,
+            priceInCents: item.priceInCents,
             downloadVerificationId: `${baseUrl}/products/download/${downloadVerification.id}`,
           };
         })
