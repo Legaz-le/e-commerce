@@ -137,8 +137,7 @@ export async function POST(req: NextRequest) {
             priceInCents: item.priceInCents,
             downloadVerificationId: verificationMap.get(item.productId) ?? "",
           };
-        }),
-      );
+        });
 
       await resend.emails.send({
         from: `Support <onboarding@resend.dev>`,
