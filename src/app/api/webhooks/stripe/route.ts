@@ -121,6 +121,7 @@ export async function POST(req: NextRequest) {
       );
 
       const productMap = new Map(products.map((p) => [p.id, p]));
+      
       const baseUrl =
         process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
