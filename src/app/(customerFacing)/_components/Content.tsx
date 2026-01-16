@@ -7,7 +7,7 @@ import {
 export function Content({ image, title, description }: dataType) {
   return (
     <section className="flex flex-col w-[355px] space-y-2">
-      <Image src={image} alt={image} width={20} height={20} loading="lazy" />
+      <Image src={image} alt={image} width={20} height={20} />
       <h2 className="text-xl font-mono">{title}</h2>
       <p className="text-[16px]">{description}</p>
     </section>
@@ -17,7 +17,7 @@ export function Content({ image, title, description }: dataType) {
 export function ContentImages({ image, title, price }: imageType) {
   return (
     <section className="space-y-5">
-      <Image src={image} alt={image} width={355} height={462} loading="lazy" />
+      <Image src={image} alt={image} width={355} height={462}  />
       <div className="space-y-3">
         <h3 className="text-xl font-mono">{title}</h3>
         <span className="text-lg font-semibold">{price}</span>
@@ -40,7 +40,7 @@ export function ContentPopular({
         alt={image}
         width={width}
         height={height}
-        loading="lazy"
+        
       />
       <div className="space-y-3">
         <h3 className="text-xl font-mono">{title}</h3>

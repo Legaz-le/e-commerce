@@ -2,7 +2,7 @@ import { Footer } from "./_components/Footer";
 import { Nav, NavLink } from "./_components/Navbar";
 import { TopNavbar } from "./_components/TopNavbar";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "auto";
 
 export default function Layout({
   children,
