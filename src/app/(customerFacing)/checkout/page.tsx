@@ -62,7 +62,7 @@ export default async function CheckoutPage() {
     throw new Error("client_secret not existing");
   }
   return (
-    <div>
+    <div className="my-15">
       <CheckoutForm
         cartItems={cartItems}
         totalInCents={totalInCents}
