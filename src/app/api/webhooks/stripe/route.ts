@@ -121,12 +121,13 @@ export async function POST(req: NextRequest) {
       );
 
       const productMap = new Map(products.map((p) => [p.id, p]));
-      
+
       const baseUrl =
         process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
-      const emailItems = cart.filter((item) =>
-        productMap.has(item.productId)).map((item) => {
+      const emailItems = cart
+        .filter((item) => productMap.has(item.productId))
+        .map((item) => {
           const product = productMap.get(item.productId)!;
           return {
             product: {
@@ -140,7 +141,7 @@ export async function POST(req: NextRequest) {
           };
         });
 
-      await resend.emails.send({
+      const { data, error } = await resend.emails.send({
         from: `Support <onboarding@resend.dev>`,
         to: email,
         subject: "Order Confirmation",
@@ -155,6 +156,12 @@ export async function POST(req: NextRequest) {
           }),
         ),
       });
+
+      if (error) {
+        console.error("Failed to send cart checkout email:", error);
+      } else {
+        console.log("Cart checkout email sent successfully:", data);
+      }
     } else {
       const product = await prisma.product.findUnique({
         where: { id: productId },
@@ -202,7 +209,7 @@ export async function POST(req: NextRequest) {
 
       console.log("Full Image URL:", fullImageUrl);
 
-      await resend.emails.send({
+      const { data, error } = await resend.emails.send({
         from: `Support <onboarding@resend.dev>`,
         to: email,
         subject: "Order Confirmation",
@@ -228,6 +235,12 @@ export async function POST(req: NextRequest) {
           }),
         ),
       });
+
+      if (error) {
+        console.error("Failed to send single product email:", error);
+      } else {
+        console.log("Single product email sent successfully:", data);
+      }
     }
   }
 
