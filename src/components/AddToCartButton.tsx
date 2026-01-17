@@ -43,6 +43,13 @@ export function AddToCartButton({ productId }: { productId: string }) {
 
   return (
     <div className="w-full">
+      {message && (
+        <p
+          className={`text-sm mb-2 ${message.includes("sign in") ? "text-red-500" : "text-green-500"}`}
+        >
+          {message}
+        </p>
+      )}
       <Button
         onClick={handleAddToCart}
         disabled={isPending}
@@ -51,13 +58,6 @@ export function AddToCartButton({ productId }: { productId: string }) {
       >
         {isPending ? "Adding..." : "Add to Cart"}
       </Button>
-      {message && (
-        <p
-          className={`text-sm mt-2 ${message.includes("sign in") ? "text-red-500" : "text-green-500"}`}
-        >
-          {message}
-        </p>
-      )}
     </div>
   );
 }

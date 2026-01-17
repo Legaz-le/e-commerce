@@ -5,27 +5,33 @@ import prisma from "@/lib/prisma";
 import { CheckoutButton } from "./CheckoutButton";
 import { formatCurrency } from "@/lib/formater";
 
-async function getCart(userId: string) {
-  const cartItems = await prisma.cartItem.findMany({
-    where: {
-      cart: {
-        userId: userId,
-      },
-      product: {
-        isAvailableForPurchase: true,
-      },
-    },
+async function getCartWithUser(clerkId: string) {
+  const user = await prisma.user.findUnique({
+    where: { clerkId },
     include: {
-      product: true,
-    },
-    orderBy: {
-      product: {
-        name: "asc",
+      cart: {
+        include: {
+          items: {
+            where: {
+              product: {
+                isAvailableForPurchase: true,
+              },
+            },
+            include: {
+              product: true,
+            },
+            orderBy: {
+              product: {
+                name: "asc",
+              },
+            },
+          },
+        },
       },
     },
   });
 
-  return cartItems;
+  return user;
 }
 
 export async function Cart() {
@@ -35,15 +41,13 @@ export async function Cart() {
     return <GuestCart />;
   }
 
-  const user = await prisma.user.findUnique({
-    where: { clerkId },
-  });
+  const user = await getCartWithUser(clerkId);
 
   if (!user) {
     return <GuestCart />;
   }
 
-  const cartItems = await getCart(user.id);
+  const cartItems = user.cart?.items ?? [];
 
   const subtotal = cartItems.reduce((sum, item) => {
     return sum + item.product.priceInCents * item.quantity;
