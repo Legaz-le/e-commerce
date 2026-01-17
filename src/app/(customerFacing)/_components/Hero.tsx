@@ -11,8 +11,11 @@ export function Hero() {
             <h1 className="text-white text-3xl font-mono">
               The furniture brand for the future, with timeless design
             </h1>
-            <Button className="hidden sm:flex text-white bg-gray-700 px-5 py-5 cursor-pointer">
-              <Link href="/products"> View Collections</Link>
+            <Button
+              asChild
+              className="hidden sm:flex w-fit text-white bg-gray-700 px-5 py-5 cursor-pointer"
+            >
+              <Link href="/products">View Collections</Link>
             </Button>
           </div>
           <p className="text-white mt-10 bottom-15  text-lg lg:w-[602px] ">
@@ -20,8 +23,11 @@ export function Hero() {
             retail brand with nice fonts, tasteful colors and a beautiful way to
             display things digitally using modern web technologies.
           </p>
-          <Button className="text-white bg-gray-700 px-5 py-5 cursor-pointer flex my-5 sm:hidden">
-            <Link href="/products"> View Collections</Link>
+          <Button
+            asChild
+            className="w-fit text-white bg-gray-700 px-5 py-5 cursor-pointer flex my-5 sm:hidden"
+          >
+            <Link href="/products">View Collections</Link>
           </Button>
         </div>
       </div>
