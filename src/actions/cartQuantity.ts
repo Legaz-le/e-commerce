@@ -9,18 +9,8 @@ export async function getCartItem(productId: string) {
 
   if (!clerkId) return null;
 
-  const user = await prisma.user.findUnique({ where: { clerkId } });
-
-  if (!user) return null;
-
-  const cart = await prisma.cart.findUnique({ where: { userId: user.id } });
-
-  if (!cart) return null;
-
-  const cartItem = await prisma.cartItem.findUnique({
-    where: {
-      cartId_productId: { cartId: cart.id, productId },
-    },
+  const cartItem = await prisma.cartItem.findFirst({
+    where: { productId, cart: { user: { clerkId } } },
   });
 
   return cartItem;
