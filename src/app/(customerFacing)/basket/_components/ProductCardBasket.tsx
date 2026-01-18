@@ -34,7 +34,11 @@ export function ProductCardBasket({
         </div>
       </div>
       <div className="text-center">
-        <span>{quantity}</span>
+        <div className="flex items-center justify-center gap-2">
+          <button>-</button>
+          <span>{quantity}</span>
+          <button>+</button>
+      </div>
       </div>
 
       <div className="text-right">

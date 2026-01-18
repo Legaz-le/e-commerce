@@ -54,7 +54,7 @@ export function AddToCartButton({ productId }: { productId: string }) {
         onClick={handleAddToCart}
         disabled={isPending}
         size="lg"
-        className="w-full"
+        className="w-full cursor-pointer"
       >
         {isPending ? "Adding..." : "Add to Cart"}
       </Button>
