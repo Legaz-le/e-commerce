@@ -1,7 +1,7 @@
 "use client";
 
 import { incrementAndDecrement } from "@/actions/cartQuantity";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 
 export function QuantityControls({
   productId,
@@ -26,6 +26,10 @@ export function QuantityControls({
       await incrementAndDecrement(productId, "decrement");
     });
   }
+  
+  useEffect(() => {
+    setOptimisticQuantity(quantity)
+  },[quantity])
 
   return (
     <div className="flex items-center justify-center gap-2">
