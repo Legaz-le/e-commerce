@@ -1,6 +1,11 @@
+"use client";
+
 import { formatCurrency } from "@/lib/formater";
 import Image from "next/image";
 import { QuantityControls } from "./QuantityControls";
+import { Trash2 } from "lucide-react";
+import { deleteCartItem } from "@/actions/cartQuantity";
+import { useTransition } from "react";
 
 export type ProductCardBasketProps = {
   id: string;
@@ -19,8 +24,16 @@ export function ProductCardBasket({
   imagePath,
   quantity,
 }: ProductCardBasketProps) {
+  const [isPending, startTransition] = useTransition();
+
+  function handleDelete() {
+    startTransition(async () => {
+      await deleteCartItem(id);
+    });
+  }
+
   return (
-    <div className="grid grid-cols-[2fr_1fr_1fr] gap-4 items-center w-full">
+    <div className="grid grid-cols-[2fr_1fr_1fr_auto] gap-4 items-center w-full">
       <div className="flex space-x-5 ">
         <Image
           src={imagePath}
@@ -44,6 +57,9 @@ export function ProductCardBasket({
           {formatCurrency((priceInCents * quantity) / 100)}
         </span>
       </div>
+      <button className="cursor-pointer" onClick={handleDelete} disabled={isPending}>
+        <Trash2 size={16} />
+      </button>
     </div>
   );
 }

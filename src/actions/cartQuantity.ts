@@ -46,3 +46,17 @@ export async function incrementAndDecrement(
     return { success: false, error: "Failed to update quantity" };
   }
 }
+
+export async function deleteCartItem(productId: string) {
+  const cartItem = await getCartItem(productId);
+
+  if (!cartItem) return { success: false, error: "Item not found" };
+  try {
+    
+    await prisma.cartItem.delete({ where: { id: cartItem.id } });
+    revalidatePath("/basket");
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: "Failed to deleted" };
+  }
+}
