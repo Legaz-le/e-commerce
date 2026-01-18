@@ -1,5 +1,6 @@
 import { formatCurrency } from "@/lib/formater";
 import Image from "next/image";
+import { QuantityControls } from "./QuantityControls";
 
 export type ProductCardBasketProps = {
   id: string;
@@ -11,6 +12,7 @@ export type ProductCardBasketProps = {
 };
 
 export function ProductCardBasket({
+  id,
   name,
   priceInCents,
   description,
@@ -34,11 +36,7 @@ export function ProductCardBasket({
         </div>
       </div>
       <div className="text-center">
-        <div className="flex items-center justify-center gap-2">
-          <button>-</button>
-          <span>{quantity}</span>
-          <button>+</button>
-      </div>
+        <QuantityControls productId={id} quantity={quantity} />
       </div>
 
       <div className="text-right">
