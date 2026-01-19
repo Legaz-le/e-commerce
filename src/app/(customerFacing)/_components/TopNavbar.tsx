@@ -7,13 +7,15 @@ export function TopNavbar() {
   return (
     <div className=" px-15">
       <div className="flex items-center justify-between mt-5">
-        <Image
-          src="/images/Search.png"
-          alt="Search"
-          width="20"
-          height="20"
-          className="cursor-pointer"
-        />
+        <Link href="/search">
+          <Image
+            src="/images/Search.png"
+            alt="Search"
+            width="20"
+            height="20"
+            className="cursor-pointer"
+          />
+        </Link>
         <NavLink href="/">
           <h1 className="text-2xl font-medium">Avion</h1>
         </NavLink>
