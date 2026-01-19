@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { ProductCard } from "@/components/ProductCard";
+import { SearchForm } from "../_components/SearchForm";
 export default async function Search({
   searchParams,
 }: {
@@ -19,6 +20,7 @@ export default async function Search({
 
   return (
     <div className="container mx-auto py-8 px-8 sm:px-0">
+      <SearchForm defaultValue={q} />
       <h1 className="text-2xl font-semibold mb-2">
         {q ? `Results for: "${q}"` : "Search"}
       </h1>
