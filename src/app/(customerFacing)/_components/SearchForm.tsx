@@ -14,9 +14,11 @@ export function SearchForm({ defaultValue }: { defaultValue?: string }) {
   return (
     <form onSubmit={handleSubmit}>
       <input
+      className="border rounded px-4 py-2 w-full mb-5"
         onChange={(e) => setItem(e.target.value)}
         type="search"
         value={item}
+        placeholder="Search products..."
       />
     </form>
   );
