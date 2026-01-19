@@ -47,16 +47,21 @@ export async function incrementAndDecrement(
   }
 }
 
-export async function deleteCartItem(productId: string) {
-  const cartItem = await getCartItem(productId);
+export async function deleteCartItem(cartItemId: string) {
+  const { userId: clerkId } = await auth();
 
-  if (!cartItem) return { success: false, error: "Item not found" };
+  if (!clerkId) return { success: false, error: "Unauthorized" };
+
   try {
-    
-    await prisma.cartItem.delete({ where: { id: cartItem.id } });
+    await prisma.cartItem.delete({
+      where: {
+        id: cartItemId,
+        cart: { user: { clerkId } },
+      },
+    });
     revalidatePath("/basket");
     return { success: true };
-  } catch (err) {
-    return { success: false, error: "Failed to deleted" };
+  } catch {
+    return { success: false, error: "Failed to delete" };
   }
 }

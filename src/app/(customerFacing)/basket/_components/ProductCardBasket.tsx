@@ -9,6 +9,7 @@ import { useTransition } from "react";
 
 export type ProductCardBasketProps = {
   id: string;
+  cartItemId: string;
   name: string;
   priceInCents: number;
   description: string;
@@ -18,6 +19,7 @@ export type ProductCardBasketProps = {
 
 export function ProductCardBasket({
   id,
+  cartItemId,
   name,
   priceInCents,
   description,
@@ -28,7 +30,7 @@ export function ProductCardBasket({
 
   function handleDelete() {
     startTransition(async () => {
-      await deleteCartItem(id);
+      await deleteCartItem(cartItemId);
     });
   }
 
@@ -57,7 +59,11 @@ export function ProductCardBasket({
           {formatCurrency((priceInCents * quantity) / 100)}
         </span>
       </div>
-      <button className="cursor-pointer" onClick={handleDelete} disabled={isPending}>
+      <button
+        className="cursor-pointer"
+        onClick={handleDelete}
+        disabled={isPending}
+      >
         <Trash2 size={16} />
       </button>
     </div>

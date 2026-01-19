@@ -69,6 +69,7 @@ export async function Cart() {
             {cartItems.map((item) => (
               <ProductCardBasket
                 key={item.id}
+                cartItemId={item.id}
                 {...item.product}
                 quantity={item.quantity}
               />
