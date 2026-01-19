@@ -2,6 +2,7 @@ import Image from "next/image";
 import { NavLink } from "./Navbar";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { MobileMenu } from "./MobileMenu";
 
 export function TopNavbar() {
   return (
@@ -36,6 +37,7 @@ export function TopNavbar() {
             <SignInButton />
           </SignedOut>
         </div>
+        <MobileMenu />
       </div>
     </div>
   );
