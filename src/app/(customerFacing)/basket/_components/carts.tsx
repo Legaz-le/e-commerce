@@ -6,6 +6,7 @@ import { CheckoutButton } from "./CheckoutButton";
 import { formatCurrency } from "@/lib/formater";
 
 async function getCartWithUser(clerkId: string) {
+  
   const user = await prisma.user.findUnique({
     where: { clerkId },
     include: {

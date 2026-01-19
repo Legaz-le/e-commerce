@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { NavLink } from "./Navbar";
 import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export function TopNavbar() {
   return (
@@ -26,15 +27,12 @@ export function TopNavbar() {
               className="cursor-pointer"
             />
           </Link>
-          <Link href="/sign-in">
-            <Image
-              src="/images/User--avatar.png"
-              alt="User"
-              width={20}
-              height={20}
-              className="cursor-pointer"
-            />
-          </Link>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
         </div>
       </div>
     </div>
