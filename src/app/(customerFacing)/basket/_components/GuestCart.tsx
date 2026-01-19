@@ -56,6 +56,7 @@ export function GuestCart() {
 
                 return (
                   <ProductCardBasket
+                    cartItemId={item.id}
                     key={item.id}
                     {...item}
                     quantity={quantity}
