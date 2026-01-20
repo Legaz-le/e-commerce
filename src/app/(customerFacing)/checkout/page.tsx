@@ -48,13 +48,6 @@ export default async function CheckoutPage() {
     metadata: {
       userId: user.id,
       cartCheckout: "true",
-      cartItems: JSON.stringify(
-        cartItems.map((item) => ({
-          productId: item.product.id,
-          quantity: item.quantity,
-          priceInCents: item.product.priceInCents,
-        })),
-      ),
     },
   });
 

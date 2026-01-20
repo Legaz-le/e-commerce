@@ -5,12 +5,6 @@ import { Resend } from "resend";
 import { render } from "@react-email/render";
 import PurchaseReceiptEmail from "@/app/email/PurchaseReceipt";
 
-type CartItemMeta = {
-  productId: string;
-  quantity: number;
-  priceInCents: number;
-};
-
 export async function POST(req: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -49,9 +43,7 @@ export async function POST(req: NextRequest) {
     const isCartCheckout = charge.metadata.cartCheckout === "true";
 
     if (isCartCheckout) {
-      const cartItems = charge.metadata.cartItems;
       const userId = charge.metadata.userId;
-      const cart: CartItemMeta[] = JSON.parse(cartItems);
 
       const user = await prisma.user.findUnique({ where: { id: userId } });
 
@@ -63,6 +55,20 @@ export async function POST(req: NextRequest) {
         return new NextResponse("No email provided", { status: 400 });
       }
 
+      // Fetch cart items from database instead of metadata
+      const cartItems = await prisma.cartItem.findMany({
+        where: {
+          cart: { userId: user.id },
+        },
+        include: {
+          product: true,
+        },
+      });
+
+      if (cartItems.length === 0) {
+        return new NextResponse("Cart is empty", { status: 400 });
+      }
+
       const { order, downloadVerifications } = await prisma.$transaction(
         async (tx) => {
           const newOrder = await tx.order.create({
@@ -71,19 +77,21 @@ export async function POST(req: NextRequest) {
               paymentIntentId: intent,
               totalPaidInCents: pricePaidInCents,
               items: {
-                create: cart.map((item) => ({
+                create: cartItems.map((item) => ({
                   productId: item.productId,
                   quantity: item.quantity,
-                  priceInCents: item.priceInCents,
+                  priceInCents: item.product.priceInCents,
                 })),
               },
             },
           });
 
-          const items = [...new Set(cart.map((item) => item.productId))];
+          const productIds = [
+            ...new Set(cartItems.map((item) => item.productId)),
+          ];
 
           const downloadVerifications = await Promise.all(
-            items.map((productId) =>
+            productIds.map((productId) =>
               tx.downloadVerification.create({
                 data: {
                   productId: productId,
@@ -110,36 +118,25 @@ export async function POST(req: NextRequest) {
         },
       );
 
-      const products = await prisma.product.findMany({
-        where: {
-          id: { in: cart.map((item) => item.productId) },
-        },
-      });
-
       const verificationMap = new Map(
         downloadVerifications.map((v) => [v.productId, v.id]),
       );
 
-      const productMap = new Map(products.map((p) => [p.id, p]));
-
       const baseUrl =
         process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
-      const emailItems = cart
-        .filter((item) => productMap.has(item.productId))
-        .map((item) => {
-          const product = productMap.get(item.productId)!;
-          return {
-            product: {
-              name: product.name,
-              imagePath: `${baseUrl}${product.imagePath}`,
-              description: product.description,
-            },
-            quantity: item.quantity,
-            priceInCents: item.priceInCents,
-            downloadVerificationId: verificationMap.get(item.productId) ?? "",
-          };
-        });
+      const emailItems = cartItems.map((item) => {
+        return {
+          product: {
+            name: item.product.name,
+            imagePath: `${baseUrl}${item.product.imagePath}`,
+            description: item.product.description,
+          },
+          quantity: item.quantity,
+          priceInCents: item.product.priceInCents,
+          downloadVerificationId: verificationMap.get(item.productId) ?? "",
+        };
+      });
 
       const { data, error } = await resend.emails.send({
         from: `Support <onboarding@resend.dev>`,
