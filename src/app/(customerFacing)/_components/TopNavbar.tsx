@@ -30,12 +30,20 @@ export function TopNavbar() {
               className="cursor-pointer"
             />
           </Link>
+          <SignedOut>
+            <SignInButton>
+              <Image
+                alt="Sign in"
+                src="/images/User--avatar.png"
+                width={20}
+                height={20}
+                className="cursor-pointer"
+              />
+            </SignInButton>
+          </SignedOut>
           <SignedIn>
             <UserButton />
           </SignedIn>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
         </div>
         <MobileMenu />
       </div>
