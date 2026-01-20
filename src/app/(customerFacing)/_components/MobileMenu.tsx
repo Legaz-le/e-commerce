@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 const navLinks = [
   { href: "/", label: "Plant pots" },
@@ -33,6 +34,17 @@ export function MobileMenu() {
             <button onClick={() => setIsOpen(false)} className="mb-8">
               <X size={24} />
             </button>
+            <div className="flex items-center space-x-4 mb-8">
+              <Link href="/basket" onClick={() => setIsOpen(false)}>
+                Cart
+              </Link>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+            </div>
             <nav className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <Link
