@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { NavLink } from "./Navbar";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { MobileMenu } from "./MobileMenu";
+import { ShoppingBag } from "lucide-react";
 
 export function TopNavbar() {
   return (
@@ -42,7 +45,21 @@ export function TopNavbar() {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <UserButton
+              appearance={{
+                elements: {
+                  userButtonPopoverActionButton: "text-sm",
+                },
+              }}
+            >
+              <UserButton.MenuItems>
+                <UserButton.Link
+                  label="My Orders"
+                  labelIcon={<ShoppingBag size={16} />}
+                  href="/orders"
+                />
+              </UserButton.MenuItems>
+            </UserButton>
           </SignedIn>
         </div>
         <MobileMenu />
