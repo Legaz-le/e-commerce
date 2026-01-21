@@ -8,13 +8,51 @@ export async function createReviews(
   rating: number,
   comment: string,
 ) {
+  const canReview = await canUserReview(productId);
+  
+  if (!canReview.canReview) {
+    return { canReview: false, error: canReview.error };
+  }
+  
+  await prisma.review.create({
+    data: {
+      userId: canReview.userId!,
+      productId: productId,
+      orderId: canReview.orderId!,
+      rating: rating,
+      comment: comment,
+    },
+  });
+
+  return { canReview: true, error: null };
+}
+
+export async function getReviewForProduct(productId: string) {
+  const reviews = await prisma.review.findMany({
+    where: { productId: productId },
+    include: { user: { select: { email: true } } },
+    orderBy: { createdAt: "desc" },
+  });
+  return { reviews };
+}
+
+export async function getAverageRating(productId: string) {
+  const average = await prisma.review.aggregate({
+    where: { productId: productId },
+    _avg: { rating: true },
+    _count: { rating: true },
+  });
+  return { average };
+}
+
+export async function canUserReview(productId: string) {
   const { userId: clerkId } = await auth();
 
-  if (!clerkId) return { success: false, error: "Not authenticated" };
+  if (!clerkId) return { canReview: false, error: "Not authenticated" };
 
   const user = await prisma.user.findUnique({ where: { clerkId: clerkId } });
 
-  if (!user) return { success: false, error: "User not existing" };
+  if (!user) return { canReview: false, error: "User not existing" };
 
   const orderCheck = await prisma.orderItem.findFirst({
     where: {
@@ -28,7 +66,7 @@ export async function createReviews(
     },
   });
 
-  if (!orderCheck) return { success: false, error: "No purchase found" };
+  if (!orderCheck) return { canReview: false, error: "No purchase found" };
 
   const existingReview = await prisma.review.findUnique({
     where: {
@@ -39,17 +77,7 @@ export async function createReviews(
     },
   });
 
-  if (existingReview) return { success: false, error: "Already reviewed" };
+  if (existingReview) return { canReview: false, error: "Already reviewed" };
 
-  const newReview = await prisma.review.create({
-    data: {
-      userId: user.id,
-      productId: productId,
-      orderId: orderCheck.orderId,
-      rating: rating,
-      comment: comment,
-    },
-  });
-
-  return { success: true, error: null };
+  return { canReview: true, orderId: orderCheck.orderId, userId: user.id, error: null };
 }
