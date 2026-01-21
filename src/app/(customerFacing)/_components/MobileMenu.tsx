@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
@@ -39,7 +39,21 @@ export function MobileMenu() {
                 Cart
               </Link>
               <SignedIn>
-                <UserButton />
+                <UserButton
+                  appearance={{
+                    elements: {
+                      userButtonPopoverActionButton: "text-sm",
+                    },
+                  }}
+                >
+                  <UserButton.MenuItems>
+                    <UserButton.Link
+                      label="My Orders"
+                      labelIcon={<ShoppingBag size={16} />}
+                      href="/orders"
+                    />
+                  </UserButton.MenuItems>
+                </UserButton>
               </SignedIn>
               <SignedOut>
                 <SignInButton />
