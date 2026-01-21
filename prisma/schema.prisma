@@ -28,6 +28,7 @@ model Product {
   cartItems   CartItem[]
   orderItems  OrderItem[]
   downloadVerifications DownloadVerification[]
+  reviews   Review[]
 }
 
 model User {
@@ -40,6 +41,7 @@ model User {
 
   cart      Cart?
   orders    Order[]
+  reviews   Review[]
 }
 
 model Cart {
@@ -81,6 +83,7 @@ model Order {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  reviews   Review[]
 }
 
 model OrderItem {
@@ -103,4 +106,23 @@ model DownloadVerification {
 
   productId String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+id        String @id @default(uuid())
+rating    Int
+comment   String? 
+
+userId    String
+productId String
+orderId   String
+
+user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+order     Order   @relation(fields: [orderId], references:[id], onDelete: Cascade)
+
+createdAt DateTime @default(now())
+
+@@unique([userId, productId])
+
 }
