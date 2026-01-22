@@ -9,6 +9,7 @@ import {
 } from "./ui/card";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import { AddToCartButton } from "./AddToCartButton";
 
 type ProductCardProps = {
@@ -27,17 +28,21 @@ export function ProductCard({
   imagePath,
 }: ProductCardProps) {
   return (
-    <Card>
-      <CardHeader className="flex overflow-hidden flex-col">
-        <div className="relative w-full h-auto aspect-video">
-          <Image src={imagePath} fill alt={name} />
-        </div>
-        <CardTitle>{name}</CardTitle>
-        <CardDescription>{formatCurrency(priceInCents / 100)}</CardDescription>
-      </CardHeader>
-      <CardContent className="grow">
-        <p>{description}</p>
-      </CardContent>
+    <Card className="hover:shadow-lg transition-shadow">
+      <Link href={`/products/${id}`}>
+        <CardHeader className="flex overflow-hidden flex-col">
+          <div className="relative w-full h-auto aspect-video">
+            <Image src={imagePath} fill alt={name} />
+          </div>
+          <CardTitle>{name}</CardTitle>
+          <CardDescription>
+            {formatCurrency(priceInCents / 100)}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grow">
+          <p>{description}</p>
+        </CardContent>
+      </Link>
       <CardFooter>
         <AddToCartButton productId={id} />
       </CardFooter>
