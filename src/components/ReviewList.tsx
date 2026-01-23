@@ -25,7 +25,6 @@ export function ReviewList({ reviews }: { reviews: Review[] }) {
           className="border-b border-gray-100 pb-6 last:border-b-0"
         >
           <div className="flex flex-col gap-3">
-            {/* User and Date */}
             <div className="flex items-center justify-between">
               <span className="font-['Clash_Display'] font-normal text-[14px] text-[#2A254B]">
                 {review.user.email.split("@")[0]}
@@ -38,11 +37,7 @@ export function ReviewList({ reviews }: { reviews: Review[] }) {
                 })}
               </span>
             </div>
-
-            {/* Star Rating */}
             <StarRating rating={review.rating} size={16} />
-
-            {/* Comment */}
             {review.comment && (
               <p className="font-['Satoshi'] text-[16px] leading-[22px] text-[#505977]">
                 {review.comment}

@@ -115,21 +115,22 @@ export default async function ProductPage({
                   </button>
                 </div>
               </div>
-
+              <div className="w-fit">
               <AddToCartButton productId={product.id} />
+            </div>
             </div>
           </div>
         </div>
       </div>
+      <FeaturedImagesSection />
+      <BrandFeaturesSection />
+      <ContactSection />
       <ReviewsSection
         productId={id}
         reviews={reviews}
         averageRating={average}
         canReview={canReview}
       />
-      <FeaturedImagesSection />
-      <BrandFeaturesSection />
-      <ContactSection />
     </>
   );
 }
