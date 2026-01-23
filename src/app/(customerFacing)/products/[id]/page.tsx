@@ -12,7 +12,7 @@ import {
   ContactSection,
   FeaturedImagesSection,
 } from "../../_components/sections";
-
+import { formatCurrency } from "@/lib/formater";
 
 export default async function ProductPage({
   params,
@@ -45,7 +45,7 @@ export default async function ProductPage({
                 {product.name}
               </h1>
               <span className="font-['Satoshi'] font-normal text-[24px] leading-8 text-[#12131A]">
-                ${product.priceInCents}
+                {formatCurrency(product.priceInCents / 100)}
               </span>
             </div>
 

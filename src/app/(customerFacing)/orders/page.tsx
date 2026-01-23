@@ -11,7 +11,7 @@ export default async function myOrderPage() {
 
   if (!clerkId) return redirect("/sign-in?redirect_url=/orders");
 
-  const { orders, error } = await getOrderForUser();
+  const { orders } = await getOrderForUser();
 
   return (
     <div className="container mx-auto py-8">
