@@ -11,6 +11,7 @@ import {
   BrandFeaturesSection,
   ContactSection,
   FeaturedImagesSection,
+  ReviewsSection,
 } from "../../_components/sections";
 import { formatCurrency } from "@/lib/formater";
 
@@ -120,6 +121,12 @@ export default async function ProductPage({
           </div>
         </div>
       </div>
+      <ReviewsSection
+        productId={id}
+        reviews={reviews}
+        averageRating={average}
+        canReview={canReview}
+      />
       <FeaturedImagesSection />
       <BrandFeaturesSection />
       <ContactSection />
