@@ -28,7 +28,7 @@ export function ProductCard({
   imagePath,
 }: ProductCardProps) {
   return (
-    <Card className="hover:shadow-lg transition-shadow">
+    <Card className="hover:shadow-lg transition-shadow flex justify-between">
       <Link href={`/products/${id}`}>
         <CardHeader className="flex overflow-hidden flex-col">
           <div className="relative w-full h-auto aspect-video">
