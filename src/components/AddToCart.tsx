@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-export async function addToCart(productId: string) {
+export async function addToCart(productId: string, quantity: number) {
   const { userId: clerkId } = await auth();
 
   if (!clerkId) {
@@ -45,14 +45,14 @@ export async function addToCart(productId: string) {
       if (existingItem) {
         await tx.cartItem.update({
           where: { id: existingItem.id },
-          data: { quantity: { increment: 1 } },
+          data: { quantity: { increment: quantity } },
         });
       } else {
         await tx.cartItem.create({
           data: {
             cartId: cart.id,
             productId,
-            quantity: 1,
+            quantity: quantity,
           },
         });
       }

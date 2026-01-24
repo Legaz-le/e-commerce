@@ -12,10 +12,10 @@ export function useGuestCart() {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  const addItem = (item: string) => {
+  const addItem = (productId: string, quantity: number) => {
     setCartItems((prevItem) => {
       const existingItem = prevItem.findIndex(
-        (cartItem) => cartItem.productId === item,
+        (cartItem) => cartItem.productId === productId,
       );
 
       let newCart = [...prevItem];
@@ -24,10 +24,10 @@ export function useGuestCart() {
         newCart = [...prevItem];
         newCart[existingItem] = {
           ...newCart[existingItem],
-          quantity: newCart[existingItem].quantity + 1,
+          quantity: newCart[existingItem].quantity + quantity,
         };
       } else {
-        newCart.push({ productId: item, quantity: 1 });
+        newCart.push({ productId, quantity });
       }
       localStorage.setItem("guestCart", JSON.stringify(newCart));
       return newCart;

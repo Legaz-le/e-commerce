@@ -5,7 +5,6 @@ import {
   canUserReview,
 } from "@/actions/reviews";
 import Image from "next/image";
-import { AddToCartButton } from "@/components/AddToCartButton";
 import { notFound } from "next/navigation";
 import {
   BrandFeaturesSection,
@@ -14,6 +13,7 @@ import {
   ReviewsSection,
 } from "../../_components/sections";
 import { formatCurrency } from "@/lib/formater";
+import { ProductAction } from "../_components/ProductActions";
 
 export default async function ProductPage({
   params,
@@ -97,28 +97,7 @@ export default async function ProductPage({
                 </div>
               </div>
             </div>
-
-            <div className="flex flex-row items-center justify-between px-10 py-7 border-t border-gray-100">
-              <div className="flex flex-row items-center gap-[22px]">
-                <span className="font-['Clash_Display'] font-normal text-[16px] leading-5 text-[#2A254B]">
-                  Amount:
-                </span>
-                <div className="flex flex-row justify-between items-center px-4 py-3 gap-[33px] bg-[#F9F9F9] h-[46px]">
-                  <button className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-[#2A254B]">
-                    -
-                  </button>
-                  <span className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#2A254B]">
-                    1
-                  </span>
-                  <button className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-[#2A254B]">
-                    +
-                  </button>
-                </div>
-              </div>
-              <div className="w-fit">
-              <AddToCartButton productId={product.id} />
-            </div>
-            </div>
+            <ProductAction productId={product.id} />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { useAuth } from "@clerk/nextjs";
 import { addToCart } from "@/components/AddToCart";
 import { Button } from "./ui/button";
 
-export function AddToCartButton({ productId }: { productId: string }) {
+export function AddToCartButton({ productId, quantity }: { productId: string, quantity: number }) {
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const { isSignedIn } = useAuth();
@@ -16,7 +16,7 @@ export function AddToCartButton({ productId }: { productId: string }) {
     setMessage(null);
 
     if (!isSignedIn) {
-      addItem(productId)
+      addItem(productId, quantity)
       setMessage("Added to cart!");
       setTimeout(() => setMessage(null), 2000)
       return;
@@ -24,7 +24,7 @@ export function AddToCartButton({ productId }: { productId: string }) {
 
     startTransition(async () => {
       try {
-        const result = await addToCart(productId);
+        const result = await addToCart(productId, quantity);
 
         if (result.success) {
           setMessage("Added to cart!");
