@@ -4,13 +4,13 @@ import { Star } from "lucide-react";
 
 type StarRatingInteractiveProps = {
   rating: number;
-  onRatingChange: (rating: number) => void;
+  onRatingChangeAction: (rating: number) => void;
   size?: number;
 };
 
 export function StarRatingInteractive({
   rating,
-  onRatingChange,
+  onRatingChangeAction,
   size,
 }: StarRatingInteractiveProps) {
   const stars = [1, 2, 3, 4, 5];
@@ -22,7 +22,7 @@ export function StarRatingInteractive({
           size={size || 20}
           fill={item <= rating ? "gold" : "none"}
           stroke={item <= rating ? "gold" : "gray"}
-          onClick={() => onRatingChange(item)}
+          onClick={() => onRatingChangeAction(item)}
           className="cursor-pointer"
         />
       ))}

@@ -36,6 +36,9 @@ export default async function ProductPage({
               src={product.imagePath}
               alt={product.name}
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={90}
+              priority
               className="object-cover"
             />
           </div>
