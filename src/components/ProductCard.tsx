@@ -44,7 +44,7 @@ export function ProductCard({
         </CardContent>
       </Link>
       <CardFooter>
-        <AddToCartButton productId={id} />
+        <AddToCartButton productId={id} quantity={1}  />
       </CardFooter>
     </Card>
   );

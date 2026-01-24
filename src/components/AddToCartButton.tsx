@@ -6,7 +6,13 @@ import { useAuth } from "@clerk/nextjs";
 import { addToCart } from "@/components/AddToCart";
 import { Button } from "./ui/button";
 
-export function AddToCartButton({ productId, quantity }: { productId: string, quantity: number }) {
+export function AddToCartButton({
+  productId,
+  quantity,
+}: {
+  productId: string;
+  quantity: number;
+}) {
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const { isSignedIn } = useAuth();
@@ -16,9 +22,9 @@ export function AddToCartButton({ productId, quantity }: { productId: string, qu
     setMessage(null);
 
     if (!isSignedIn) {
-      addItem(productId, quantity)
+      addItem(productId, quantity);
       setMessage("Added to cart!");
-      setTimeout(() => setMessage(null), 2000)
+      setTimeout(() => setMessage(null), 2000);
       return;
     }
 

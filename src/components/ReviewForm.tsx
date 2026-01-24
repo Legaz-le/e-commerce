@@ -38,7 +38,7 @@ export function ReviewForm({ productId }: { productId: string }) {
         </label>
         <StarRatingInteractive
           rating={star}
-          onRatingChange={setStar}
+          onRatingChangeAction={setStar}
           size={28}
         />
       </div>
