@@ -6,6 +6,8 @@ import { QuantityControls } from "./QuantityControls";
 import { Trash2 } from "lucide-react";
 import { deleteCartItem } from "@/actions/cartQuantity";
 import { useTransition } from "react";
+import { useUser } from "@clerk/nextjs";
+import { useGuestCart } from "@/hooks/useGuestCart";
 
 export type ProductCardBasketProps = {
   id: string;
@@ -26,12 +28,18 @@ export function ProductCardBasket({
   imagePath,
   quantity,
 }: ProductCardBasketProps) {
+  const { user } = useUser();
+  const { removeItem } = useGuestCart();
   const [isPending, startTransition] = useTransition();
 
   function handleDelete() {
-    startTransition(async () => {
-      await deleteCartItem(cartItemId);
-    });
+    if (!user) {
+      removeItem(id);
+    } else {
+      startTransition(async () => {
+        await deleteCartItem(cartItemId);
+      });
+    }
   }
 
   return (

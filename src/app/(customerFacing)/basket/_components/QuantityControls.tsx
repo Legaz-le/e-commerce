@@ -1,6 +1,8 @@
 "use client";
 
 import { incrementAndDecrement } from "@/actions/cartQuantity";
+import { useGuestCart } from "@/hooks/useGuestCart";
+import { useUser } from "@clerk/nextjs";
 import { useState, useTransition, useEffect } from "react";
 
 export function QuantityControls({
@@ -10,26 +12,38 @@ export function QuantityControls({
   productId: string;
   quantity: number;
 }) {
+  const { user } = useUser();
+  const { updateQuantity } = useGuestCart();
   const [isPending, startTransition] = useTransition();
   const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);
 
   function handleIncrement() {
-    setOptimisticQuantity((value) => value + 1);
-    startTransition(async () => {
-      await incrementAndDecrement(productId, "increment");
-    });
+    if (!user) {
+      setOptimisticQuantity((value) => value + 1);
+      updateQuantity(productId, "increment");
+    } else {
+      startTransition(async () => {
+        await incrementAndDecrement(productId, "increment");
+      });
+    }
   }
 
   function handleDecrement() {
-    setOptimisticQuantity((value) => value - 1);
-    startTransition(async () => {
-      await incrementAndDecrement(productId, "decrement");
-    });
+    if (optimisticQuantity > 1) {
+      if (!user) {
+        setOptimisticQuantity((value) => value - 1);
+        updateQuantity(productId, "decrement");
+      } else {
+        startTransition(async () => {
+          await incrementAndDecrement(productId, "decrement");
+        });
+      }
+    }
   }
-  
+
   useEffect(() => {
-    setOptimisticQuantity(quantity)
-  },[quantity])
+    setOptimisticQuantity(quantity);
+  }, [quantity]);
 
   return (
     <div className="flex items-center justify-center gap-2">
