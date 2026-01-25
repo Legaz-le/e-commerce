@@ -34,7 +34,8 @@
     "stripe": "^20.0.0",
     "svix": "^1.84.1",
     "tailwind-merge": "^3.4.0",
-    "zod": "^4.1.13"
+    "zod": "^4.1.13",
+    "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@react-email/preview-server": "^5.0.8",
