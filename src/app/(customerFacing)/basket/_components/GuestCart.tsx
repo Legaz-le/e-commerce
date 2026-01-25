@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useGuestCart } from "@/hooks/useGuestCart";
+import { useCartStore } from "@/store/cartStore";
 import { getProductsById } from "@/actions/getProductsByIds";
 import { ProductCardBasket } from "./ProductCardBasket";
 import { formatCurrency } from "@/lib/formater";
@@ -15,25 +15,27 @@ type Product = {
 };
 
 export function GuestCart() {
-  const { guestCart } = useGuestCart();
+  const items =  useCartStore((state) => state.items);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchProducts() {
-      if (!guestCart) {
+      if (items.length === 0) {
+        setProducts([]);
+        setIsLoading(false);
         return;
       }
-      const productIds = guestCart.map((item) => item.productId);
+      const productIds = items.map((item) => item.productId);
       const fetchedProducts = await getProductsById(productIds);
       setProducts(fetchedProducts);
       setIsLoading(false);
     }
     fetchProducts();
-  }, [guestCart]);
+  }, [items]);
 
   const subtotal = products.reduce((sum, product) => {
-    const carItem = guestCart.find((cart) => cart.productId === product.id);
+    const carItem = items.find((cart) => cart.productId === product.id);
     const quantity = carItem?.quantity || 0;
     return sum + product.priceInCents * quantity;
   }, 0);
@@ -49,7 +51,7 @@ export function GuestCart() {
           ) : (
             <>
               {products.map((item) => {
-                const carItem = guestCart.find(
+                const carItem = items.find(
                   (cart) => cart.productId === item.id,
                 );
                 const quantity = carItem?.quantity || 0;

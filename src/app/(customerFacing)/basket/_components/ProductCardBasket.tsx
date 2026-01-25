@@ -7,7 +7,7 @@ import { Trash2 } from "lucide-react";
 import { deleteCartItem } from "@/actions/cartQuantity";
 import { useTransition } from "react";
 import { useUser } from "@clerk/nextjs";
-import { useGuestCart } from "@/hooks/useGuestCart";
+import { useCartStore } from "@/store/cartStore";
 
 export type ProductCardBasketProps = {
   id: string;
@@ -29,7 +29,7 @@ export function ProductCardBasket({
   quantity,
 }: ProductCardBasketProps) {
   const { user } = useUser();
-  const { removeItem } = useGuestCart();
+  const removeItem = useCartStore((state) => state.removeItem);
   const [isPending, startTransition] = useTransition();
 
   function handleDelete() {

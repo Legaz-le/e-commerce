@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useGuestCart } from "@/hooks/useGuestCart";
+import { useCartStore } from "@/store/cartStore";
 import { useAuth } from "@clerk/nextjs";
 import { addToCart } from "@/components/AddToCart";
 import { Button } from "./ui/button";
@@ -16,7 +16,7 @@ export function AddToCartButton({
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const { isSignedIn } = useAuth();
-  const { addItem } = useGuestCart();
+  const addItem = useCartStore((state) => state.addItem)
 
   const handleAddToCart = async () => {
     setMessage(null);

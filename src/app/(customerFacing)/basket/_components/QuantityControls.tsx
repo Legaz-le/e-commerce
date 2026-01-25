@@ -1,7 +1,7 @@
 "use client";
 
 import { incrementAndDecrement } from "@/actions/cartQuantity";
-import { useGuestCart } from "@/hooks/useGuestCart";
+import { useCartStore } from "@/store/cartStore";
 import { useUser } from "@clerk/nextjs";
 import { useState, useTransition, useEffect } from "react";
 
@@ -13,7 +13,7 @@ export function QuantityControls({
   quantity: number;
 }) {
   const { user } = useUser();
-  const { updateQuantity } = useGuestCart();
+  const updateQuantity = useCartStore((state) => state.updateQuantity)
   const [isPending, startTransition] = useTransition();
   const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);
 
