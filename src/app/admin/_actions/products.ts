@@ -56,7 +56,7 @@ const editSchema = addSchema.extend({
 export async function updateProduct(
   id: string,
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
   const result = editSchema.safeParse(Object.fromEntries(formData.entries()));
   if (!result.success) {
@@ -86,7 +86,7 @@ export async function updateProduct(
 
 export async function toggleProductAvailability(
   id: string,
-  isAvailableForPurchase: boolean
+  isAvailableForPurchase: boolean,
 ) {
   await prisma.product.update({
     where: { id },
@@ -98,6 +98,18 @@ export async function toggleProductAvailability(
 }
 
 export async function deleteProduct(id: string) {
+  const orderItems = await prisma.orderItem.findFirst({
+    where: { productId: id },
+  });
+
+  if (orderItems) {
+    throw new Error("Cannot delete product with existing orders");
+  }
+
+  await prisma.cartItem.deleteMany({ where: { productId: id } });
+  await prisma.downloadVerification.deleteMany({ where: { productId: id } });
+  await prisma.review.deleteMany({ where: { productId: id } });
+
   const product = await prisma.product.delete({ where: { id } });
   if (product == null) return notFound();
 

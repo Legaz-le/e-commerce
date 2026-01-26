@@ -44,9 +44,10 @@ export const getFeaturedProducts = cache(() => {
   return prisma.product.findMany({
     where: { isAvailableForPurchase: true },
     orderBy: { createdAt: "desc" },
+    skip: 1,
     take: 4,
   });
-}, ["/", "getFeaturedProducts"]);
+}, ["/", "getFeaturedProducts",]);
 
 export const getPopularProducts = cache(() => {
   return prisma.product.findMany({
