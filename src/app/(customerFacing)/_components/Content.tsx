@@ -4,6 +4,8 @@ import {
   imageType,
   PopularProductsType,
 } from "../../info-data/Image-text";
+import { formatCurrency } from "@/lib/formater";
+import Link from "next/link";
 export function Content({ image, title, description }: dataType) {
   return (
     <section className="flex flex-col w-[355px] space-y-2">
@@ -14,62 +16,63 @@ export function Content({ image, title, description }: dataType) {
   );
 }
 
-export function ContentImages({ image, title, price }: imageType) {
+export function ContentImages({ id, image, title, price }: imageType) {
   return (
-    <section className="space-y-5">
-      <Image src={image} alt={image} width={355} height={462}  />
-      <div className="space-y-3">
-        <h3 className="text-xl font-mono">{title}</h3>
-        <span className="text-lg font-semibold">{price}</span>
-      </div>
-    </section>
+    <Link href={`/products/${id}`}>
+      <section className="space-y-5">
+        <Image src={image} alt={image} width={355} height={462} />
+        <div className="space-y-3">
+          <h3 className="text-xl font-mono">{title}</h3>
+          <span className="text-lg font-semibold">
+            {formatCurrency(price / 100)}
+          </span>
+        </div>
+      </section>
+    </Link>
   );
 }
 
 export function ContentPopular({
+  id,
   image,
   title,
   price,
-  width,
-  height,
+  isLarge
 }: PopularProductsType) {
   return (
-    <section className="space-y-5">
-      <Image
-        src={image}
-        alt={image}
-        width={width}
-        height={height}
-        
-      />
-      <div className="space-y-3">
-        <h3 className="text-xl font-mono">{title}</h3>
-        <span className="text-lg font-semibold">{price}</span>
-      </div>
-    </section>
+    <Link href={`/products/${id}`}>
+      <section className="space-y-5">
+        <Image src={image} alt={image} width={isLarge ? 745 : 360} height={375} />
+        <div className="space-y-3">
+          <h3 className="text-xl font-mono">{title}</h3>
+          <span className="text-lg font-semibold">
+            {formatCurrency(price / 100)}
+          </span>
+        </div>
+      </section>
+    </Link>
   );
 }
 
 export function LastContent() {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 ">
-     
       <div className="py-16 md:pl-[max(2rem,calc((82vw-1280px)/2+2rem))] pr-0 md:pr-10 xl:pr-45 flex flex-col justify-center space-y-10 px-8 md:px-0">
         <h2 className="text-3xl font-bold">
           From a studio in London to a global brand with over 400 outlets
         </h2>
         <div className="space-y-5">
-        <p className="text-gray-600">
-          When we started Avion, the idea was simple. Make high quality
-          furniture affordable and available for the mass market.
-        </p>
-        <p className="text-gray-600">
-          Handmade, and lovingly crafted furniture and homeware is what we live,
-          breathe and design so our Chelsea boutique become the hotbed for the
-          London interior design community.
-        </p>
+          <p className="text-gray-600">
+            When we started Avion, the idea was simple. Make high quality
+            furniture affordable and available for the mass market.
+          </p>
+          <p className="text-gray-600">
+            Handmade, and lovingly crafted furniture and homeware is what we
+            live, breathe and design so our Chelsea boutique become the hotbed
+            for the London interior design community.
+          </p>
         </div>
-        <button  className="md:w-fit bg-[#F9F9F9] py-4 px-8 cursor-pointer self-center w-full">
+        <button className="md:w-fit bg-[#F9F9F9] py-4 px-8 cursor-pointer self-center w-full">
           Get in touch
         </button>
       </div>

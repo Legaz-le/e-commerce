@@ -1,12 +1,14 @@
 
 
 export type allType = {
+  id: string
   image: string
   title: string
   description: string
-  price: string
+  price: number
   width?: number
   height?: number
+  isLarge: boolean
 }
 
 export type dataType = Pick<allType, "image" | "title" | "description">
@@ -34,56 +36,9 @@ export const data:dataType[] = [
   }
 ]
 
-export type imageType = Pick<allType, 'image' | 'title' | 'price'>
+export type imageType = Pick<allType, 'id'| 'image' | 'title' | 'price'>
 
-export const Images:imageType[] = [
-  {
-    image: "/images/Photo.jpg",
-    title: "The Dandy chair",
-    price: "$250",
-  },
-  {
-    image: "/images/Photo_2.jpg",
-    title: "Rustic Vase Set",
-    price: "$155",
-  },
-  {
-    image: "/images/Photo_3.jpg",
-    title: "The Silky Vase",
-    price: "$125",
-  },
-  {
-    image: "/images/Photo_4.jpg",
-    title: "The Lucy Lamp",
-    price: "$399",
-  }
-]
-
-export type PopularProductsType = Pick<allType, 'image' | 'title' | 'price' | 'width' | 'height'>
-
-export const PopularProducts:PopularProductsType[] = [
-  {
-    image: "/images/Large.jpg",
-    title: "The Popular suede sofa",
-    price: "$980",
-    width: 745,
-    height: 375,
-  },
-  {
-    image: "/images/Photo.jpg",
-    title: "The Dandy chair",
-    price: "$250",
-    width: 360,
-    height: 375,
-  },
-  {
-    image: "/images/Photo_2.2.jpg",
-    title: "The Dandy chair",
-    price: "$250",
-    width: 360,
-    height: 375,
-  },
-]
+export type PopularProductsType = Pick<allType, 'id' | 'image' | 'title' | 'price' | 'width' | 'height' | 'isLarge'>
 
 export type SidebarType = Pick<allType, 'title'>
 

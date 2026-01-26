@@ -4,8 +4,15 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { Sidebar } from "./_components/Sidebar";
 
-
-export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ category?: string; price?: string; designer?: string }> }) {
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    category?: string;
+    price?: string;
+    designer?: string;
+  }>;
+}) {
   const filters = await searchParams;
   return (
     <>
@@ -43,10 +50,10 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
 type Filters = {
   category?: string;
   price?: string;
-  designer?: string
-}
+  designer?: string;
+};
 
-async function ProductsSuspense({filters} : {filters: Filters}) {
+async function ProductsSuspense({ filters }: { filters: Filters }) {
   const products = await getFilteredProducts(filters);
   return products.map((product) => (
     <ProductCard key={product.id} {...product} />
