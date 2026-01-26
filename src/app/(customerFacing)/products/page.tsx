@@ -1,11 +1,12 @@
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard";
-import { getProducts } from "@/lib/cache";
+import { getFilteredProducts } from "@/lib/cache";
 import Image from "next/image";
 import { Suspense } from "react";
 import { Sidebar } from "./_components/Sidebar";
 
 
-export default function ProductsPage() {
+export default async function ProductsPage({ searchParams }: { searchParams: Promise<{ category?: string; price?: string; designer?: string }> }) {
+  const filters = await searchParams;
   return (
     <>
       <div className="w-full">
@@ -31,7 +32,7 @@ export default function ProductsPage() {
               </>
             }
           >
-            <ProductsSuspense />
+            <ProductsSuspense filters={filters} />
           </Suspense>
         </div>
       </div>
@@ -39,8 +40,14 @@ export default function ProductsPage() {
   );
 }
 
-async function ProductsSuspense() {
-  const products = await getProducts();
+type Filters = {
+  category?: string;
+  price?: string;
+  designer?: string
+}
+
+async function ProductsSuspense({filters} : {filters: Filters}) {
+  const products = await getFilteredProducts(filters);
   return products.map((product) => (
     <ProductCard key={product.id} {...product} />
   ));

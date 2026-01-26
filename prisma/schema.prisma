@@ -25,6 +25,9 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  category String?
+  designer String?
+
   cartItems   CartItem[]
   orderItems  OrderItem[]
   downloadVerifications DownloadVerification[]
