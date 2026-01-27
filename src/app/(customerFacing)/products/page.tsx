@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard";
 import { getFilteredProducts } from "@/lib/cache";
 import Image from "next/image";
 import { Suspense } from "react";
 import { Sidebar } from "./_components/Sidebar";
+
+export const metadata: Metadata = {
+  title: "All Product — Avion",
+  description:
+    "Browse our full collection of premium furniture and home decor. Filter by category, price, and designer.",
+};
 
 export default async function ProductsPage({
   searchParams,

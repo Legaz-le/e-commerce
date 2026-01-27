@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { Cart } from "./_components/carts";
 import { CartMerge } from "@/components/CartMerge";
+
+export const metadata: Metadata = {
+  title: "Your Cart — Avion",
+  description: "Review items in your shopping cart and proceed to checkout.",
+};
+
 
 export default function BasketPage() {
   return (

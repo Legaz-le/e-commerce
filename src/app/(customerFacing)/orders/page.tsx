@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getOrderForUser } from "@/actions/orders";
@@ -5,6 +6,11 @@ import { formatCurrency } from "@/lib/formater";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "My Orders — Avion",
+  description: "View your order history and past purchases.",
+};
 
 export default async function myOrderPage() {
   const { userId: clerkId } = await auth();

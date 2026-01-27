@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import { ProductCard } from "@/components/ProductCard";
 import { SearchForm } from "../_components/SearchForm";
+
+export const metadata: Metadata = {
+  title: "Search — Avion",
+  description: "Search our collection of premium furniture and home decor.",
+};
+
 export default async function Search({
   searchParams,
 }: {

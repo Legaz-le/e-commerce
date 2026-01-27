@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { CheckoutForm } from "@/components/CheckoutForm";
+
+export const metadata: Metadata = {
+  title: "Checkout — Avion",
+  description: "Complete your purchase securely with Stripe.",
+};
+
 
 export default async function CheckoutPage() {
   const { userId: clerkId } = await auth();
