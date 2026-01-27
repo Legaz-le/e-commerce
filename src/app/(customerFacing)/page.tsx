@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 import { LastContent } from "./_components/Content";
 import {
   HeroSection,
@@ -8,10 +8,10 @@ import {
   ContactSection,
 } from "./_components/sections";
 
-
 export const metadata: Metadata = {
   title: "Home — Avion",
-  description: "Discover premium furniture and home decor. Shop our curated collection of modern designs.",
+  description:
+    "Discover premium furniture and home decor. Shop our curated collection of modern designs.",
 };
 
 export const revalidate = 3600;

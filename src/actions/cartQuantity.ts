@@ -65,3 +65,13 @@ export async function deleteCartItem(cartItemId: string) {
     return { success: false, error: "Failed to delete" };
   }
 }
+
+export async function cartCountAuth() {
+  const { userId: clerkId } = await auth();
+
+  if (!clerkId) return 0;
+
+  return await prisma.cartItem.count({
+    where: { cart: { user: { clerkId } } },
+  });
+}

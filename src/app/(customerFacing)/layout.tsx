@@ -1,6 +1,7 @@
 import { Footer } from "./_components/Footer";
 import { Nav, NavLink } from "./_components/Navbar";
 import { TopNavbar } from "./_components/TopNavbar";
+import { Toaster } from "sonner";
 
 export const dynamic = "auto";
 
@@ -32,6 +33,7 @@ export default function Layout({
           <Footer />
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

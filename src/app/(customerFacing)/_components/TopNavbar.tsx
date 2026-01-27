@@ -6,8 +6,22 @@ import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { MobileMenu } from "./MobileMenu";
 import { ShoppingBag } from "lucide-react";
+import { useCartStore } from "@/store/cartStore";
+import { useAuth } from "@clerk/nextjs";
+import { useState, useEffect } from "react";
+import { cartCountAuth } from "@/actions/cartQuantity";
 
 export function TopNavbar() {
+  const guestItems = useCartStore((state) => state.items);
+  const { isSignedIn } = useAuth();
+  const [authCount, setAuthCount] = useState(0);
+  const cartCount = isSignedIn ? authCount : guestItems.length;
+
+  useEffect(() => {
+    if (!isSignedIn) return;
+    cartCountAuth().then((count) => setAuthCount(count));
+  }, [isSignedIn]);
+
   return (
     <div className=" px-15">
       <div className="flex items-center justify-between mt-5">
@@ -24,7 +38,7 @@ export function TopNavbar() {
           <h1 className="text-2xl font-medium">Avion</h1>
         </NavLink>
         <div className="sm:flex space-x-5 hidden ">
-          <Link href="/basket">
+          <Link href="/basket" className="relative">
             <Image
               src="/images/Shopping--cart.png"
               alt="Shopping Cart"
@@ -32,6 +46,11 @@ export function TopNavbar() {
               height={20}
               className="cursor-pointer"
             />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-[#2A254B] text-white text-sm w-4 h-4 flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
           </Link>
           <SignedOut>
             <SignInButton>
