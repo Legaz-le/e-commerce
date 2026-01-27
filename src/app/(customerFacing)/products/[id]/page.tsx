@@ -57,9 +57,25 @@ export default async function ProductPage({
   const { reviews } = await getReviewForProduct(id);
   const { average } = await getAverageRating(id);
   const canReview = await canUserReview(id);
-
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    image: product.imagePath,
+    offers: {
+      "@type": "Offer",
+      price: product.priceInCents / 100,
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+  };
   return (
     <>
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        type="application/ld+json"
+      ></script>
       <div className="bg-white">
         <div className="flex flex-col lg:flex-row min-h-[759px]">
           <div className="relative w-full lg:w-1/2 h-[400px] lg:h-[759px]">
