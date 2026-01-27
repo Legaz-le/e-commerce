@@ -15,7 +15,7 @@ async function getSalesData() {
   });
 
   return {
-    amount: data._sum.totalPaidInCents || 0 / 100,
+    amount: (data._sum.totalPaidInCents || 0) / 100,
     numberOfSales: data._count,
   };
 }
@@ -38,8 +38,8 @@ async function getUserData() {
 
 async function getProductData() {
   const [activeProduct, notActiveProduct] = await Promise.all([
-    prisma.product.count({ where: { isAvailableForPurchase: false } }),
     prisma.product.count({ where: { isAvailableForPurchase: true } }),
+    prisma.product.count({ where: { isAvailableForPurchase: false } }),
   ]);
   return {
     activeProduct,
@@ -54,25 +54,25 @@ export default async function AdminDashboard() {
     getProductData(),
   ]);
   return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <DashboardCard
-          title="Sales"
-          subtitle={`${formatNumber(salesData.numberOfSales)} Orders`}
-          body={formatCurrency(salesData.amount)}
-        />
-        <DashboardCard
-          title="Customers"
-          subtitle={`${formatCurrency(
-            userData.averageValuePerUser
-          )} Average Value`}
-          body={formatNumber(userData.userCount)}
-        />
-        <DashboardCard
-          title="Active Products"
-          subtitle={`${formatNumber(productData.notActiveProduct)} Inactive`}
-          body={formatNumber(productData.activeProduct)}
-        />
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <DashboardCard
+        title="Sales"
+        subtitle={`${formatNumber(salesData.numberOfSales)} Orders`}
+        body={formatCurrency(salesData.amount)}
+      />
+      <DashboardCard
+        title="Customers"
+        subtitle={`${formatCurrency(
+          userData.averageValuePerUser,
+        )} Average Value`}
+        body={formatNumber(userData.userCount)}
+      />
+      <DashboardCard
+        title="Active Products"
+        subtitle={`${formatNumber(productData.notActiveProduct)} Inactive`}
+        body={formatNumber(productData.activeProduct)}
+      />
+    </div>
   );
 }
 
