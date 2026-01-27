@@ -14,6 +14,37 @@ import {
 } from "../../_components/sections";
 import { formatCurrency } from "@/lib/formater";
 import { ProductAction } from "../_components/ProductActions";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const product = await prisma.product.findUnique({ where: { id } });
+
+  if (!product) {
+    return { title: "Product Not Found — Avion" };
+  }
+
+  return {
+    title: `${product.name} — Avion`,
+    description: product.description.slice(0, 160),
+    openGraph: {
+      title: product.name,
+      description: product.description.slice(0, 160),
+      images: [product.imagePath],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: product.description.slice(0, 160),
+      images: [product.imagePath],
+    },
+  };
+}
 
 export default async function ProductPage({
   params,
