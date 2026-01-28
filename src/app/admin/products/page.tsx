@@ -46,6 +46,7 @@ async function ProductsTable() {
       priceInCents: true,
       isAvailableForPurchase: true,
       _count: { select: { orderItems: true } },
+      stock: true,
     },
     orderBy: { name: "asc" },
   });
@@ -62,6 +63,7 @@ async function ProductsTable() {
           <TableHead>Name</TableHead>
           <TableHead>Price</TableHead>
           <TableHead>Orders</TableHead>
+          <TableHead>Stock</TableHead>
           <TableHead className="w-0">
             <span className="sr-only">Action</span>
           </TableHead>
@@ -79,13 +81,18 @@ async function ProductsTable() {
               ) : (
                 <>
                   <span className="sr-only">Unavailable</span>
-                  <XCircle  className="stroke-destructive"/>
+                  <XCircle className="stroke-destructive" />
                 </>
               )}
             </TableCell>
             <TableCell>{product.name}</TableCell>
             <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
             <TableCell>{formatNumber(product._count.orderItems)}</TableCell>
+            <TableCell>
+              <span className={product.stock < 5 ? "text-red-500 font-semibold" : ""}>
+                {product.stock}
+              </span>
+            </TableCell>
             <TableCell>
               <DropdownMenu>
                 <DropdownMenuTrigger>

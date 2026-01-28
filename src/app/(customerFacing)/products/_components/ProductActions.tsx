@@ -4,7 +4,13 @@ import { useState } from "react";
 import { ProductQuantitySelector } from "./ProductQuantitySelector";
 import { AddToCartButton } from "@/components/AddToCartButton";
 
-export function ProductAction({ productId }: { productId: string }) {
+export function ProductAction({
+  productId,
+  stock,
+}: {
+  productId: string;
+  stock: number;
+}) {
   const [quantity, setQuantity] = useState(1);
 
   return (
@@ -16,10 +22,15 @@ export function ProductAction({ productId }: { productId: string }) {
         <ProductQuantitySelector
           initialQuantity={1}
           onChangeAction={setQuantity}
+          max={stock}
         />
       </div>
       <div className="w-fit">
-        <AddToCartButton productId={productId} quantity={quantity} />
+        <AddToCartButton
+          productId={productId}
+          quantity={quantity}
+          stock={stock}
+        />
       </div>
     </div>
   );

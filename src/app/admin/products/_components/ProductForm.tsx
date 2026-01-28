@@ -17,14 +17,14 @@ import {
 
 export function ProductForm({ product }: { product?: Product | null }) {
   const [priceInCents, setPriceInCents] = useState<number>(
-    product?.priceInCents || 0
+    product?.priceInCents || 0,
   );
   const [fileUrl, setFileUrl] = useState<string>(product?.filePath || "");
   const [imageUrl, setImageUrl] = useState<string>(product?.imagePath || "");
 
   const [error, formAction] = useActionState(
     product == null ? addProduct : updateProduct.bind(null, product.id),
-    {}
+    {},
   );
 
   return (
@@ -69,6 +69,20 @@ export function ProductForm({ product }: { product?: Product | null }) {
         />
         {error.description && (
           <div className="text-destructive">{error.description}</div>
+        )}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="Amount">Amount</Label>
+        <Input
+          type="number"
+          id="stock"
+          name="stock"
+          required
+          defaultValue={product?.stock || 0}
+          min="0"
+        />
+        {error.stock && (
+          <div className="text-destructive">{error.stock}</div>
         )}
       </div>
 

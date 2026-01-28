@@ -86,6 +86,16 @@ export async function POST(req: NextRequest) {
             },
           });
 
+          await Promise.all(
+            cartItems.map((item) =>
+              tx.product.update({
+                where: { id: item.productId },
+                data: { stock: { decrement: item.quantity } },
+              }),
+            ),
+          );
+          
+
           const productIds = [
             ...new Set(cartItems.map((item) => item.productId)),
           ];
@@ -180,27 +190,37 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      const order = await prisma.order.create({
-        data: {
-          userId: user.id,
-          paymentIntentId: intent,
-          totalPaidInCents: pricePaidInCents,
-          items: {
-            create: {
-              productId,
-              quantity: 1,
-              priceInCents: pricePaidInCents,
+      const order = await prisma.$transaction(async (tx) => {
+        const newOrder = await tx.order.create({
+          data: {
+            userId: user.id,
+            paymentIntentId: intent,
+            totalPaidInCents: pricePaidInCents,
+            items: {
+              create: {
+                productId,
+                quantity: 1,
+                priceInCents: pricePaidInCents,
+              },
             },
           },
-        },
+        });
+      
+        await tx.product.update({
+          where: { id: productId },
+          data: { stock: { decrement: 1 } },
+        });
+        
+         await tx.downloadVerification.create({
+          data: {
+            productId,
+            expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
+          },
+        });
+      
+        return newOrder;
       });
 
-      const downloadVerification = await prisma.downloadVerification.create({
-        data: {
-          productId,
-          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        },
-      });
 
       const fullImageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000"}${product.imagePath}`;
 
@@ -226,7 +246,7 @@ export async function POST(req: NextRequest) {
                 },
                 priceInCents: pricePaidInCents,
                 quantity: 1,
-                downloadVerificationId: downloadVerification.id,
+                downloadVerificationId: order.id,
               },
             ],
           }),

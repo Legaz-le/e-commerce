@@ -5,9 +5,11 @@ import { useState } from "react";
 export function ProductQuantitySelector({
   initialQuantity = 1,
   onChangeAction,
+  max,
 }: {
   initialQuantity: number;
   onChangeAction: (quantity: number) => void;
+  max: number;
 }) {
   const [quantity, setQuantity] = useState(initialQuantity);
 
@@ -20,6 +22,7 @@ export function ProductQuantitySelector({
   }
 
   function handleIncrement() {
+    if (quantity >= max) return;
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     onChangeAction(newQuantity);
@@ -39,6 +42,7 @@ export function ProductQuantitySelector({
       </span>
       <button
         onClick={handleIncrement}
+        disabled={quantity >= max}
         className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-[#2A254B] cursor-pointer"
       >
         +

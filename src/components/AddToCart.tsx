@@ -11,7 +11,7 @@ export async function addToCart(productId: string, quantity: number) {
     throw new Error("Please sign in to add items to cart");
   }
   console.log("clerkId:", clerkId);
-  
+
   try {
     await prisma.$transaction(async (tx) => {
       const user = await tx.user.findUnique({
@@ -27,6 +27,13 @@ export async function addToCart(productId: string, quantity: number) {
         where: { userId: user.id },
       });
 
+      const product = await tx.product.findUnique({
+        where: { id: productId },
+        select: { stock: true },
+      });
+      
+      if(!product) throw new Error("Product not found")
+
       if (!cart) {
         cart = await tx.cart.create({
           data: { userId: user.id },
@@ -41,6 +48,9 @@ export async function addToCart(productId: string, quantity: number) {
           },
         },
       });
+      
+      const totalQuantity = (existingItem?.quantity || 0) + quantity
+      if(product.stock < totalQuantity) throw new Error(`Only ${product.stock} left in stock`)
 
       if (existingItem) {
         await tx.cartItem.update({

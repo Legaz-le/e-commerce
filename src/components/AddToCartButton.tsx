@@ -10,9 +10,11 @@ import { toast } from "sonner";
 export function AddToCartButton({
   productId,
   quantity,
+  stock,
 }: {
   productId: string;
   quantity: number;
+  stock: number;
 }) {
   const [isPending, startTransition] = useTransition();
   const { isSignedIn } = useAuth();
@@ -46,11 +48,11 @@ export function AddToCartButton({
     <div className="w-full">
       <Button
         onClick={handleAddToCart}
-        disabled={isPending}
+        disabled={isPending || stock <= 0}
         size="lg"
         className="w-full cursor-pointer"
       >
-        {isPending ? "Adding..." : "Add to Cart"}
+        {isPending ? "Adding..." : stock <= 0 ? "Out of Stock" : "Add to Cart"}
       </Button>
     </div>
   );

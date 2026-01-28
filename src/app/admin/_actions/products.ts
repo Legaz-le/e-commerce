@@ -11,6 +11,7 @@ const addSchema = z.object({
   priceInCents: z.coerce.number().int().min(1),
   fileUrl: z.string().min(1, "File is required"),
   imageUrl: z.string().min(1, "Image is required"),
+  stock: z.coerce.number().int().min(0),
 });
 
 function formatErrors(issues: z.core.$ZodIssue[]) {
@@ -40,6 +41,7 @@ export async function addProduct(prevState: unknown, formData: FormData) {
       priceInCents: data.priceInCents,
       filePath: data.fileUrl,
       imagePath: data.imageUrl,
+      stock: data.stock,
     },
   });
 
@@ -52,6 +54,7 @@ export async function addProduct(prevState: unknown, formData: FormData) {
 const editSchema = addSchema.extend({
   fileUrl: z.string().optional(),
   imageUrl: z.string().optional(),
+  stock: z.coerce.number().int().min(0),
 });
 
 export async function updateProduct(
@@ -77,6 +80,7 @@ export async function updateProduct(
       priceInCents: data.priceInCents,
       filePath: data.fileUrl || product.filePath,
       imagePath: data.imageUrl || product.imagePath,
+      stock: data.stock,
     },
   });
 

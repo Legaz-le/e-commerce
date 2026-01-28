@@ -67,7 +67,10 @@ export default async function ProductPage({
       "@type": "Offer",
       price: product.priceInCents / 100,
       priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
+      availability:
+        product.stock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
     },
   };
   return (
@@ -97,6 +100,17 @@ export default async function ProductPage({
               </h1>
               <span className="font-['Satoshi'] font-normal text-[24px] leading-8 text-[#12131A]">
                 {formatCurrency(product.priceInCents / 100)}
+              </span>
+              <span>
+                {product.stock > 5 ? (
+                  <span className="text-green-600">In Stock</span>
+                ) : product.stock > 0 ? (
+                  <span className="text-yellow-600">
+                    Only{product.stock} left in stock
+                  </span>
+                ) : (
+                  <span className="text-red-600">Out of Stock</span>
+                )}
               </span>
             </div>
 
@@ -147,7 +161,7 @@ export default async function ProductPage({
                 </div>
               </div>
             </div>
-            <ProductAction productId={product.id} />
+            <ProductAction productId={product.id} stock={product.stock} />
           </div>
         </div>
       </div>
