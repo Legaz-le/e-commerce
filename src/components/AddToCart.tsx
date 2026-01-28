@@ -29,10 +29,14 @@ export async function addToCart(productId: string, quantity: number) {
 
       const product = await tx.product.findUnique({
         where: { id: productId },
-        select: { stock: true },
+        select: { stock: true, isAvailableForPurchase: true },
       });
-      
-      if(!product) throw new Error("Product not found")
+
+      if (!product) throw new Error("Product not found");
+
+      if (!product.isAvailableForPurchase) {
+        throw new Error("Product is no longer available");
+      }
 
       if (!cart) {
         cart = await tx.cart.create({
@@ -48,9 +52,10 @@ export async function addToCart(productId: string, quantity: number) {
           },
         },
       });
-      
-      const totalQuantity = (existingItem?.quantity || 0) + quantity
-      if(product.stock < totalQuantity) throw new Error(`Only ${product.stock} left in stock`)
+
+      const totalQuantity = (existingItem?.quantity || 0) + quantity;
+      if (product.stock < totalQuantity)
+        throw new Error(`Only ${product.stock} left in stock`);
 
       if (existingItem) {
         await tx.cartItem.update({
@@ -67,7 +72,8 @@ export async function addToCart(productId: string, quantity: number) {
         });
       }
     });
-
+    
+    revalidatePath("/");
     revalidatePath("/cart");
     revalidatePath("/products");
 

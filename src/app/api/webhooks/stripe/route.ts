@@ -71,6 +71,14 @@ export async function POST(req: NextRequest) {
 
       const { order, downloadVerifications } = await prisma.$transaction(
         async (tx) => {
+          
+          for (const item of cartItems) {
+            if (item.product.stock < item.quantity) {
+              throw new Error(`Insufficient stock for ${item.product.name}`);
+            }
+          }
+
+          
           const newOrder = await tx.order.create({
             data: {
               userId: user.id,
@@ -211,15 +219,22 @@ export async function POST(req: NextRequest) {
           data: { stock: { decrement: 1 } },
         });
         
-         await tx.downloadVerification.create({
+        const downloadVerification = await prisma.downloadVerification.create({
           data: {
             productId,
             expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
           },
         });
       
-        return newOrder;
+        return {order: newOrder, downloadVerification}
       });
+      
+      const downloadVerification = await prisma.downloadVerification.create({
+         data: {
+           productId,
+           expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
+         },
+       });
 
 
       const fullImageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000"}${product.imagePath}`;
@@ -233,9 +248,9 @@ export async function POST(req: NextRequest) {
         html: await render(
           PurchaseReceiptEmail({
             order: {
-              id: order.id,
-              createdAt: order.createdAt,
-              totalPaidInCents: order.totalPaidInCents,
+              id: order.order.id,
+              createdAt: order.order.createdAt,
+              totalPaidInCents: order.order.totalPaidInCents,
             },
             items: [
               {
@@ -246,7 +261,7 @@ export async function POST(req: NextRequest) {
                 },
                 priceInCents: pricePaidInCents,
                 quantity: 1,
-                downloadVerificationId: order.id,
+                downloadVerificationId: downloadVerification.id,
               },
             ],
           }),
