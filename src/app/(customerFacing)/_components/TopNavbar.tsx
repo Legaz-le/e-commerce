@@ -8,18 +8,18 @@ import { MobileMenu } from "./MobileMenu";
 import { ShoppingBag } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useAuth } from "@clerk/nextjs";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { cartCountAuth } from "@/actions/cartQuantity";
 
 export function TopNavbar() {
   const guestItems = useCartStore((state) => state.items);
   const { isSignedIn } = useAuth();
-  const [authCount, setAuthCount] = useState(0);
+  const authCount = useCartStore((state) => state.authCount)
   const cartCount = isSignedIn ? authCount : guestItems.length;
 
   useEffect(() => {
     if (!isSignedIn) return;
-    cartCountAuth().then((count) => setAuthCount(count));
+    cartCountAuth().then((count) => useCartStore.getState().setAuthCount(count));
   }, [isSignedIn]);
 
   return (

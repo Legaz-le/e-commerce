@@ -33,6 +33,7 @@ export function AddToCartButton({
 
         if (result.success) {
           toast.success("Added to cart!");
+          useCartStore.getState().setAuthCount(useCartStore.getState().authCount + quantity)
         }
       } catch (error) {
         if (error instanceof Error) {

@@ -8,6 +8,7 @@ type CartItem = {
 
 type CartStore = {
   items: CartItem[];
+  authCount: number;
   addItem: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (
@@ -15,12 +16,14 @@ type CartStore = {
     action: "increment" | "decrement",
   ) => void;
   clearCart: () => void;
+  setAuthCount: (count: number) => void;
 };
 
 export const useCartStore = create<CartStore>()(
   persist(
     (set) => ({
       items: [],
+      authCount: 0,
 
       addItem: (productId, quantity) =>
         set((state) => {
@@ -76,6 +79,8 @@ export const useCartStore = create<CartStore>()(
         }),
 
       clearCart: () => set({ items: [] }),
+      
+      setAuthCount: (count) => set({ authCount: count })
     }),
     { name: "guest-cart" },
   ),
