@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { notFound, redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 const addSchema = z.object({
   name: z.string().min(1),
@@ -45,6 +45,7 @@ export async function addProduct(prevState: unknown, formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/products");
+  revalidateTag("products", "default");
   redirect("/admin/products");
 }
 
@@ -81,6 +82,7 @@ export async function updateProduct(
 
   revalidatePath("/");
   revalidatePath("/products");
+  revalidateTag("products", "default");
   redirect("/admin/products");
 }
 
@@ -95,6 +97,7 @@ export async function toggleProductAvailability(
 
   revalidatePath("/");
   revalidatePath("/products");
+  revalidateTag("products", "default");
 }
 
 export async function deleteProduct(id: string) {
@@ -115,4 +118,5 @@ export async function deleteProduct(id: string) {
 
   revalidatePath("/");
   revalidatePath("/products");
+  revalidateTag("products", "default");
 }

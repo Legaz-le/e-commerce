@@ -12,12 +12,16 @@ export function cache<T extends Callback>(
   return nexCache(reactCache(cb), keyParts, options);
 }
 
-export const getProducts = cache(() => {
-  return prisma.product.findMany({
-    where: { isAvailableForPurchase: true },
-    orderBy: { name: "asc" },
-  });
-}, ["/products", "getProducts"]);
+export const getProducts = cache(
+  () => {
+    return prisma.product.findMany({
+      where: { isAvailableForPurchase: true },
+      orderBy: { name: "asc" },
+    });
+  },
+  ["/products", "getProducts"],
+  { tags: ["products"] },
+);
 
 export const getFilteredProducts = cache(
   async (filters: { category?: string; price?: string; designer?: string }) => {
@@ -38,21 +42,30 @@ export const getFilteredProducts = cache(
     return prisma.product.findMany({ where, orderBy: { name: "asc" } });
   },
   ["/products", "getFilteredProducts"],
+  { tags: ["products"] },
 );
 
-export const getFeaturedProducts = cache(() => {
-  return prisma.product.findMany({
-    where: { isAvailableForPurchase: true },
-    orderBy: { createdAt: "desc" },
-    skip: 1,
-    take: 4,
-  });
-}, ["/", "getFeaturedProducts",]);
+export const getFeaturedProducts = cache(
+  () => {
+    return prisma.product.findMany({
+      where: { isAvailableForPurchase: true },
+      orderBy: { createdAt: "desc" },
+      skip: 1,
+      take: 4,
+    });
+  },
+  ["/", "getFeaturedProducts"],
+  { tags: ["products"] },
+);
 
-export const getPopularProducts = cache(() => {
-  return prisma.product.findMany({
-    where: { isAvailableForPurchase: true },
-    orderBy: { createdAt: "desc" },
-    take: 3,
-  });
-}, ["/", "getPopularProducts"]);
+export const getPopularProducts = cache(
+  () => {
+    return prisma.product.findMany({
+      where: { isAvailableForPurchase: true },
+      orderBy: { createdAt: "desc" },
+      take: 3,
+    });
+  },
+  ["/", "getPopularProducts"],
+  { tags: ["products"] },
+);
