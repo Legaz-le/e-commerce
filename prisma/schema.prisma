@@ -13,6 +13,13 @@ datasource db {
   provider = "postgresql"
 }
 
+enum OrderStatus {
+PROCESSING
+SHIPPED
+DELIVERED
+CANCELLED
+}
+
 model Product {
   id          String   @id @default(uuid())
   name        String
@@ -88,6 +95,9 @@ model Order {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   reviews   Review[]
+
+  status OrderStatus @default(PROCESSING)
+  trackingNumber String?
 }
 
 model OrderItem {
