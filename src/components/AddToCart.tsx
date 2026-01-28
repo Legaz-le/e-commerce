@@ -74,7 +74,7 @@ export async function addToCart(productId: string, quantity: number) {
     });
     
     revalidatePath("/");
-    revalidatePath("/cart");
+    revalidatePath("/basket");
     revalidatePath("/products");
 
     return { success: true };
