@@ -86,3 +86,34 @@ export async function getOrderStatusBreakdown(timeRange: string) {
     percentage: total > 0 ? (row._count.id / total) * 100 : 0,
   }));
 }
+
+export async function getTopSellingProducts(timeRange: string, limit: number = 10) {
+  const startDate = getStartDate(timeRange);
+  const result = await prisma.orderItem.groupBy({
+    by: ["productId"],
+    where: {
+      order: { createdAt: { gte: startDate }, status: { not: "CANCELLED" } },
+    },
+    _sum: { quantity: true, priceInCents: true },
+    orderBy: { _sum: { quantity: "desc" } },
+    take: limit,
+  });
+
+  const productIds = result.map((r) => r.productId);
+
+  const products = await prisma.product.findMany({
+    where: {
+      id: { in: productIds },
+    },
+    select: { id: true, name: true },
+  });
+
+  const productMap = new Map(products.map((p) => [p.id, p.name]));
+
+  return result.map((row) => ({
+    productId: row.productId,
+    productName: productMap.get(row.productId) ?? "Unknown",
+    totalQuantity: row._sum.quantity ?? 0,
+    totalRevenue: (row._sum.priceInCents ?? 0) / 100,
+  }));
+}
