@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  PieChart,
-  Pie,
-  ResponsiveContainer,
-  Legend,
-  Tooltip,
-} from "recharts";
+import { PieChart, Pie, ResponsiveContainer, Legend, Tooltip } from "recharts";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
@@ -20,20 +14,22 @@ interface OrderStatusChartProps {
 
 export function OrderStatusChart({ data }: OrderStatusChartProps) {
   const colors: Record<string, string> = {
-    PROCESSING: "hsl(var(--chart-1))",
-    SHIPPED: "hsl(var(--chart-2))",
-    DELIVERED: "hsl(var(--chart-3))",
-    CANCELLED: "hsl(var(--destructive))",
+    PROCESSING: "#e76e50",
+    SHIPPED: "#2a9d8f",
+    DELIVERED: "#264653",
+    CANCELLED: "#e63946",
   };
-  
+
   const chartData = data.map((item) => ({
     ...item,
-    fill: colors[item.status] ?? "hsl(var(--muted))"
-  }))
+    fill: colors[item.status] ?? "hsl(var(--muted))",
+  }));
 
   return (
     <Card>
-      <CardHeader><CardTitle>Order Status</CardTitle></CardHeader>
+      <CardHeader>
+        <CardTitle>Order Status</CardTitle>
+      </CardHeader>
       <CardContent>
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">

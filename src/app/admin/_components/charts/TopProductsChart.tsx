@@ -40,7 +40,7 @@ export function TopProductsChart({ data }: TopProductsChartProps) {
               <XAxis type="number" />
               <YAxis type="category" dataKey="name" width={120} />
               <Tooltip />
-              <Bar dataKey="totalQuantity" fill="hsl(var(--chart-2))" />
+              <Bar dataKey="totalQuantity" fill="#2a9d8f" />
             </BarChart>
           </ResponsiveContainer>
         </div>
