@@ -8,7 +8,7 @@ import { formatCurrency } from "@/lib/formater";
 import { useActionState, useState } from "react";
 import { addProduct, updateProduct } from "../../_actions/products";
 import { useFormStatus } from "react-dom";
-import { Product } from "../../../../../generated/prisma/client";
+import { Product } from "@prisma/client";
 import Image from "next/image";
 import {
   CldUploadWidget,
@@ -81,9 +81,7 @@ export function ProductForm({ product }: { product?: Product | null }) {
           defaultValue={product?.stock || 0}
           min="0"
         />
-        {error.stock && (
-          <div className="text-destructive">{error.stock}</div>
-        )}
+        {error.stock && <div className="text-destructive">{error.stock}</div>}
       </div>
 
       <div className="space-y-2">

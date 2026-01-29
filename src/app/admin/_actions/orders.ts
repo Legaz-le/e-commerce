@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import { OrderStatus } from "../../../../generated/prisma";
+import { OrderStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export async function deleteOrder(id: string) {
