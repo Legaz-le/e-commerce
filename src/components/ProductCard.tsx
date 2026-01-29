@@ -18,7 +18,7 @@ type ProductCardProps = {
   priceInCents: number;
   description: string;
   imagePath: string;
-  stock:number
+  stock: number;
 };
 
 export function ProductCard({
@@ -30,20 +30,25 @@ export function ProductCard({
   stock,
 }: ProductCardProps) {
   return (
-    <Card className="hover:shadow-lg transition-shadow flex justify-between">
+    <Card className="group hover:shadow-lg hover:-translate-y-1 flex justify-between transition-all duration-300">
       <Link href={`/products/${id}`}>
         <CardHeader className="flex overflow-hidden flex-col">
-          <div className="relative w-full h-auto aspect-video">
-            <Image src={imagePath} fill alt={name} className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+          <div className="relative w-full h-auto aspect-square sm:aspect-video overflow-hidden rounded-t-lg">
+            <Image
+              src={imagePath}
+              fill
+              alt={name}
+              className="object-cover transition-transform duration-300 group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
             {stock <= 0 && (
               <div className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded text-sm z-10">
                 Out of Stock
               </div>
             )}
-
           </div>
-          <CardTitle>{name}</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-sm sm:text-lg line-clamp-2">{name}</CardTitle>
+          <CardDescription className="text-sm text-gray-600 line-clamp-2">
             {formatCurrency(priceInCents / 100)}
           </CardDescription>
         </CardHeader>
@@ -52,7 +57,7 @@ export function ProductCard({
         </CardContent>
       </Link>
       <CardFooter>
-        <AddToCartButton productId={id} quantity={1}  stock={stock} />
+        <AddToCartButton productId={id} quantity={1} stock={stock} />
       </CardFooter>
     </Card>
   );
