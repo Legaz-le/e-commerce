@@ -16,10 +16,13 @@ import {
 import { MoreVertical } from "lucide-react";
 import { DeleteDropDownItem } from "./_components/OrderActions";
 import prisma from "@/lib/prisma";
+import { OrderStatusForm } from "./_components/OrderStatusForm";
 
 function getOrders() {
   return prisma.order.findMany({
     select: {
+      status: true,
+      trackingNumber: true,
       id: true,
       totalPaidInCents: true,
       user: { select: { email: true } },
@@ -59,6 +62,8 @@ async function OrdersTable() {
           <TableHead>Order ID</TableHead>
           <TableHead>Customer</TableHead>
           <TableHead>Price Paid</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Tracking</TableHead>
           <TableHead className="w-0">
             <span className="sr-only">Actions</span>
           </TableHead>
@@ -67,11 +72,21 @@ async function OrdersTable() {
       <TableBody>
         {orders.map((order) => (
           <TableRow key={order.id}>
-            <TableCell>{order.items.map(item => item.product.name).join(', ')}</TableCell>
+            <TableCell>
+              {order.items.map((item) => item.product.name).join(", ")}
+            </TableCell>
             <TableCell>{order.user.email}</TableCell>
             <TableCell>
               {formatCurrency(order.totalPaidInCents / 100)}
             </TableCell>
+            <TableCell>
+              <OrderStatusForm
+                  orderId={order.id}
+                  currentStatus={order.status}
+                  currentTrackingNumber={order.trackingNumber || ""}
+                />
+            </TableCell>
+            <TableCell>{order.trackingNumber || "—"}</TableCell>
             <TableCell className="text-center">
               <DropdownMenu>
                 <DropdownMenuTrigger>

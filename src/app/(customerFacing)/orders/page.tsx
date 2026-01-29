@@ -12,6 +12,23 @@ export const metadata: Metadata = {
   description: "View your order history and past purchases.",
 };
 
+
+function getStatusColor(status: string) {
+  switch (status) {
+    case "PROCESSING":
+      return "text-yellow-600 bg-yellow-100";
+    case "SHIPPED":
+      return "text-blue-600 bg-blue-100";
+    case "DELIVERED":
+      return "text-green-600 bg-green-100";
+    case "CANCELLED":
+      return "text-red-600 bg-red-100";
+    default:
+      return "";
+  }
+}
+
+
 export default async function myOrderPage() {
   const { userId: clerkId } = await auth();
 
@@ -35,9 +52,17 @@ export default async function myOrderPage() {
             <Card key={order.id} className="mb-4 p-6">
               <div className="flex justify-between items-center mb-4 border-b pb-4">
                 <p className="font-medium">Order #{order.id.slice(0, 8)}</p>
-                <p className="text-sm text-muted-foreground">
-                  {order.createdAt.toLocaleDateString()}
-                </p>
+                <div className="flex items-center gap-4">
+                   <span className={`px-2 py-1 rounded text-sm ${getStatusColor(order.status)}`}>
+                     {order.status}
+                   </span>
+                   {order.trackingNumber && (
+                     <span className="text-sm">Tracking: {order.trackingNumber}</span>
+                   )}
+                   <p className="text-sm text-muted-foreground">
+                     {order.createdAt.toLocaleDateString()}
+                   </p>
+                 </div>
               </div>
               {order.items.map((item) => (
                 <div key={item.id} className="flex items-center gap-4 py-2">
@@ -54,7 +79,6 @@ export default async function myOrderPage() {
                       Qty:{item.quantity}
                     </p>
                   </div>
-
                   <span>{formatCurrency(item.priceInCents / 100)}</span>
                 </div>
               ))}

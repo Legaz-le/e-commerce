@@ -16,6 +16,8 @@ export async function getOrderForUser() {
         select: {
           totalPaidInCents: true,
           id: true,
+          status: true,
+          trackingNumber: true,
           createdAt: true,
           items: {
             select: {
