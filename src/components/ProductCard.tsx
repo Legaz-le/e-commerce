@@ -34,7 +34,7 @@ export function ProductCard({
       <Link href={`/products/${id}`}>
         <CardHeader className="flex overflow-hidden flex-col">
           <div className="relative w-full h-auto aspect-video">
-            <Image src={imagePath} fill alt={name} />
+            <Image src={imagePath} fill alt={name} className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
             {stock <= 0 && (
               <div className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded text-sm z-10">
                 Out of Stock

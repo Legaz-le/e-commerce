@@ -87,8 +87,9 @@ export default async function ProductPage({
               alt={product.name}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              quality={90}
+              quality={100}
               priority
+              unoptimized
               className="object-cover"
             />
           </div>
