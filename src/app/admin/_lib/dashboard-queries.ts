@@ -87,7 +87,10 @@ export async function getOrderStatusBreakdown(timeRange: string) {
   }));
 }
 
-export async function getTopSellingProducts(timeRange: string, limit: number = 10) {
+export async function getTopSellingProducts(
+  timeRange: string,
+  limit: number = 10,
+) {
   const startDate = getStartDate(timeRange);
   const result = await prisma.orderItem.groupBy({
     by: ["productId"],
@@ -116,4 +119,50 @@ export async function getTopSellingProducts(timeRange: string, limit: number = 1
     totalQuantity: row._sum.quantity ?? 0,
     totalRevenue: (row._sum.priceInCents ?? 0) / 100,
   }));
+}
+
+export async function getRevenueMetrics(timeRange: string) {
+  const startDate = getStartDate(timeRange);
+  const previousStartDate = getPreviousPeriodStart(timeRange);
+
+  const [current, previos] = await Promise.all([
+    prisma.order.aggregate({
+      where: {
+        createdAt: { gte: startDate },
+        status: { not: "CANCELLED" },
+      },
+      _sum: { totalPaidInCents: true },
+      _count: { id: true },
+      _avg: { totalPaidInCents: true },
+    }),
+
+    prisma.order.aggregate({
+      where: {
+        createdAt: { gte: previousStartDate, lt: startDate },
+        status: { not: "CANCELLED" },
+      },
+      _sum: { totalPaidInCents: true },
+      _count: { id: true },
+    }),
+  ]);
+  const currentRevenue = (current._sum.totalPaidInCents ?? 0) / 100
+  const previousRevenue = (previos._sum.totalPaidInCents ?? 0) / 100
+  const currentOrders = current._count.id
+  const previousOrders = previos._count.id
+  
+  const revenueGrowth = previousRevenue > 0 
+    ? ((currentRevenue - previousRevenue) / previousRevenue) * 100
+    : 0
+  
+  const ordersGrowth = previousOrders > 0
+    ? ((currentOrders - previousOrders) / previousOrders) * 100
+    : 0
+  
+  return {
+    totalRevenue: currentRevenue,
+    totalOrders: currentOrders,
+    averageOrderValue: (current._avg.totalPaidInCents ?? 0) / 100,
+    revenueGrowth,
+    ordersGrowth,
+  }
 }
