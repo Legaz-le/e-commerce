@@ -18,7 +18,7 @@ export function SearchForm({ defaultValue }: { defaultValue?: string }) {
     <form onSubmit={handleSubmit} className="relative">
       <Search
         size={18}
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-muted"
+        className="absolute left-3 top-1/3 -translate-y-1/2 text-brand-muted"
       />
       <Input
         onChange={(e) => setItem(e.target.value)}
