@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
+import { ClearCart } from "./ClearCart";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ export default async function SuccessPage({
     return (
       <div className="max-w-5xl w-full mx-auto space-y-8">
         <h1 className="text-4xl font-bold">
-          {isSuccess ? "Order Successful!" : "Error"}
+          {isSuccess && <ClearCart />}
         </h1>
         <p className="text-lg">
           Thank you for your purchase! We have sent a confirmation email with
@@ -49,11 +50,12 @@ export default async function SuccessPage({
     if (product == null) return notFound();
 
     const isSuccess = paymentIntent.status === "succeeded";
+  
 
     return (
       <div className="max-w-5xl w-full mx-auto space-y-8">
         <h1 className="text-4xl font-bold">
-          {isSuccess ? "Success!" : "Error"}
+          {isSuccess && <ClearCart />}
         </h1>
         <div className="flex gap-4 items-center">
           <div className="aspect-video shrink-0 w-1/3 relative">

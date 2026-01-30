@@ -4,7 +4,7 @@ import { formatCurrency } from "@/lib/formater";
 import Image from "next/image";
 import { QuantityControls } from "./QuantityControls";
 import { Trash2 } from "lucide-react";
-import { deleteCartItem } from "@/actions/cartQuantity";
+import { cartCountAuth, deleteCartItem } from "@/actions/cartQuantity";
 import { useTransition } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useCartStore } from "@/store/cartStore";
@@ -38,6 +38,8 @@ export function ProductCardBasket({
     } else {
       startTransition(async () => {
         await deleteCartItem(cartItemId);
+        const newCount = await cartCountAuth()
+        useCartStore.getState().setAuthCount(newCount)
       });
     }
   }
