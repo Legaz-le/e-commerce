@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "My Orders — Avion",
   description: "View your order history and past purchases.",

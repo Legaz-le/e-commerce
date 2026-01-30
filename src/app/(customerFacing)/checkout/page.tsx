@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { CheckoutForm } from "@/components/CheckoutForm";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Checkout — Avion",
   description: "Complete your purchase securely with Stripe.",
