@@ -38,60 +38,25 @@ A modern, full-stack e-commerce application for furniture and homeware products 
 - Clerk account
 - Cloudinary account
 
-### Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-# Database
-DATABASE_URL="postgresql://..."
-
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
-CLERK_SECRET_KEY=sk_...
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-
-# Stripe
-STRIPE_SECRET_KEY=sk_...
-NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-
-# Cloudinary
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=...
-
-# App
-NEXT_PUBLIC_SERVER_URL=http://localhost:3000
-
-# Resend (Email)
-RESEND_API_KEY=re_...
-```
 
 ### Installation
 
-1. Clone the repository
-   ```bash
-   git clone https://github.com/yourusername/avion-ecommerce.git
-   cd avion-ecommerce
-   ```
 
-2. Install dependencies
+1. Install dependencies
    ```bash
    npm install
    ```
 
-3. Set up the database
+2. Set up the database
    ```bash
    npx prisma generate
    npx prisma db push
    ```
 
-4. Run the development server
+3. Run the development server
    ```bash
    npm run dev
    ```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Project Structure
 
