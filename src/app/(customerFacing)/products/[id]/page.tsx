@@ -81,7 +81,7 @@ export default async function ProductPage({
       ></script>
       <div className="bg-white">
         <div className="flex flex-col lg:flex-row min-h-[759px]">
-          <div className="relative w-full lg:w-1/2 h-[400px] lg:h-[759px]">
+          <div className="relative w-full lg:w-1/2 h-[400px] lg:h-[759px] animate-fade-in">
             <Image
               src={product.imagePath}
               alt={product.name}
@@ -94,20 +94,26 @@ export default async function ProductPage({
             />
           </div>
 
-          <div className="w-full lg:w-1/2 bg-white px-6 lg:px-10 py-10 lg:py-[51px]">
+          <div className="w-full lg:w-1/2 bg-white px-6 lg:px-10 py-10 lg:py-[51px] animate-slide-in-right">
             <div className="flex flex-col gap-[13px] mb-8">
-              <h1 className="font-display font-normal text-[36px] leading-11 text-brand">
+              <h1 className="font-display font-normal text-[36px] leading-11 text-brand animate-fade-in-up">
                 {product.name}
               </h1>
-              <span className="font-body font-normal text-[24px] leading-8 text-[#12131A]">
+              <span
+                className="font-body font-normal text-[24px] leading-8 text-brand animate-fade-in-up"
+                style={{ animationDelay: "0.1s" }}
+              >
                 {formatCurrency(product.priceInCents / 100)}
               </span>
-              <span>
+              <span
+                className="animate-fade-in-up"
+                style={{ animationDelay: "0.15s" }}
+              >
                 {product.stock > 5 ? (
                   <span className="text-green-600">In Stock</span>
                 ) : product.stock > 0 ? (
                   <span className="text-yellow-600">
-                    Only{product.stock} left in stock
+                    Only {product.stock} left in stock
                   </span>
                 ) : (
                   <span className="text-red-600">Out of Stock</span>
@@ -115,7 +121,10 @@ export default async function ProductPage({
               </span>
             </div>
 
-            <div className="flex flex-col gap-4 p-10 mb-6">
+            <div
+              className="flex flex-col gap-4 p-10 mb-6 animate-fade-in-up"
+              style={{ animationDelay: "0.2s" }}
+            >
               <h2 className="font-display font-normal text-[16px] leading-5 text-brand">
                 Description
               </h2>
@@ -131,7 +140,10 @@ export default async function ProductPage({
               </div>
             </div>
 
-            <div className="mb-6 px-10">
+            <div
+              className="mb-6 px-10 animate-fade-in-up"
+              style={{ animationDelay: "0.3s" }}
+            >
               <h2 className="font-display font-normal text-[16px] leading-5 text-brand mb-7">
                 Dimensions
               </h2>
@@ -162,7 +174,12 @@ export default async function ProductPage({
                 </div>
               </div>
             </div>
-            <ProductAction productId={product.id} stock={product.stock} />
+            <div
+              className="animate-fade-in-up"
+              style={{ animationDelay: "0.4s" }}
+            >
+              <ProductAction productId={product.id} stock={product.stock} />
+            </div>
           </div>
         </div>
       </div>

@@ -23,7 +23,13 @@ export function Section({
   };
 
   return (
-    <section className={cn(bgColors[background], "py-16", className)}>
+    <section
+      className={cn(
+        bgColors[background],
+        "py-16 animate-fade-in-up",
+        className,
+      )}
+    >
       <div
         className={cn(
           "container mx-auto",

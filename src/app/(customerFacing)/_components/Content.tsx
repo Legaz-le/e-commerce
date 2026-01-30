@@ -18,11 +18,15 @@ export function Content({ image, title, description }: dataType) {
 
 export function ContentImages({ id, image, title, price }: imageType) {
   return (
-    <Link href={`/products/${id}`}>
-      <section className="space-y-5">
-        <Image src={image} alt={image} width={355} height={462} />
+    <Link href={`/products/${id}`} className="group">
+      <section className="space-y-5 hover-lift">
+        <div className="img-zoom rounded-lg">
+          <Image src={image} alt={image} width={355} height={462} />
+        </div>
         <div className="space-y-3">
-          <h3 className="heading-4">{title}</h3>
+          <h3 className="heading-4 group-hover:text-brand-primary transition-colors">
+            {title}
+          </h3>
           <span className="text-lg font-semibold">
             {formatCurrency(price / 100)}
           </span>
@@ -40,16 +44,20 @@ export function ContentPopular({
   isLarge,
 }: PopularProductsType) {
   return (
-    <Link href={`/products/${id}`}>
-      <section className="space-y-5">
-        <Image
-          src={image}
-          alt={image}
-          width={isLarge ? 745 : 360}
-          height={375}
-        />
+    <Link href={`/products/${id}`} className="group">
+      <section className="space-y-5 hover-lift">
+        <div className="img-zoom rounded-lg">
+          <Image
+            src={image}
+            alt={image}
+            width={isLarge ? 745 : 360}
+            height={375}
+          />
+        </div>
         <div className="space-y-3">
-          <h3 className="heading-4">{title}</h3>
+          <h3 className="heading-4 group-hover:text-brand-primary transition-colors">
+            {title}
+          </h3>
           <span className="text-lg font-semibold">
             {formatCurrency(price / 100)}
           </span>
@@ -77,7 +85,7 @@ export function LastContent() {
             for the London interior design community.
           </p>
         </div>
-        <button className="md:w-fit bg-brand-light py-4 px-8 cursor-pointer self-center w-full">
+        <button className="md:w-fit bg-brand-light py-4 px-8 cursor-pointer self-center w-full btn-animate hover:bg-brand-border transition-colors">
           Get in touch
         </button>
       </div>

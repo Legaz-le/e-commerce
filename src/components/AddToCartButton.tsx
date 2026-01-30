@@ -33,7 +33,9 @@ export function AddToCartButton({
 
         if (result.success) {
           toast.success("Added to cart!");
-          useCartStore.getState().setAuthCount(useCartStore.getState().authCount + quantity)
+          useCartStore
+            .getState()
+            .setAuthCount(useCartStore.getState().authCount + quantity);
         }
       } catch (error) {
         if (error instanceof Error) {
@@ -51,7 +53,7 @@ export function AddToCartButton({
         onClick={handleAddToCart}
         disabled={isPending || stock <= 0}
         size="lg"
-        className="w-full cursor-pointer"
+        className="w-full cursor-pointer btn-animate bg-brand hover:bg-brand-primary"
       >
         {isPending ? "Adding..." : stock <= 0 ? "Out of Stock" : "Add to Cart"}
       </Button>

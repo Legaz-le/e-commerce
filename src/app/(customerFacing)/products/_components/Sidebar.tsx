@@ -24,12 +24,12 @@ export function Sidebar() {
     } else {
       params.delete(type);
     }
-    router.push(`${pathname}?${params.toString()}`, {scroll: false});
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   }
   return (
-    <div className="hidden  sm:flex flex-col space-y-10">
+    <div className="hidden sm:flex flex-col space-y-10 animate-slide-in-left">
       <div>
-        <h1 className="mb-5">Product type</h1>
+        <h1 className="mb-5 heading-5 text-brand">Product type</h1>
         <div className="flex flex-col space-y-4">
           {TextsType.map((item, index) => (
             <CheckBoxLabel
@@ -44,7 +44,7 @@ export function Sidebar() {
         </div>
       </div>
       <div>
-        <h1 className="mb-5">Price</h1>
+        <h1 className="mb-5 heading-5 text-brand">Price</h1>
         <div className="flex flex-col space-y-4">
           {Prices.map((item, index) => (
             <CheckBoxLabel
@@ -59,7 +59,7 @@ export function Sidebar() {
         </div>
       </div>
       <div>
-        <h1 className="mb-5">Designer</h1>
+        <h1 className="mb-5 heading-5 text-brand">Designer</h1>
         <div className="flex flex-col space-y-4">
           {Designer.map((item, index) => (
             <CheckBoxLabel
