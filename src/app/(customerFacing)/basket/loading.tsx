@@ -3,7 +3,7 @@ export default function BasketLoading() {
     <div className="bg-brand-light">
       <div className="container mx-auto py-10">
         <div className="space-y-10">
-          <h1 className="text-4xl font-mono">Your shopping cart</h1>
+          <h1 className="heading-1">Your shopping cart</h1>
           <div className="flex flex-col w-full space-y-5 animate-pulse">
             <div className="grid grid-cols-[2fr_1fr_1fr] gap-4 w-full">
               <div className="h-6 bg-gray-200 rounded w-24" />

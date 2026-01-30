@@ -10,8 +10,8 @@ export function Content({ image, title, description }: dataType) {
   return (
     <section className="flex flex-col w-[355px] space-y-2">
       <Image src={image} alt={image} width={20} height={20} />
-      <h2 className="text-xl font-mono">{title}</h2>
-      <p className="text-[16px]">{description}</p>
+      <h2 className="heading-4">{title}</h2>
+      <p className="body-md">{description}</p>
     </section>
   );
 }
@@ -22,7 +22,7 @@ export function ContentImages({ id, image, title, price }: imageType) {
       <section className="space-y-5">
         <Image src={image} alt={image} width={355} height={462} />
         <div className="space-y-3">
-          <h3 className="text-xl font-mono">{title}</h3>
+          <h3 className="heading-4">{title}</h3>
           <span className="text-lg font-semibold">
             {formatCurrency(price / 100)}
           </span>
@@ -49,7 +49,7 @@ export function ContentPopular({
           height={375}
         />
         <div className="space-y-3">
-          <h3 className="text-xl font-mono">{title}</h3>
+          <h3 className="heading-4">{title}</h3>
           <span className="text-lg font-semibold">
             {formatCurrency(price / 100)}
           </span>
@@ -63,7 +63,7 @@ export function LastContent() {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 ">
       <div className="py-16 md:pl-[max(2rem,calc((82vw-1280px)/2+2rem))] pr-0 md:pr-10 xl:pr-45 flex flex-col justify-center space-y-10 px-8 md:px-0">
-        <h2 className="text-3xl font-bold">
+        <h2 className="heading-1 font-bold">
           From a studio in London to a global brand with over 400 outlets
         </h2>
         <div className="space-y-5">

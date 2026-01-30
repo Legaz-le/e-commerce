@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -43,14 +44,21 @@
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-light: var(--brand-light);
   --color-brand-muted: var(--brand-muted);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-border: var(--brand-border);
+  --color-brand-border-dark: var(--brand-border-dark);
 }
 
 :root {
   --radius: 0.625rem;
-  --brand: #2a254b;
-  --brand-foreground: #ffffff;
-  --brand-light: #f9f9f9;
-  --brand-muted: #505977;
+  /* Avion Design System Colors */
+  --brand: #2a254b; /* Dark Primary - main brand color */
+  --brand-primary: #4e4d93; /* Primary - purple/violet */
+  --brand-foreground: #ffffff; /* White - text on brand backgrounds */
+  --brand-light: #f9f9f9; /* Light Gray - backgrounds */
+  --brand-muted: #505977; /* Muted text color */
+  --brand-border: #ebe8f4; /* Border Gray - light borders */
+  --brand-border-dark: #cac6da; /* Border Dark - darker borders, disabled states */
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -125,4 +133,75 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Avion Typography System - Google Fonts */
+.font-display {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.font-body {
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+
+/* Headings - Playfair Display */
+.heading-1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2rem; /* 32px */
+  line-height: 1.5; /* 150% */
+  font-weight: 400;
+}
+
+.heading-2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2rem; /* 32px */
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.heading-3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.heading-4 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.heading-5 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1rem; /* 16px */
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.heading-6 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Body Text - DM Sans */
+.body-sm {
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+}
+
+.body-md {
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 1rem; /* 16px */
+  line-height: 1.5;
+}
+
+.body-lg {
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.5;
 }

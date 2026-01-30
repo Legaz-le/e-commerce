@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
-
-
-const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: "Avion",
@@ -15,13 +11,13 @@ export const metadata: Metadata = {
     title: "Avion",
     description: "Shop premium furniture and home decor",
     siteName: "Avion",
-    type: "website"
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Avion",
-    description: "Shop premium furniture and home decor"
-  } 
+    description: "Shop premium furniture and home decor",
+  },
 };
 
 export default function RootLayout({
@@ -31,16 +27,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={cn(
-          "bg-background min-h-screen font-sans antialiased",
-          inter.className
-        )}
-      >
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <body
+          className={cn("bg-background min-h-screen antialiased font-body")}
+        >
+          {children}
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

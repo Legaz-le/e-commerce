@@ -96,10 +96,10 @@ export default async function ProductPage({
 
           <div className="w-full lg:w-1/2 bg-white px-6 lg:px-10 py-10 lg:py-[51px]">
             <div className="flex flex-col gap-[13px] mb-8">
-              <h1 className="font-['Clash_Display'] font-normal text-[36px] leading-11 text-brand">
+              <h1 className="font-display font-normal text-[36px] leading-11 text-brand">
                 {product.name}
               </h1>
-              <span className="font-['Satoshi'] font-normal text-[24px] leading-8 text-[#12131A]">
+              <span className="font-body font-normal text-[24px] leading-8 text-[#12131A]">
                 {formatCurrency(product.priceInCents / 100)}
               </span>
               <span>
@@ -116,14 +116,14 @@ export default async function ProductPage({
             </div>
 
             <div className="flex flex-col gap-4 p-10 mb-6">
-              <h2 className="font-['Clash_Display'] font-normal text-[16px] leading-5 text-brand">
+              <h2 className="font-display font-normal text-[16px] leading-5 text-brand">
                 Description
               </h2>
               <div className="flex flex-col gap-5 max-w-[498px]">
-                <p className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-brand-muted">
+                <p className="font-body font-normal text-[16px] leading-[22px] text-brand-muted">
                   {product.description}
                 </p>
-                <ul className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-brand-muted list-disc list-inside">
+                <ul className="font-body font-normal text-[16px] leading-[22px] text-brand-muted list-disc list-inside">
                   <li>Premium material</li>
                   <li>Handmade upholstery</li>
                   <li>Quality timeless classic</li>
@@ -132,31 +132,31 @@ export default async function ProductPage({
             </div>
 
             <div className="mb-6 px-10">
-              <h2 className="font-['Clash_Display'] font-normal text-[16px] leading-5 text-brand mb-7">
+              <h2 className="font-display font-normal text-[16px] leading-5 text-brand mb-7">
                 Dimensions
               </h2>
               <div className="flex flex-row gap-[57px]">
                 <div className="flex flex-col gap-3">
-                  <span className="font-['Clash_Display'] font-normal text-[14px] leading-[17px] text-brand">
+                  <span className="font-display font-normal text-[14px] leading-[17px] text-brand">
                     Height
                   </span>
-                  <span className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-brand-muted">
+                  <span className="font-body font-normal text-[16px] leading-[22px] text-brand-muted">
                     110cm
                   </span>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <span className="font-['Clash_Display'] font-normal text-[14px] leading-[17px] text-brand">
+                  <span className="font-display font-normal text-[14px] leading-[17px] text-brand">
                     Width
                   </span>
-                  <span className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-brand-muted">
+                  <span className="font-body font-normal text-[16px] leading-[22px] text-brand-muted">
                     75cm
                   </span>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <span className="font-['Clash_Display'] font-normal text-[14px] leading-[17px] text-brand">
+                  <span className="font-display font-normal text-[14px] leading-[17px] text-brand">
                     Depth
                   </span>
-                  <span className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-brand-muted">
+                  <span className="font-body font-normal text-[16px] leading-[22px] text-brand-muted">
                     50cm
                   </span>
                 </div>

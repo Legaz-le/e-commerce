@@ -13,7 +13,7 @@ export default function BasketPage() {
       <div className="bg-brand-light">
         <div className="container mx-auto py-10 ">
           <div className="space-y-10">
-            <h1 className="text-4xl font-mono">Your shopping cart</h1>
+            <h1 className="heading-1">Your shopping cart</h1>
             <Cart />
             <CartMerge />
           </div>

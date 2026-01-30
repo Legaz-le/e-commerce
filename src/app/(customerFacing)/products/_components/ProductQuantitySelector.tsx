@@ -33,17 +33,17 @@ export function ProductQuantitySelector({
       <button
         onClick={handleDecrement}
         disabled={quantity === 1}
-        className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-brand cursor-pointer"
+        className="font-body font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-brand cursor-pointer"
       >
         -
       </button>
-      <span className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-brand">
+      <span className="font-body font-normal text-[16px] leading-[22px] text-brand">
         {quantity}
       </span>
       <button
         onClick={handleIncrement}
         disabled={quantity >= max}
-        className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-brand cursor-pointer"
+        className="font-body font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-brand cursor-pointer"
       >
         +
       </button>
