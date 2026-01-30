@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { Sidebar } from "./_components/Sidebar";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "All Product — Avion",
   description:

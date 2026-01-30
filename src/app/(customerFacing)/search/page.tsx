@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import { ProductCard } from "@/components/ProductCard";
 import { SearchForm } from "../_components/SearchForm";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Search — Avion",
   description: "Search our collection of premium furniture and home decor.",

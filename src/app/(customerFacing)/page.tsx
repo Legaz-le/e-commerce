@@ -8,13 +8,13 @@ import {
   ContactSection,
 } from "./_components/sections";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Home — Avion",
   description:
     "Discover premium furniture and home decor. Shop our curated collection of modern designs.",
 };
-
-export const revalidate = 3600;
 
 export default function HomePage() {
   return (

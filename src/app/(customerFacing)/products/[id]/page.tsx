@@ -16,6 +16,9 @@ import { formatCurrency } from "@/lib/formater";
 import { ProductAction } from "../_components/ProductActions";
 import { Metadata } from "next";
 
+
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {
