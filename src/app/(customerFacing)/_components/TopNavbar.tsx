@@ -14,12 +14,14 @@ import { cartCountAuth } from "@/actions/cartQuantity";
 export function TopNavbar() {
   const guestItems = useCartStore((state) => state.items);
   const { isSignedIn } = useAuth();
-  const authCount = useCartStore((state) => state.authCount)
+  const authCount = useCartStore((state) => state.authCount);
   const cartCount = isSignedIn ? authCount : guestItems.length;
 
   useEffect(() => {
     if (!isSignedIn) return;
-    cartCountAuth().then((count) => useCartStore.getState().setAuthCount(count));
+    cartCountAuth().then((count) =>
+      useCartStore.getState().setAuthCount(count),
+    );
   }, [isSignedIn]);
 
   return (
@@ -47,7 +49,7 @@ export function TopNavbar() {
               className="cursor-pointer"
             />
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#2A254B] text-white text-sm w-4 h-4 flex items-center justify-center rounded-full">
+              <span className="absolute -top-2 -right-2 bg-brand text-white text-sm w-4 h-4 flex items-center justify-center rounded-full">
                 {cartCount}
               </span>
             )}

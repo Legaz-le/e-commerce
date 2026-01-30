@@ -37,12 +37,17 @@ export function ContentPopular({
   image,
   title,
   price,
-  isLarge
+  isLarge,
 }: PopularProductsType) {
   return (
     <Link href={`/products/${id}`}>
       <section className="space-y-5">
-        <Image src={image} alt={image} width={isLarge ? 745 : 360} height={375} />
+        <Image
+          src={image}
+          alt={image}
+          width={isLarge ? 745 : 360}
+          height={375}
+        />
         <div className="space-y-3">
           <h3 className="text-xl font-mono">{title}</h3>
           <span className="text-lg font-semibold">
@@ -72,7 +77,7 @@ export function LastContent() {
             for the London interior design community.
           </p>
         </div>
-        <button className="md:w-fit bg-[#F9F9F9] py-4 px-8 cursor-pointer self-center w-full">
+        <button className="md:w-fit bg-brand-light py-4 px-8 cursor-pointer self-center w-full">
           Get in touch
         </button>
       </div>

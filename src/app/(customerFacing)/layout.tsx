@@ -28,7 +28,7 @@ export default function Layout({
         </div>
       </div>
       <main className="flex-1">{children}</main>
-      <div className="bg-[#2A254B] pt-16 ">
+      <div className="bg-brand pt-16 ">
         <div className="container mx-auto">
           <Footer />
         </div>

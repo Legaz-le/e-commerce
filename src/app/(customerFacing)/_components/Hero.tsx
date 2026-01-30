@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function Hero() {
   return (
-    <section className="bg-[#2A254B] flex flex-col md:flex-row ">
+    <section className="bg-brand flex flex-col md:flex-row ">
       <div className=" mt-15 w-full">
         <div className="px-8 lg:px-15 flex flex-col">
           <div className="space-y-10 lg:w-[513px]">

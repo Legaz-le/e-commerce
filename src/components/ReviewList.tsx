@@ -11,7 +11,7 @@ type Review = {
 export function ReviewList({ reviews }: { reviews: Review[] }) {
   if (reviews.length === 0) {
     return (
-      <p className="font-['Satoshi'] text-[16px] text-[#505977]">
+      <p className="font-['Satoshi'] text-[16px] text-brand-muted">
         No reviews yet. Be the first to review this product!
       </p>
     );
@@ -26,10 +26,10 @@ export function ReviewList({ reviews }: { reviews: Review[] }) {
         >
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="font-['Clash_Display'] font-normal text-[14px] text-[#2A254B]">
+              <span className="font-['Clash_Display'] font-normal text-[14px] text-brand">
                 {review.user.email.split("@")[0]}
               </span>
-              <span className="font-['Satoshi'] text-[14px] text-[#505977]">
+              <span className="font-['Satoshi'] text-[14px] text-brand-muted">
                 {review.createdAt.toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -39,7 +39,7 @@ export function ReviewList({ reviews }: { reviews: Review[] }) {
             </div>
             <StarRating rating={review.rating} size={16} />
             {review.comment && (
-              <p className="font-['Satoshi'] text-[16px] leading-[22px] text-[#505977]">
+              <p className="font-['Satoshi'] text-[16px] leading-[22px] text-brand-muted">
                 {review.comment}
               </p>
             )}

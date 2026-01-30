@@ -16,7 +16,7 @@ export function ProductAction({
   return (
     <div className="flex flex-row items-center justify-between px-10 py-7 border-t border-gray-100">
       <div className="flex flex-row items-center gap-[22px]">
-        <span className="font-['Clash_Display'] font-normal text-[16px] leading-5 text-[#2A254B]">
+        <span className="font-['Clash_Display'] font-normal text-[16px] leading-5 text-brand">
           Amount:
         </span>
         <ProductQuantitySelector

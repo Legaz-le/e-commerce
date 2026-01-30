@@ -18,7 +18,7 @@ export function Section({
 }: SectionProps) {
   const bgColors = {
     white: "bg-white",
-    gray: "bg-[#F9F9F9]",
+    gray: "bg-brand-light",
     transparent: "bg-transparent",
   };
 
@@ -28,7 +28,7 @@ export function Section({
         className={cn(
           "container mx-auto",
           withPadding && "px-8 sm:px-0",
-          containerClassName
+          containerClassName,
         )}
       >
         {children}

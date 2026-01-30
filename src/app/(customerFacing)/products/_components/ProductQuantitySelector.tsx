@@ -29,21 +29,21 @@ export function ProductQuantitySelector({
   }
 
   return (
-    <div className="flex flex-row justify-between items-center px-4 py-3 gap-[33px] bg-[#F9F9F9] h-[46px]">
+    <div className="flex flex-row justify-between items-center px-4 py-3 gap-[33px] bg-brand-light h-[46px]">
       <button
         onClick={handleDecrement}
         disabled={quantity === 1}
-        className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-[#2A254B] cursor-pointer"
+        className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-brand cursor-pointer"
       >
         -
       </button>
-      <span className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#2A254B]">
+      <span className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-brand">
         {quantity}
       </span>
       <button
         onClick={handleIncrement}
         disabled={quantity >= max}
-        className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-[#2A254B] cursor-pointer"
+        className="font-['Satoshi'] font-normal text-[16px] leading-[22px] text-[#CAC6DA] hover:text-brand cursor-pointer"
       >
         +
       </button>

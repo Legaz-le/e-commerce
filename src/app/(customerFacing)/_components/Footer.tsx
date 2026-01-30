@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="bg-[#2A254B]  text-white flex flex-col space-y-10 px-8 md:px-0">
+    <footer className="bg-brand text-white flex flex-col space-y-10 px-8 md:px-0">
       <div className="flex w-full flex-col md:flex-row">
         <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-10 md:pr-20">
           <div className="flex flex-col space-y-3">
@@ -36,7 +36,7 @@ export function Footer() {
               placeholder="your@email.com"
               className="p-4 bg-[#696681] w-full"
             />
-            <button className="bg-[#F9F9F9] p-4 w-1/4">Sign up</button>
+            <button className="bg-brand-light p-4 w-1/4">Sign up</button>
           </div>
         </div>
       </div>
