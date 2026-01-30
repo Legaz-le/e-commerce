@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Avion - E-Commerce Furniture Store
+
+A modern, full-stack e-commerce application for furniture and homeware products built with Next.js 16.
+
+## Features
+
+- **Product Catalog** - Browse products by category with search and filtering
+- **Shopping Cart** - Add, remove, and update quantities with persistent cart state
+- **Secure Checkout** - Stripe payment integration for secure transactions
+- **User Authentication** - Sign up, sign in, and account management with Clerk
+- **Order History** - View past orders and track order status
+- **Admin Dashboard** - Manage products, orders, and view analytics
+- **Responsive Design** - Optimized for desktop, tablet, and mobile devices
+- **Loading States** - Skeleton loaders for better perceived performance
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **UI Components:** shadcn/ui, Radix UI
+- **Database:** PostgreSQL with Prisma ORM
+- **Authentication:** Clerk
+- **Payments:** Stripe
+- **State Management:** Zustand
+- **Image Hosting:** Cloudinary
+- **Email:** React Email + Resend
+- **Icons:** Lucide React
+- **Charts:** Recharts
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+
+- PostgreSQL database
+- Stripe account
+- Clerk account
+- Cloudinary account
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Database
+DATABASE_URL="postgresql://..."
+
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
+CLERK_SECRET_KEY=sk_...
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+# Stripe
+STRIPE_SECRET_KEY=sk_...
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=...
+
+# App
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+
+# Resend (Email)
+RESEND_API_KEY=re_...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/avion-ecommerce.git
+   cd avion-ecommerce
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. Set up the database
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Run the development server
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── (customerFacing)/    # Customer-facing pages
+│   │   ├── products/        # Product listing & details
+│   │   ├── basket/          # Shopping cart
+│   │   ├── checkout/        # Checkout flow
+│   │   ├── orders/          # Order history
+│   │   └── search/          # Product search
+│   ├── admin/               # Admin dashboard
+│   ├── api/                 # API routes
+│   └── actions/             # Server actions
+├── components/              # Reusable UI components
+├── lib/                     # Utility functions
+└── store/                   # Zustand state stores
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run email` - Preview email templates
+
+## License
+
+This project is for educational purposes.
