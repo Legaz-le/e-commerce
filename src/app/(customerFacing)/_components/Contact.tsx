@@ -1,3 +1,6 @@
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
 export function Contact() {
   return (
     <section className="text-center bg-white py-15 space-y-20 px-8 md:px-0 animate-fade-in-up">
@@ -10,15 +13,17 @@ export function Contact() {
           sales, pop up stores and more
         </p>
       </div>
-      <div>
-        <input
-          type="email"
-          placeholder="you@gmail.com"
-          className="p-4 bg-brand-light md:w-1/4 border border-transparent focus:border-brand focus:outline-none transition-colors"
-        />
-        <button className="py-4 px-8 bg-brand text-white btn-animate hover:bg-brand-primary transition-colors">
-          Sign up
-        </button>
+      <div className="flex justify-center">
+        <div className="flex w-full md:w-1/2 lg:w-1/3">
+          <Input
+            type="email"
+            placeholder="you@gmail.com"
+            className="rounded-r-none h-12 bg-brand-light border-brand-border focus-visible:border-brand focus-visible:ring-brand/20"
+          />
+          <Button className="rounded-l-none h-12 px-8 bg-brand hover:bg-brand-primary btn-animate">
+            Sign up
+          </Button>
+        </div>
       </div>
     </section>
   );

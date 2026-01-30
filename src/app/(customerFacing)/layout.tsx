@@ -17,13 +17,14 @@ export default function Layout({
         <div className="hidden md:flex border-b border-solid" />
         <div className="container mx-auto">
           <Nav>
-            <NavLink href="/">Plant pots</NavLink>
-            <NavLink href="/">Ceramics</NavLink>
-            <NavLink href="/">Tables</NavLink>
-            <NavLink href="/">Chairs</NavLink>
-            <NavLink href="/">Crockery</NavLink>
-            <NavLink href="/">Tableware</NavLink>
-            <NavLink href="/">Cutlery</NavLink>
+            <NavLink href="/products">All Products</NavLink>
+            <NavLink href="/products?category=Furniture">Furniture</NavLink>
+            <NavLink href="/products?category=Homeware">Homeware</NavLink>
+            <NavLink href="/products?category=Sofas">Sofas</NavLink>
+            <NavLink href="/products?category=Light+fittings">
+              Light Fittings
+            </NavLink>
+            <NavLink href="/products?category=Accessories">Accessories</NavLink>
           </Nav>
         </div>
       </div>

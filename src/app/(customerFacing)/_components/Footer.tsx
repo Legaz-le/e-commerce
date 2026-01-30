@@ -1,42 +1,106 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer className="bg-brand text-white flex flex-col space-y-10 px-8 md:px-0">
       <div className="flex w-full flex-col md:flex-row">
         <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-10 md:pr-20">
           <div className="flex flex-col space-y-3">
-            <a>Menu</a>
-            <a>New arrivals</a>
-            <a>Best sellers</a>
-            <a>Recently viewed</a>
-            <a>Popular this week</a>
-            <a>All products</a>
+            <span className="font-semibold">Menu</span>
+            <Link
+              href="/products"
+              className="hover:text-brand-light transition-colors"
+            >
+              New arrivals
+            </Link>
+            <Link
+              href="/products"
+              className="hover:text-brand-light transition-colors"
+            >
+              Best sellers
+            </Link>
+            <Link
+              href="/products"
+              className="hover:text-brand-light transition-colors"
+            >
+              Recently viewed
+            </Link>
+            <Link
+              href="/products"
+              className="hover:text-brand-light transition-colors"
+            >
+              Popular this week
+            </Link>
+            <Link
+              href="/products"
+              className="hover:text-brand-light transition-colors"
+            >
+              All products
+            </Link>
           </div>
           <div className="flex flex-col space-y-3">
-            <a>Categories</a>
-            <a>Crockery</a>
-            <a>Furniture</a>
-            <a>Homeware</a>
-            <a>Plant pots</a>
-            <a>Chairs</a>
+            <span className="font-semibold">Categories</span>
+            <Link
+              href="/products?category=Furniture"
+              className="hover:text-brand-light transition-colors"
+            >
+              Furniture
+            </Link>
+            <Link
+              href="/products?category=Homeware"
+              className="hover:text-brand-light transition-colors"
+            >
+              Homeware
+            </Link>
+            <Link
+              href="/products?category=Sofas"
+              className="hover:text-brand-light transition-colors"
+            >
+              Sofas
+            </Link>
+            <Link
+              href="/products?category=Light+fittings"
+              className="hover:text-brand-light transition-colors"
+            >
+              Light fittings
+            </Link>
+            <Link
+              href="/products?category=Accessories"
+              className="hover:text-brand-light transition-colors"
+            >
+              Accessories
+            </Link>
           </div>
           <div className="flex flex-col space-y-3 mb-10 md:mb-0">
-            <a>Our company</a>
-            <a>About us</a>
-            <a>Vacancies</a>
-            <a>Contact us</a>
-            <a>Privacy</a>
-            <a>Return policy</a>
+            <span className="font-semibold">Our company</span>
+            <Link href="/" className="hover:text-brand-light transition-colors">
+              About us
+            </Link>
+            <Link href="/" className="hover:text-brand-light transition-colors">
+              Vacancies
+            </Link>
+            <Link href="/" className="hover:text-brand-light transition-colors">
+              Contact us
+            </Link>
+            <Link href="/" className="hover:text-brand-light transition-colors">
+              Privacy
+            </Link>
+            <Link href="/" className="hover:text-brand-light transition-colors">
+              Return policy
+            </Link>
           </div>
         </div>
         <div className="flex-1 flex flex-col space-y-5">
-          <label>Join our mailing list</label>
+          <label className="font-semibold">Join our mailing list</label>
           <div className="flex text-black">
             <input
               type="email"
               placeholder="your@email.com"
-              className="p-4 bg-[#696681] w-full"
+              className="p-4 bg-brand-primary/50 text-white placeholder:text-white/70 w-full focus:outline-none focus:ring-2 focus:ring-brand-light transition-all"
             />
-            <button className="bg-brand-light p-4 w-1/4">Sign up</button>
+            <button className="bg-brand-light text-brand p-4 w-1/4 btn-animate hover:bg-white transition-colors">
+              Sign up
+            </button>
           </div>
         </div>
       </div>
