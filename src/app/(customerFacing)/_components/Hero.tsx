@@ -35,7 +35,7 @@ export function Hero() {
         </div>
       </div>
       <div
-        className="w-full justify-items-end animate-fade-in"
+        className="w-full flex justify-end animate-fade-in"
         style={{ animationDelay: "0.3s" }}
       >
         <Image
@@ -44,7 +44,7 @@ export function Hero() {
           width={500}
           height={500}
           priority
-          className="hidden sm:block h-full"
+          className="hidden sm:block h-full object-cover"
         />
       </div>
     </section>
